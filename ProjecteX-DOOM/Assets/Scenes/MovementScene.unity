@@ -610,7 +610,22 @@ MonoBehaviour:
   _sprintSpeed: 6
   _lookSens: 0.1
   _lookLimitV: 89
-  _playerCamera: {fileID: 0}
+  _playerCamera: {fileID: 1547681205}
+  RotationSpeed: 1
+  SpeedChangeRate: 10
+  JumpHeight: 1.2
+  Gravity: -15
+  JumpTimeout: 0.1
+  FallTimeout: 0.15
+  Grounded: 1
+  GroundedOffset: -0.14
+  GroundedRadius: 0.5
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  CinemachineCameraTarget: {fileID: 0}
+  TopClamp: 90
+  BottomClamp: -90
 --- !u!143 &845303460
 CharacterController:
   m_ObjectHideFlags: 0
