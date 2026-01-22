@@ -1,52 +1,51 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+[RequireComponent(typeof(PruebaInputsPlayer))]
 
-public class Gun : MonoBehaviour, InputSystem_Actions.IPruebaActions
+public class Gun : MonoBehaviour
 {
 	public float damage = 10f;
 	public float range = 100f;
-	private InputSystem_Actions inputActions;
+    public int maxAmmo = 10;
+    private int currentAmmo;
 
-	public Camera fpsCam;
+    private PruebaInputsPlayer _pruebaInputsPlayer;
+
+    public Camera fpsCam;
 
     private void Awake()
     {
-		inputActions = new InputSystem_Actions();
-		inputActions.Prueba.SetCallbacks(this);
+		_pruebaInputsPlayer = GetComponent<PruebaInputsPlayer>();
     }
-    private void OnEnable()
+    private void Start()
     {
-        inputActions.Enable();
+        currentAmmo = maxAmmo;
     }
-    private void OnDisable()
+    private void Update()
     {
-        inputActions.Disable();
+        if(currentAmmo <= 0)
+        {
+            return;
+        }
+        if (_pruebaInputsPlayer.Shoot)
+        {
+            Shoot();
+        }
     }
-
-    public void OnAttack(InputAction.CallbackContext context)
-    {
-		if (context.performed)
-		{
-			Shoot();
-			Debug.Log("click");
-		}
-	}
 	private void Shoot()
 	{
-		RaycastHit hit;
+        currentAmmo--;
+        Debug.Log("shoot");
+        RaycastHit hit;
+        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
+        {
+            Debug.Log(hit.transform.name);
 
-		if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
-		{
-			Debug.Log(hit.transform.name);
-
-			Target target = hit.transform.GetComponent<Target>();
-			if (target != null)
-			{
-				target.TakeDamage(damage);
-			}
-
-		}
-
-
+            Target target = hit.transform.GetComponent<Target>();
+            if (target != null)
+            {
+                target.TakeDamage(damage);
+            }
+        }
 	}
 }
