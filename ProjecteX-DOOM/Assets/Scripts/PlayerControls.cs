@@ -1,6 +1,5 @@
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Windows;
 
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
 public class PlayerControls : MonoBehaviour
@@ -38,7 +37,6 @@ public class PlayerControls : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(_isGrounded);
         GroundedCheck();
         GravityAndJump();
         Movement();

@@ -12,6 +12,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public bool Jump { get; private set; }
     public bool SprintToggledOn { get; private set; }
+    public bool Attack { get; private set; }
 
     private void OnEnable()
     {
@@ -31,11 +32,15 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     private void LateUpdate()
     {
         Jump = false;
+        Attack = false;
     }
 
     public void OnAttack(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        if (!context.performed)
+            return;
+
+        Attack = true;
     }
 
     public void OnInteract(InputAction.CallbackContext context)
