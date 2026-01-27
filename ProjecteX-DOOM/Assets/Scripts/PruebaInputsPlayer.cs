@@ -26,11 +26,14 @@ public class PruebaInputsPlayer : MonoBehaviour, InputSystem_Actions.IPruebaActi
     }
     public void OnAttack(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        /*if (context.performed)
         {
             Debug.Log("click");
             Shoot = true;
-        }
+        }*/
+        if (!context.performed)
+            return;
+        Shoot = true;
     }
 
     public void OnNext(InputAction.CallbackContext context)
