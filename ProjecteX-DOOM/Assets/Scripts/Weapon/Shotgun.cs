@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour
+[CreateAssetMenu(fileName = "Shotgun", menuName = "Weapons/Shotgun")]
+public class Shotgun : RangedWeapon
 {
     [Header("Shotgun Settings")]
     [SerializeField] private float _damageMulti = 5f;
-    [SerializeField] private float _weaponRange = 100f;
+    //[SerializeField] private float _range = 100f;
     [SerializeField] private int _pellets = 7;
     [SerializeField] private int _initialAmmunition = 8;
 
@@ -14,25 +15,27 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private float _spreadMin = 2.2f;
     [SerializeField] private float _spreadMax = 9.8f;
 
-    public float Ammunition;
+    //public float Ammunition;
 
-    private void Awake()
+    /*private void Awake()
     {
-        Ammunition = _initialAmmunition;
-    }
+        _ammunition = _initialAmmunition;
+    }*/
 
-    public void Shoot(Transform shootPoint, Camera cam)
+    public override void Shoot(Transform shootPoint, Camera cam)
     {
-        if (Ammunition <= 0) return;
+        base.Shoot(shootPoint, cam);
 
-        Ammunition--;
+        /*if (Ammunition <= 0) return;
+
+        Ammunition--;*/
 
         for (int i = 0; i < _pellets; i++)
         {
             Vector3 spreadDirection = GetSpreadDirection(cam.transform.forward);
 
             RaycastHit hit;
-            if (Physics.Raycast(shootPoint.position, spreadDirection, out hit, _weaponRange))
+            if (Physics.Raycast(shootPoint.position, spreadDirection, out hit, _range))
             {
                 Target target = hit.transform.GetComponent<Target>();
                 if (target != null)
@@ -43,7 +46,7 @@ public class Shotgun : MonoBehaviour
                 }
             }
 
-            Debug.DrawRay(shootPoint.transform.position, spreadDirection * _weaponRange, Color.red, 1f);
+            Debug.DrawRay(shootPoint.transform.position, spreadDirection * _range, Color.red, 1f);
         }
     }
 
@@ -72,7 +75,7 @@ public class Shotgun : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        Ammunition += ammo;
+        _ammunition += ammo;
     }
 
     private float GetDamage()

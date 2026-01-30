@@ -4,16 +4,19 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
 public class PlayerControls : MonoBehaviour
 {
+    [Header("Player First Person Camera")]
     [SerializeField] private CinemachineCamera _playerCamera;
 
+    [Header("Movement Settings")]
     [SerializeField] private float _moveSpeed = 10f;
     [SerializeField] private float _sprintSpeed = 20f;
 
+    [Header("Look Settinngs")]
     [SerializeField] private float _lookSense = 0.1f;
     [SerializeField] private float _lookLimitV = 89f;
 
+    [Header("Jump and Gravity Settings")]
     [SerializeField] private float _gravity = 9.8f;
-    [SerializeField] private float _jumpHeight = 8f;
     [SerializeField] private LayerMask _groundLayers;
 
     private PlayerInputs _playerInputs;
@@ -38,7 +41,7 @@ public class PlayerControls : MonoBehaviour
     private void Update()
     {
         GroundedCheck();
-        GravityAndJump();
+        Gravity();
         Movement();
     }
 
@@ -54,7 +57,7 @@ public class PlayerControls : MonoBehaviour
         _isGrounded = Physics.CheckSphere(spherePosition, _characterController.radius, _groundLayers, QueryTriggerInteraction.Ignore);
     }
 
-    private void GravityAndJump()
+    private void Gravity()
     {
         _verticalVelocity -= _gravity * Time.deltaTime;
 
