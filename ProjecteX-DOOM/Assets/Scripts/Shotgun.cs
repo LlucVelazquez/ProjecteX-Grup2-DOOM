@@ -21,7 +21,7 @@ public class Shotgun : MonoBehaviour
         Ammunition = _initialAmmunition;
     }
 
-    public void Shoot(Camera cam)
+    public void Shoot(Transform shootPoint, Camera cam)
     {
         if (Ammunition <= 0) return;
 
@@ -32,7 +32,7 @@ public class Shotgun : MonoBehaviour
             Vector3 spreadDirection = GetSpreadDirection(cam.transform.forward);
 
             RaycastHit hit;
-            if (Physics.Raycast(cam.transform.position, spreadDirection, out hit, _weaponRange))
+            if (Physics.Raycast(shootPoint.position, spreadDirection, out hit, _weaponRange))
             {
                 Target target = hit.transform.GetComponent<Target>();
                 if (target != null)
@@ -43,7 +43,7 @@ public class Shotgun : MonoBehaviour
                 }
             }
 
-            Debug.DrawRay(cam.transform.position, spreadDirection * _weaponRange, Color.red, 1f);
+            Debug.DrawRay(shootPoint.transform.position, spreadDirection * _weaponRange, Color.red, 1f);
         }
     }
 
