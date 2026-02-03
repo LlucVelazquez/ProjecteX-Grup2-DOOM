@@ -10,6 +10,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     public Vector2 Move { get; private set; }
     public Vector2 Look { get; private set; }
 
+    public bool Interact { get; private set; }
     public bool Jump { get; private set; }
     public bool SprintToggledOn { get; private set; }
     public bool Attack { get; private set; }
@@ -45,7 +46,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public void OnInteract(InputAction.CallbackContext context)
     {
-        throw new System.NotImplementedException();
+        Interact = context.ReadValueAsButton();
     }
 
     public void OnJump(InputAction.CallbackContext context)

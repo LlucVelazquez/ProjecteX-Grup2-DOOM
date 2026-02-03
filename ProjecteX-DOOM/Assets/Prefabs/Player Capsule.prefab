@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8662744441889607416}
   - component: {fileID: 7435437870675708565}
   - component: {fileID: 9016166299356724271}
+  - component: {fileID: 7731495180606540487}
   m_Layer: 10
   m_Name: Player Capsule
   m_TagString: Untagged
@@ -176,10 +177,22 @@ MonoBehaviour:
   _lookSense: 0.1
   _lookLimitV: 89
   _gravity: 9.8
-  _jumpHeight: 8
   _groundLayers:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &7731495180606540487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355842356551018819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0d825a9094fab24f9855e10ada7c8aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  _health: 100
 --- !u!1 &4124411366322451352
 GameObject:
   m_ObjectHideFlags: 0
