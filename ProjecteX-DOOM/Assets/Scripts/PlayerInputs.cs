@@ -9,11 +9,17 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
     public Vector2 Move { get; private set; }
     public Vector2 Look { get; private set; }
-
+    
     public bool Interact { get; private set; }
     public bool Jump { get; private set; }
     public bool SprintToggledOn { get; private set; }
     public bool Attack { get; private set; }
+
+    public int SelectedWeapon { get; private set; }
+
+    private float _scroll;
+    private int _firstWeapon = 1;
+    private int _secondWeapon = 2;
 
     private void OnEnable()
     {
@@ -22,6 +28,8 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
 
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);
+
+        SelectedWeapon = _firstWeapon;
     }
 
     private void OnDisable()
@@ -67,16 +75,6 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         Move = context.ReadValue<Vector2>();
     }
 
-    public void OnNext(InputAction.CallbackContext context)
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void OnPrevious(InputAction.CallbackContext context)
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void OnSprint(InputAction.CallbackContext context)
     {
         if (context.performed)
@@ -86,6 +84,30 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
         else if (context.canceled)
         {
             SprintToggledOn = !_holdToSprint && SprintToggledOn;
+        }
+    }
+
+    public void OnFirst(InputAction.CallbackContext context)
+    {
+        SelectedWeapon = _firstWeapon;
+    }
+
+    public void OnSecond(InputAction.CallbackContext context)
+    {
+        SelectedWeapon = _secondWeapon;
+    }
+
+    public void OnScrollWheel(InputAction.CallbackContext context)
+    {
+        _scroll = context.ReadValue<float>();
+
+        if (_scroll > 0)
+        {
+            SelectedWeapon = _firstWeapon;
+        }
+        else if (_scroll < 0)
+        {
+            SelectedWeapon = _secondWeapon;
         }
     }
 }

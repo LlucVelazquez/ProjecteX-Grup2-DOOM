@@ -1,0 +1,3 @@
+diff - base
+disp - height
+rough - spec

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7435437870675708565}
   - component: {fileID: 9016166299356724271}
   - component: {fileID: 7731495180606540487}
+  - component: {fileID: 4389148969614408509}
   m_Layer: 10
   m_Name: Player Capsule
   m_TagString: Untagged
@@ -193,6 +194,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   _health: 100
+--- !u!114 &4389148969614408509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 355842356551018819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8676ce102cc71834b90250db9e28d960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  _camera: {fileID: 1913825984682430765}
+  _interactDistance: 10
 --- !u!1 &4124411366322451352
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +221,7 @@ GameObject:
   - component: {fileID: 1722095995820166226}
   - component: {fileID: 4837021326715592180}
   - component: {fileID: 8824640765852624453}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
