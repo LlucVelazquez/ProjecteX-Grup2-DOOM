@@ -38,7 +38,7 @@ public class Shotgun : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(_shootPoint.position, spreadDirection, out hit, _range))
             {
-                Target target = hit.transform.GetComponent<Target>();
+                ITargeteable target = hit.transform.GetComponent<ITargeteable>();
                 if (target != null)
                 {
                     float damage = GetDamage();
