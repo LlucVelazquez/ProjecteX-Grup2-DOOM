@@ -1,16 +1,14 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(PruebaInputsPlayer))]
-public class WeaponSwitching : MonoBehaviour
+[RequireComponent(typeof(PlayerInputs))]
+public class WeaponsHolder : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _weapons;
 
+    public GameObject _currentWeapon;
+
     private PlayerInputs _playerInputs;
-
-    private GameObject _currentWeapon;
-
-    public int selectedWeapon = 0;
 
     private void Awake()
     {
