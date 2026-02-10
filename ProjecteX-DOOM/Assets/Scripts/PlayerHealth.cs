@@ -1,8 +1,10 @@
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, ITargeteable
 {
     [SerializeField] private float _health = 100f;
+
+    public float Health { get => _health; set => _health = value; }
 
     public void TakeDamage(float damage)
     {
