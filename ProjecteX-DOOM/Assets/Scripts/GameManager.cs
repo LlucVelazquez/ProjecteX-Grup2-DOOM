@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -5,6 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public PlayerController Player { get; set; }
+
+    public static event Action OnPlayerDeath = delegate { };
 
     private PlayerHealth _pHealth;
 
@@ -30,6 +33,15 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("PlayerController instance not found. PlayerHealth will not be assigned to GameManager.");
+        }
+    }
+
+    private void Update()
+    {
+        if (_pHealth != null && _pHealth.Health <= 0)
+        {
+            Player.GetComponent<PlayerInputs>().enabled = false;
+            OnPlayerDeath.Invoke();
         }
     }
 }

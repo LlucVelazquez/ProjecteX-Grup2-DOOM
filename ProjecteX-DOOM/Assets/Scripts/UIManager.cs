@@ -21,6 +21,16 @@ public class UIManager : MonoBehaviour
 
     private PlayerHealth _pHealth;
 
+    private void OnEnable()
+    {
+        GameManager.OnPlayerDeath += ShowDeathMenu;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnPlayerDeath -= ShowDeathMenu;
+    }
+
     private void Awake()
     {
         if (Instance == null)
@@ -67,6 +77,14 @@ public class UIManager : MonoBehaviour
         Cursor.visible = isVisible;
     }
 
+    public void ShowDeathMenu()
+    {
+        Time.timeScale = 0f;
+        _deathMenu.SetActive(true);
+
+        CursorState(false, true);
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;
@@ -82,6 +100,10 @@ public class UIManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        
+        CursorState(false, true);
+        _pauseMenu.SetActive(false);
+        _deathMenu.SetActive(false);
     }
 
     public void QuitGame()
