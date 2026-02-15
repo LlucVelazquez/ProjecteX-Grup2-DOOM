@@ -7,15 +7,12 @@ public class Enemy : MonoBehaviour, ITargeteable
 
     public float Health { get => _health; set => _health = value; }
 
+    [SerializeField] private float _attackDistance = 2f;
+
     private FollowBehaviour _fb;
 
     private void Awake()
     {
         _fb = GetComponent<FollowBehaviour>();
-    }
-
-    private void Update()
-    {
-        _fb.FollowTarget(GameManager.Instance.Player.transform);
     }
 }
