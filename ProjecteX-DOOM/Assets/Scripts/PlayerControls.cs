@@ -51,8 +51,7 @@ public class PlayerControls : MonoBehaviour
     }
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        UIManager.Instance.CursorState(true, false);
     }
 
     private void Update()
