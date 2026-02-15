@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
 [RequireComponent(typeof(MoveBehaviour), typeof(GravityBehaviour), typeof(CamRotationBehaviour))]
 [RequireComponent(typeof(SprintBehaviour))]
-public class PlayerControls : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private PlayerInputs _playerInputs;
 
