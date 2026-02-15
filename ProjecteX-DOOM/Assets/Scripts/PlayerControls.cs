@@ -31,6 +31,23 @@ public class PlayerControls : MonoBehaviour
     {
         _playerInputs = GetComponent<PlayerInputs>();
         _characterController = GetComponent<CharacterController>();
+
+        if (GameManager.Instance != null)
+        {
+            if (GameManager.Instance.Player == null)
+            {
+                GameManager.Instance.Player = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            Debug.LogError("GameManager instance not found. PlayerControls will not be assigned to GameManager.");
+        }
     }
     private void Start()
     {
