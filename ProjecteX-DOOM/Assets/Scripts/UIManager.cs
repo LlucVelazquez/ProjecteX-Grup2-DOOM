@@ -6,18 +6,20 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    public string PlayerHealthText { get => _pHealth.text;  set => _pHealth.text = value; }
-    public string PlayerArmorText { get => _pArmor.text; set => _pArmor.text = value; }
-    public string PlayerAmmoText { get => _pAmmo.text; set => _pAmmo.text = value; }
+    public string PlayerHealthText { get => _pHealthText.text;  set => _pHealthText.text = value; }
+    public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
+    public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
 
     [Header("HUD")]
-    [SerializeField] private TextMeshProUGUI _pHealth;
-    [SerializeField] private TextMeshProUGUI _pArmor;
-    [SerializeField] private TextMeshProUGUI _pAmmo;
+    [SerializeField] private TextMeshProUGUI _pHealthText;
+    [SerializeField] private TextMeshProUGUI _pArmorText;
+    [SerializeField] private TextMeshProUGUI _pAmmoText;
 
     [Header("Menus")]
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _deathMenu;
+
+    private PlayerHealth _pHealth;
 
     private void Awake()
     {
@@ -29,6 +31,33 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        if (GameManager.Instance.Player != null)
+        {
+            _pHealth = GameManager.Instance.Player.GetComponent<PlayerHealth>();
+            UpdateHUD();
+        }
+        else
+        {
+            Debug.LogError("PlayerController instance not found. PlayerHealth will not be assigned to UIManager.");
+        }
+    }
+
+    private void Update()
+    {
+        UpdateHUD();
+    }
+
+    private void UpdateHUD()
+    {
+        if (_pHealth != null)
+        {
+            PlayerHealthText = $"{_pHealth.Health}";
+            PlayerArmorText = $"{_pHealth.Armor}";
         }
     }
 
