@@ -25,7 +25,7 @@ public class FollowBehaviour : MonoBehaviour
         initialRotation = transform.rotation;
     }
 
-    private void Update()
+    public void Follow()
     {
         isFollowingTarget = DistanceToTarget <= _followDistance;
 
