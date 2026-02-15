@@ -21,18 +21,19 @@ public class Enemy : MonoBehaviour, ITargeteable
     private void Update()
     {
         _fb.Follow();
-        Attack();
+        CheckIfCanAttack();
+        _ab.Attack();
     }
 
-    private void Attack()
+    private void CheckIfCanAttack()
     {
         if (_fb.isFollowingTarget && _fb.DistanceToTarget <= _attackDistance)
         {
-            _ab.IsAttacking = true;
+            _ab.CanAttack = true;
         }
         else
         {
-            _ab.IsAttacking = false;
+            _ab.CanAttack = false;
         }
     }
 }

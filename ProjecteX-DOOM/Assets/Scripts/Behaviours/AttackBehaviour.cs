@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class AttackBehaviour : MonoBehaviour
 {
-    public bool IsAttacking { get => _attackCollider.enabled; set => _attackCollider.enabled = value; }
+    public bool CanAttack { get => _attackCollider.enabled; set => _attackCollider.enabled = value; }
 
     [SerializeField] private Collider _attackCollider;
     [SerializeField] private string _targetLayerName = "Player";
     [SerializeField] private float _damage = 10f;
+    [SerializeField] private float _damageInterval = 1f;
+
+    private float _lastDamageTime;
+    private ITargeteable _target;
+    private bool _isAttacking;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,7 +19,8 @@ public class AttackBehaviour : MonoBehaviour
         {
             if (other.TryGetComponent<ITargeteable>(out ITargeteable target))
             {
-                Attack(target);
+                _target = target;
+                _isAttacking = true;
             }
             else
             {
@@ -23,11 +29,21 @@ public class AttackBehaviour : MonoBehaviour
         }
     }
 
-    public void Attack(ITargeteable target)
+    private void OnTriggerExit(Collider other)
     {
-        if (target != null)
+        _target = null;
+        _isAttacking = false;
+    }
+
+    public void Attack()
+    {
+        if (_target != null)
         {
-            target.Health -= _damage;
+            if (_isAttacking && Time.time - _lastDamageTime >= _damageInterval)
+            {
+                _target.Health -= _damage;
+                _lastDamageTime = Time.time;
+            }
         }
         else
         {
