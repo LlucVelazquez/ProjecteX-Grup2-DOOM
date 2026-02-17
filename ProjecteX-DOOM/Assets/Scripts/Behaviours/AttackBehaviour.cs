@@ -17,7 +17,7 @@ public class AttackBehaviour : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer(_targetLayerName))
         {
-            if (other.TryGetComponent<ITargeteable>(out ITargeteable target))
+            if (other.gameObject.TryGetComponent<ITargeteable>(out ITargeteable target))
             {
                 _target = target;
                 _isAttacking = true;

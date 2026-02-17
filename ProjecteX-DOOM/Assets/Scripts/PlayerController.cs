@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
 [RequireComponent(typeof(MoveBehaviour), typeof(GravityBehaviour), typeof(CamRotationBehaviour))]
-[RequireComponent(typeof(SprintBehaviour))]
+[RequireComponent(typeof(SprintBehaviour), typeof(WeaponSwitchBehaviour))]
 public class PlayerController : MonoBehaviour
 {
     private PlayerInputs _playerInputs;
@@ -11,8 +11,12 @@ public class PlayerController : MonoBehaviour
     private GravityBehaviour _gb;
     private CamRotationBehaviour _crb;
     private SprintBehaviour _sb;
+    private WeaponSwitchBehaviour _wsb;
+
+    public int CurrentWeaponIndex { get => _currentWeaponIndex; set => _currentWeaponIndex = value - 1; }
 
     private float _yRotation;
+    private int _currentWeaponIndex;
 
     private void Awake()
     {
@@ -40,6 +44,9 @@ public class PlayerController : MonoBehaviour
         _gb = GetComponent<GravityBehaviour>();
         _crb = GetComponent<CamRotationBehaviour>();
         _sb = GetComponent<SprintBehaviour>();
+        _wsb = GetComponent<WeaponSwitchBehaviour>();
+
+        CurrentWeaponIndex = _playerInputs.SelectedWeapon;
     }
     private void Start()
     {
@@ -50,6 +57,8 @@ public class PlayerController : MonoBehaviour
     {
         Gravity();
         Movement();
+
+        WeaponHandler();
     }
 
     private void LateUpdate()
@@ -73,6 +82,15 @@ public class PlayerController : MonoBehaviour
         else
         {
             _mb.MoveCharacter();
+        }
+    }
+
+    private void WeaponHandler()
+    {
+        if (_currentWeaponIndex != _playerInputs.SelectedWeapon - 1)
+        {
+            CurrentWeaponIndex = _playerInputs.SelectedWeapon;
+            _wsb.SwitchWeapon(CurrentWeaponIndex);
         }
     }
 

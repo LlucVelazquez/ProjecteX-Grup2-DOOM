@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerInputs), typeof(WeaponsHolder))]
+[RequireComponent(typeof(PlayerInputs), typeof(WeaponSwitchBehaviour))]
 public class PlayerAttacks : MonoBehaviour
 {
     private PlayerInputs _playerInputs;
-    private WeaponsHolder _weaponHolder;
+    private WeaponSwitchBehaviour _weaponHolder;
 
     private void Awake()
     {
         _playerInputs = GetComponent<PlayerInputs>();
-        _weaponHolder = GetComponent<WeaponsHolder>();
+        _weaponHolder = GetComponent<WeaponSwitchBehaviour>();
     }
 
     private void Update()

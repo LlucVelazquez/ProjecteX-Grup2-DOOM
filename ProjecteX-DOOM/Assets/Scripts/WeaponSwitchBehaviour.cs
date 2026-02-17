@@ -1,8 +1,8 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
+
 [RequireComponent(typeof(PlayerInputs))]
-public class WeaponsHolder : MonoBehaviour
+public class WeaponSwitchBehaviour : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _weapons;
 
@@ -15,13 +15,26 @@ public class WeaponsHolder : MonoBehaviour
         _playerInputs = GetComponent<PlayerInputs>();
     }
 
-    void Update()
+    /*void Update()
     {
         int index = _playerInputs.SelectedWeapon - 1;
 
         _currentWeapon = _weapons[index];
 
         foreach (GameObject weapon in _weapons)
+        {
+            if (weapon == _currentWeapon)
+                weapon.SetActive(true);
+            else
+                weapon.SetActive(false);
+        }
+    }*/
+
+    public void SwitchWeapon(int index)
+    {
+        _currentWeapon = _weapons[index];
+
+        foreach(GameObject weapon in _weapons)
         {
             if (weapon == _currentWeapon)
                 weapon.SetActive(true);
