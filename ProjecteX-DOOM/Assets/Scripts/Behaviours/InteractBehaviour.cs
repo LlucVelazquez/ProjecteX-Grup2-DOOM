@@ -17,6 +17,11 @@ public class InteractBehaviour : MonoBehaviour
         if (Physics.Raycast(origin, _camera.transform.forward, out RaycastHit hit, _interactDistance))
         {
             _interactable = hit.collider.GetComponent<IInteractable>();
+
+            if (_interactable != null )
+            {
+                UIManager.Instance.InteractionText = _interactable.InteractionPrompt;
+            }
         }
     }
 }

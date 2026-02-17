@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
     public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
 
+    public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
+
     [Header("HUD")]
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
@@ -18,6 +20,9 @@ public class UIManager : MonoBehaviour
     [Header("Menus")]
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _deathMenu;
+
+    [Header("UI")]
+    [SerializeField] private TextMeshProUGUI _interactionText;
 
     private PlayerHealth _pHealth;
 

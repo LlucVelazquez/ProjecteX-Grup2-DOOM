@@ -4,7 +4,7 @@ public class Door : MonoBehaviour, IInteractable
 {
     public string InteractionPrompt { get => _prompt; }
 
-    private string _prompt = string.Empty;
+    [SerializeField] private string _prompt = "Prem 'E' per obrir";
 
     public void OnInteract(GameObject interactor)
     {
