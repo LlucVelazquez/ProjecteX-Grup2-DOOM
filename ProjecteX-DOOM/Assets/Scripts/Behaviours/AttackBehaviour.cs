@@ -9,9 +9,10 @@ public class AttackBehaviour : MonoBehaviour
     [SerializeField] private float _damage = 10f;
     [SerializeField] private float _damageInterval = 1f;
 
-    private float _lastDamageTime;
     private ITargeteable _target;
+
     private bool _isAttacking;
+    private float _lastDamageTime;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -44,10 +45,6 @@ public class AttackBehaviour : MonoBehaviour
                 _target.Health -= _damage;
                 _lastDamageTime = Time.time;
             }
-        }
-        else
-        {
-            Debug.LogWarning("Attack target is null. AttackBehaviour will not function properly.");
         }
     }
 }

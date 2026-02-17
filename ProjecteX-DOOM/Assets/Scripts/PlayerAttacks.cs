@@ -1,6 +1,3 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputs), typeof(WeaponSwitchBehaviour))]
@@ -25,7 +22,6 @@ public class PlayerAttacks : MonoBehaviour
 
     private void Attack()
     {
-        // Foreach weapon type, check if the current weapon has the corresponding component and call its Attack/Shoot method
         if (_weaponHolder._currentWeapon.TryGetComponent<Shotgun>(out var shotgun))
         {
             shotgun.Shoot();
