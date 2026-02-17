@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
 [RequireComponent(typeof(MoveBehaviour), typeof(GravityBehaviour), typeof(CamRotationBehaviour))]
-[RequireComponent(typeof(SprintBehaviour), typeof(WeaponSwitchBehaviour))]
+[RequireComponent(typeof(SprintBehaviour), typeof(WeaponSwitchBehaviour), typeof(InteractBehaviour))]
 public class PlayerController : MonoBehaviour
 {
     private PlayerInputs _playerInputs;
@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private CamRotationBehaviour _crb;
     private SprintBehaviour _sb;
     private WeaponSwitchBehaviour _wsb;
+    private InteractBehaviour _ib;
 
     public int CurrentWeaponIndex { get => _currentWeaponIndex; set => _currentWeaponIndex = value - 1; }
 
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
         _crb = GetComponent<CamRotationBehaviour>();
         _sb = GetComponent<SprintBehaviour>();
         _wsb = GetComponent<WeaponSwitchBehaviour>();
+        _ib = GetComponent<InteractBehaviour>();
 
         CurrentWeaponIndex = _playerInputs.SelectedWeapon;
     }
@@ -58,6 +60,7 @@ public class PlayerController : MonoBehaviour
         Gravity();
         Movement();
 
+        CheckInteraction();
         WeaponHandler();
     }
 
@@ -82,6 +85,16 @@ public class PlayerController : MonoBehaviour
         else
         {
             _mb.MoveCharacter();
+        }
+    }
+
+    private void CheckInteraction()
+    {
+        _ib.CheckInteraction();
+
+        if (_playerInputs.Interact)
+        {
+            _ib.Interactable?.OnInteract(gameObject);
         }
     }
 
