@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using UnityEngine.InputSystem;
 [RequireComponent(typeof(PruebaInputsPlayer))]
 
@@ -49,3 +49,4 @@ public class Gun : MonoBehaviour
         }
 	}
 }
+*/
