@@ -7,7 +7,13 @@ public class GameManager : MonoBehaviour
 
     public PlayerController Player { get; set; }
 
+    public string PlayerLayerName { get => _playerLayerName; private set => _playerLayerName = value; }
+    public string EnemyLayerName { get => _enemyLayerName; private set => _playerLayerName = value; }
+
     public static event Action OnPlayerDeath = delegate { };
+
+    [SerializeField] private string _playerLayerName = "Player";
+    [SerializeField] private string _enemyLayerName = "Enemy";
 
     private PlayerHealth _pHealth;
 
