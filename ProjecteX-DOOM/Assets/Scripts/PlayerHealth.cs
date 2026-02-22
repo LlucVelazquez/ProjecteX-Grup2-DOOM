@@ -17,19 +17,19 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
     {
         float damageResult = damage;
         float damageReduction;
-        Debug.Log("hit");
+
         if (_megaarmor > 0)
         {
             damageReduction = (float)damage / 2;
             damageResult = Mathf.Ceil(damageReduction);
-            Debug.Log("mega");
+
             _megaarmor -= (int)damageReduction;
         }
         else if (_armor > 0)
         {
             damageReduction = (float)damage / 3;
             damageResult = Mathf.Ceil(damageReduction) * 2;
-            Debug.Log("normal");
+
             _armor -= (int)damageReduction;
         }
 
