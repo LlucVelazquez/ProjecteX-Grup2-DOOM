@@ -5,7 +5,7 @@ using UnityEngine;
 public class DamageArea : MonoBehaviour
 {
     [Header("Area Damage Settings")]
-    [SerializeField] private float _damage = 10f;
+    [SerializeField] private int _damage = 10;
     [SerializeField] private float _damageInterval = 1f;
 
     [Header("Player Layer")]

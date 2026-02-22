@@ -3,9 +3,9 @@ using UnityEngine;
 [RequireComponent(typeof(FollowBehaviour), typeof(AttackBehaviour))]
 public class Enemy : MonoBehaviour, ITargeteable
 {
-    [SerializeField] private float _health = 10f;
+    [SerializeField] private int _health = 10;
 
-    public float Health { get => _health; set => _health = value; }
+    public int Health { get => _health; set => _health = value; }
 
     [SerializeField] private float _attackDistance = 2f;
 

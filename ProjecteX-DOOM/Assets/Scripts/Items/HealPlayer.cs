@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class Medkit : MonoBehaviour, ICollectible
+public class HealPlayer : MonoBehaviour, ICollectible
 {
-    public string Name { get => _name; set => _name = value; }
+    public string Name { get => _healthItem.name; }
 
-    [SerializeField] private string _name = "Medkit";
-    [SerializeField] private int _heal = 25;
+    [SerializeField] private HealthItemSO _healthItem;
 
     private Collider _collider;
 
     private void Awake()
     {
         _collider = GetComponent<Collider>();
+
+        if (_healthItem == null) Debug.LogError($"The collectible item '{gameObject.name}' does not have a HealItemSO.");
 
         if (_collider != null)
         {
@@ -20,7 +21,7 @@ public class Medkit : MonoBehaviour, ICollectible
         }
         else
         {
-            Debug.LogError($"The GameObject {gameObject.name} does not have a collider attached.");
+            Debug.LogError($"The GameObject '{gameObject.name}' does not have a collider attached.");
         }
     }
 
@@ -38,7 +39,15 @@ public class Medkit : MonoBehaviour, ICollectible
 
         if (pHealth != null)
         {
-            pHealth.Health += _heal;
+            if (pHealth.Health >= _healthItem.maxHealth) return;
+
+            int health = pHealth.Health + _healthItem.healAmount;
+            if (health > _healthItem.maxHealth)
+            {
+                health = _healthItem.maxHealth;
+            }
+
+            pHealth.Health = health;
 
             gameObject.SetActive(false);
         }

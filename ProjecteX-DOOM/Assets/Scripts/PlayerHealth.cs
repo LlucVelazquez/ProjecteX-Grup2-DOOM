@@ -3,55 +3,39 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour, ITargeteable
 {
-    [SerializeField] private float _health = 100f;
-    [SerializeField] private float _armor = 0f;
-    [SerializeField] private float _megaarmor = 0f;
+    [SerializeField] private int _health = 100;
+    [SerializeField] private int _armor = 0;
+    [SerializeField] private int _megaarmor = 0;
 
     public static event Action OnPlayerDeath = delegate { };
 
-    public float Health
-    {
-        get => _health;
-        set => _health = value >= MAX_HEALTH ? MAX_HEALTH : value;
-    }
-    public float Armor
-    {
-        get => _armor;
-        set => _armor = value >= MAX_ARMOR ? MAX_ARMOR : value;
-    }
-    public float Megaarmor
-    {
-        get => _megaarmor;
-        set => _megaarmor = value >= MAX_MEGAARMOR ? MAX_MEGAARMOR : value;
-    }
+    public int Health { get => _health; set => _health = value; }
+    public int Armor { get => _armor; set => _armor = value; }
+    public int Megaarmor { get => _megaarmor; set => _megaarmor = value; }
 
-    private const float MAX_HEALTH = 200;
-    private const float MAX_ARMOR = 100;
-    private const float MAX_MEGAARMOR = 200;
-
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         float damageResult = damage;
         float damageReduction;
-
-        if (_megaarmor > 0f)
+        Debug.Log("hit");
+        if (_megaarmor > 0)
         {
-            damageReduction = damage / 2;
+            damageReduction = (float)damage / 2;
             damageResult = Mathf.Ceil(damageReduction);
-
+            Debug.Log("mega");
             _megaarmor -= (int)damageReduction;
         }
-        else if (_armor > 0f)
+        else if (_armor > 0)
         {
-            damageReduction = damage / 3;
+            damageReduction = (float)damage / 3;
             damageResult = Mathf.Ceil(damageReduction) * 2;
-
+            Debug.Log("normal");
             _armor -= (int)damageReduction;
         }
 
-        _health -= damageResult;
+        _health -= (int)damageResult;
 
-        if (_health <= 0f)
+        if (_health <= 0)
         {
             Die();
         }

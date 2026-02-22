@@ -16,7 +16,7 @@ public class Sword : MonoBehaviour
         ITargeteable target = other.GetComponent<ITargeteable>();
         if (target != null)
         {
-            target.TakeDamage(10f); // You can adjust the damage value as needed
+            target.TakeDamage(10); // You can adjust the damage value as needed
         }
     }
     private void Attack()

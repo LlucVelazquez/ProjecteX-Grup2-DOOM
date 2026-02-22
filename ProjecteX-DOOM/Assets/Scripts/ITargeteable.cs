@@ -2,9 +2,9 @@ using UnityEngine;
 
 public interface ITargeteable
 {
-    public float Health { get; set; }
+    public int Health { get; set; }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         Health -= damage;
     

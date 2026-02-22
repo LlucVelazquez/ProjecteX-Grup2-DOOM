@@ -6,7 +6,7 @@ public class AttackBehaviour : MonoBehaviour
 
     [SerializeField] private Collider _attackCollider;
     [SerializeField] private string _targetLayerName = "Player";
-    [SerializeField] private float _damage = 10f;
+    [SerializeField] private int _damage = 10;
     [SerializeField] private float _damageInterval = 1f;
 
     private ITargeteable _target;

@@ -7,7 +7,7 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private Camera _camera;
 
     [Header("Shotgun Settings")]
-    [SerializeField] private float _damageMulti = 5f;
+    [SerializeField] private int _damageMulti = 5;
     [SerializeField] private float _range = 100f;
     [SerializeField] private int _pellets = 7;
     [SerializeField] private int _initialAmmunition = 8;
@@ -41,7 +41,7 @@ public class Shotgun : MonoBehaviour
                 ITargeteable target = hit.transform.GetComponent<ITargeteable>();
                 if (target != null)
                 {
-                    float damage = GetDamage();
+                    int damage = GetDamage();
                     target.TakeDamage(damage);
                     Debug.Log($"Hit to target {hit.collider.name} - Damage: {damage}");
                 }
@@ -79,7 +79,7 @@ public class Shotgun : MonoBehaviour
         Ammunition += ammo;
     }
 
-    private float GetDamage()
+    private int GetDamage()
     {
         return Random.Range(1, 4) * _damageMulti;
     }
