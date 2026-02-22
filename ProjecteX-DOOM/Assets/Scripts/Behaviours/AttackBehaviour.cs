@@ -42,7 +42,7 @@ public class AttackBehaviour : MonoBehaviour
         {
             if (_isAttacking && Time.time - _lastDamageTime >= _damageInterval)
             {
-                _target.Health -= _damage;
+                _target.TakeDamage(_damage);
                 _lastDamageTime = Time.time;
             }
         }

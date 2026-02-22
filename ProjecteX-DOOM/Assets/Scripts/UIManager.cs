@@ -13,9 +13,11 @@ public class UIManager : MonoBehaviour
     public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
 
     [Header("HUD")]
+    [SerializeField] private TextMeshProUGUI _pNotificationText;
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
     [SerializeField] private TextMeshProUGUI _pAmmoText;
+    [SerializeField] private Color _pMegaarmorTextColor;
 
     [Header("Menus")]
     [SerializeField] private GameObject _pauseMenu;
@@ -26,14 +28,16 @@ public class UIManager : MonoBehaviour
 
     private PlayerHealth _pHealth;
 
+    private Color _pArmorTextDefaultColor;
+
     private void OnEnable()
     {
-        GameManager.OnPlayerDeath += ShowDeathMenu;
+        PlayerHealth.OnPlayerDeath += ShowDeathMenu;
     }
 
     private void OnDisable()
     {
-        GameManager.OnPlayerDeath -= ShowDeathMenu;
+        PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
     }
 
     private void Awake()
@@ -47,6 +51,8 @@ public class UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        _pArmorTextDefaultColor = _pArmorText.color;
     }
 
     private void Start()
@@ -72,7 +78,10 @@ public class UIManager : MonoBehaviour
         if (_pHealth != null)
         {
             PlayerHealthText = $"{_pHealth.Health}";
-            PlayerArmorText = $"{_pHealth.Armor}";
+
+            bool megaarmor = _pHealth.Megaarmor > 0f;
+            PlayerArmorText = $"{(megaarmor ? _pHealth.Megaarmor : _pHealth.Armor)}";
+            _pArmorText.color = megaarmor ? _pMegaarmorTextColor : _pArmorTextDefaultColor;
         }
     }
 
