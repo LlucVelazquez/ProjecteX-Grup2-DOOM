@@ -3,7 +3,7 @@ using UnityEngine;
 public class AttackBehaviour : MonoBehaviour
 {
     public bool CanAttack { get => _attackCollider.enabled; set => _attackCollider.enabled = value; }
-
+    
     [SerializeField] private Collider _attackCollider;
     [SerializeField] private string _targetLayerName = "Player";
     [SerializeField] private int _damage = 10;

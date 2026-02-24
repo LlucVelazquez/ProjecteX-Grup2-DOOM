@@ -9,6 +9,10 @@ public class Enemy : MonoBehaviour, ITargeteable
 
     [SerializeField] private float _attackDistance = 2f;
 
+    // In chase and attack states the enmey contiunes shooting
+    // And in attack state continues chasing
+    private enum EnemyState { Idle, Chase, Attack, Die }
+
     private FollowBehaviour _fb;
     private AttackBehaviour _ab;
 
@@ -27,7 +31,7 @@ public class Enemy : MonoBehaviour, ITargeteable
 
     private void CheckIfCanAttack()
     {
-        if (_fb.isFollowingTarget && _fb.DistanceToTarget <= _attackDistance)
+        if (_fb.isFollowingTarget && _fb.GetDistanceToTarget() <= _attackDistance)
         {
             _ab.CanAttack = true;
         }
