@@ -11,10 +11,12 @@ public class Enemy : MonoBehaviour, ITargeteable
 
     // In chase and attack states the enmey contiunes shooting
     // And in attack state continues chasing
-    private enum EnemyState { Idle, Chase, Attack, Die }
+    private enum State { Idle, Chase, Attack, Die }
 
     private FollowBehaviour _fb;
     private AttackBehaviour _ab;
+
+    private State _currentState = State.Idle;
 
     private void Awake()
     {
@@ -24,9 +26,51 @@ public class Enemy : MonoBehaviour, ITargeteable
 
     private void Update()
     {
-        _fb.Follow();
+        /*_fb.Follow();
         CheckIfCanAttack();
-        _ab.Attack();
+        _ab.Attack();*/
+
+        switch (_currentState)
+        {
+            case State.Idle:
+                Idle();
+                break;
+            case State.Chase:
+                Chase();
+                break;
+            case State.Attack:
+                Attack();
+                break;
+            case State.Die:
+                Die();
+                break;
+            default:
+                _currentState = State.Idle;
+                break;
+        }
+    }
+
+    private void Idle()
+    {
+        if (_fb.IsTargetInRange() && _fb.IsTargetWithinTheVision())
+        {
+            _currentState = State.Chase;
+        }
+    }
+
+    private void Chase()
+    {
+
+    }
+
+    private void Attack()
+    {
+
+    }
+
+    private void Die()
+    {
+
     }
 
     private void CheckIfCanAttack()

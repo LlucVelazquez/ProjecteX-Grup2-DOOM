@@ -27,40 +27,35 @@ public class FollowBehaviour : MonoBehaviour
         initialRotation = transform.rotation;
     }
 
-    public void Follow()
+    public void FollowTarget()
     {
-        if (_followTarget != null)
+        if (IsFollowTargetNotNull())
         {
-            isFollowingTarget = GetDistanceToTarget() <= _followDistance && IsWithinTheVision();
+            _agent.SetDestination(_followTarget.transform.position);
 
-            if (isFollowingTarget)
-            {
-                _agent.SetDestination(_followTarget.transform.position);
-
-                Debug.DrawLine(transform.position, _followTarget.transform.position, Color.green);
-            }
-            else
-            {
-                _agent.SetDestination(initialPosition);
-
-                if (_agent.remainingDistance <= _agent.stoppingDistance)
-                {
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, initialRotation, _agent.angularSpeed * Time.deltaTime);
-                }
-            }
-        }
-        else
-        {
-            Debug.LogWarning("Follow target is null. FollowBehaviour will not function properly.");
+            Debug.DrawLine(transform.position, _followTarget.transform.position, Color.green);
         }
     }
 
-    public float GetDistanceToTarget()
+    public void ReturnToInitialPosition()
     {
-        return Vector3.Distance(_followTarget.transform.position, transform.position);
+        if (IsFollowTargetNotNull())
+        {
+            _agent.SetDestination(initialPosition);
+
+            if (_agent.remainingDistance <= _agent.stoppingDistance)
+            {
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, initialRotation, _agent.angularSpeed * Time.deltaTime);
+            }
+        }
     }
 
-    private bool IsWithinTheVision()
+    public bool IsTargetInRange()
+    {
+        return GetDistanceToTarget() <= _followDistance;
+    }
+
+    public bool IsTargetWithinTheVision()
     {
         Vector3 direction = (_followTarget.transform.position - transform.position).normalized;
         LayerMask layerMask = ~_ignoreLayers;
@@ -70,5 +65,23 @@ public class FollowBehaviour : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    public float GetDistanceToTarget()
+    {
+        return Vector3.Distance(_followTarget.transform.position, transform.position);
+    }
+
+    private bool IsFollowTargetNotNull()
+    {
+        if (_followTarget != null)
+        {
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning("Follow target is null. FollowBehaviour will not function properly.");
+            return false;
+        }
     }
 }
