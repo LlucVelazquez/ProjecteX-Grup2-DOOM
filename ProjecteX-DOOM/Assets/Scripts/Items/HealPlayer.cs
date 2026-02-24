@@ -1,15 +1,28 @@
 using UnityEngine;
 
+[RequireComponent(typeof(ReiniciableBehaviour))]
 public class HealPlayer : MonoBehaviour, ICollectible
 {
     public string Name { get => _healthItem.name; }
 
     [SerializeField] private HealthItemSO _healthItem;
 
+    private ReiniciableBehaviour _rb;
     private Collider _collider;
 
     private void Awake()
     {
+        _rb = GetComponent<ReiniciableBehaviour>();
+
+        if (_rb != null)
+        {
+            _rb.SetValues(_collider, GetComponent<MeshRenderer>(), GetComponentsInChildren<MeshRenderer>());
+        }
+        else
+        {
+            Debug.LogError($"The GameObject '{gameObject.name}' does not have a ReiniciableBehaviour attached.");
+        }
+        
         _collider = GetComponent<Collider>();
 
         if (_healthItem == null) Debug.LogError($"The collectible item '{gameObject.name}' does not have a HealItemSO.");
@@ -49,7 +62,8 @@ public class HealPlayer : MonoBehaviour, ICollectible
 
             pHealth.Health = health;
 
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
+            _rb.DisableObject();
         }
         else
         {
