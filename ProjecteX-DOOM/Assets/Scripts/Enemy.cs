@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour, ITargeteable
 
     private void CheckIfCanAttack()
     {
-        if (_fb.isFollowingTarget && _fb.DistanceToTarget <= _attackDistance)
+        if (_fb.isFollowingTarget && _fb.GetDistanceToTarget() <= _attackDistance)
         {
             _ab.CanAttack = true;
         }
