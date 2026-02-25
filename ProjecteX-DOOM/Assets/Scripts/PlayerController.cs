@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     private InteractBehaviour _ib;
 
     public int CurrentWeaponIndex { get => _currentWeaponIndex; set => _currentWeaponIndex = value - 1; }
+
+    public static event Action<bool> OnWeaponChangeHasAmmo;
+    public static event Action<GameObject> OnWeaponChange;
 
     private float _yRotation;
     private int _currentWeaponIndex;
@@ -104,6 +108,8 @@ public class PlayerController : MonoBehaviour
         {
             CurrentWeaponIndex = _playerInputs.SelectedWeapon;
             _wsb.SwitchWeapon(CurrentWeaponIndex);
+            OnWeaponChangeHasAmmo?.Invoke(_wsb.CurrentWeaponHasAmmo());
+            OnWeaponChange?.Invoke(_wsb.CurrentWeapon);
         }
     }
 

@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
     [SerializeField] private TextMeshProUGUI _pAmmoText;
+    [SerializeField] private Image _pWeaponImage;
     [SerializeField] private Color _pMegaarmorTextColor;
 
     [Header("Menus")]
@@ -34,6 +36,8 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnMegaarmorChange += UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
+        PlayerController.OnWeaponChangeHasAmmo += ShowAmmoText;
+        PlayerController.OnWeaponChange += ShowWeaponIcon;
     }
 
     private void OnDisable()
@@ -43,6 +47,8 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnMegaarmorChange -= UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
+        PlayerController.OnWeaponChangeHasAmmo -= ShowAmmoText;
+        PlayerController.OnWeaponChange -= ShowWeaponIcon;
     }
 
     private void Awake()
@@ -80,6 +86,24 @@ public class UIManager : MonoBehaviour
     private void UpdateHUDAmmunition(int ammo)
     {
         PlayerAmmoText = $"{ammo}";
+    }
+
+    private void ShowAmmoText(bool state)
+    {
+        _pAmmoText.enabled = state;
+    }
+
+    private void ShowWeaponIcon(GameObject weapon)
+    {
+        if (weapon.TryGetComponent<IIconable>(out var iconable))
+        {
+            _pWeaponImage.sprite = iconable.Icon;
+            _pWeaponImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            _pWeaponImage.gameObject.SetActive(false);
+        }
     }
 
     public void CursorState(bool isLocked, bool isVisible)

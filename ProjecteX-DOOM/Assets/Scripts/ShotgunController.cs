@@ -4,11 +4,12 @@ using static UnityEngine.Rendering.DebugUI;
 using Sys = System;
 
 [RequireComponent(typeof(Animator))]
-public class ShotgunController : MonoBehaviour, IUsable
+public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
 {
     [Header("References")]
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private Camera _camera;
+    [SerializeField] private Sprite _shotgunIcon;
 
     [Header("Shotgun Settings")]
     [SerializeField] private int _damageMulti = 5;
@@ -23,15 +24,11 @@ public class ShotgunController : MonoBehaviour, IUsable
     [SerializeField] private float _spreadMax = 9.8f;
 
     [Header("Animation Settings")]
+    [SerializeField] private float _animWaitTime = 0.1f;
     [SerializeField] private string _animPumpParName = "Pump";
     [SerializeField] private string _animPumpStateName = "Pump Handle";
 
-    public static event Sys.Action<int> OnAmmunitionChange;
-
-    private Animator _animator;
-
-    private bool _isShooting = false;
-
+    public Sprite Icon { get => _shotgunIcon; }
     public int CurrentAmmunition
     {
         get => _currentAmmo;
@@ -42,7 +39,12 @@ public class ShotgunController : MonoBehaviour, IUsable
         }
     }
 
+    public static event Sys.Action<int> OnAmmunitionChange;
+
+    private Animator _animator;
+
     private int _currentAmmo;
+    private bool _isShooting = false;
 
     private void Awake()
     {
@@ -68,7 +70,6 @@ public class ShotgunController : MonoBehaviour, IUsable
 
         _isShooting = true;
 
-        _animator.SetTrigger(_animPumpParName);
         CurrentAmmunition--;
 
         for (int i = 0; i < _pellets; i++)
@@ -90,11 +91,14 @@ public class ShotgunController : MonoBehaviour, IUsable
             Debug.DrawRay(_shootPoint.transform.position, spreadDirection * _range, Color.red, 1f);
         }
 
-        StartCoroutine(WaitForAnimation());
+        StartCoroutine(ShootCooldown());
     }
 
-    private IEnumerator WaitForAnimation()
+    private IEnumerator ShootCooldown()
     {
+        yield return new WaitForSeconds(_animWaitTime);
+        _animator.SetTrigger(_animPumpParName);
+
         yield return null;
 
         AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
@@ -103,7 +107,6 @@ public class ShotgunController : MonoBehaviour, IUsable
             yield return null;
             stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
         }
-
         while (stateInfo.normalizedTime < 0.9f)
         {
             yield return null;

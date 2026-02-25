@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,5 +24,10 @@ public class WeaponSwitchBehaviour : MonoBehaviour
             else
                 weapon.SetActive(false);
         }
+    }
+
+    public bool CurrentWeaponHasAmmo()
+    {
+        return _currentWeapon.TryGetComponent<IRefillable>(out _);
     }
 }
