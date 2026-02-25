@@ -6,12 +6,6 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    public string PlayerHealthText { get => _pHealthText.text;  set => _pHealthText.text = value; }
-    public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
-    public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
-
-    public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
-
     [Header("Player (P) HUD")]
     [SerializeField] private TextMeshProUGUI _pNotificationText;
     [SerializeField] private TextMeshProUGUI _pHealthText;
@@ -26,18 +20,27 @@ public class UIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI _interactionText;
 
-    private PlayerHealth _pHealth;
+    public string PlayerHealthText { get => _pHealthText.text; set => _pHealthText.text = value; }
+    public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
+    public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
+    public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
 
     private Color _pArmorTextDefaultColor;
 
     private void OnEnable()
     {
+        PlayerHealth.OnHealthChange += UpdateHUDHealth;
+        PlayerHealth.OnArmorChange += UpdateHUDArmor;
+        PlayerHealth.OnMegaarmorChange += UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
     }
 
     private void OnDisable()
     {
+        PlayerHealth.OnHealthChange -= UpdateHUDHealth;
+        PlayerHealth.OnArmorChange -= UpdateHUDArmor;
+        PlayerHealth.OnMegaarmorChange -= UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
     }
@@ -57,39 +60,26 @@ public class UIManager : MonoBehaviour
         _pArmorTextDefaultColor = _pArmorText.color;
     }
 
-    private void Start()
+    private void UpdateHUDHealth(int health)
     {
-        if (GameManager.Instance.Player != null)
-        {
-            _pHealth = GameManager.Instance.Player.GetComponent<PlayerHealth>();
-            UpdateHUD();
-        }
-        else
-        {
-            Debug.LogError("PlayerController instance not found. PlayerHealth will not be assigned to UIManager.");
-        }
+        PlayerHealthText = $"{health}";
     }
 
-    private void Update()
+    private void UpdateHUDArmor(int armor)
     {
-        UpdateHUD();
+        PlayerArmorText = $"{armor}";
+        _pArmorText.color = _pArmorTextDefaultColor;
     }
 
-    private void UpdateHUD()
+    private void UpdateHUDMegaarmor(int megaarmor)
     {
-        if (_pHealth != null)
-        {
-            PlayerHealthText = $"{_pHealth.Health}";
-
-            bool megaarmor = _pHealth.Megaarmor > 0f;
-            PlayerArmorText = $"{(megaarmor ? _pHealth.Megaarmor : _pHealth.Armor)}";
-            _pArmorText.color = megaarmor ? _pMegaarmorTextColor : _pArmorTextDefaultColor;
-        }
+        PlayerArmorText = $"{megaarmor}";
+        _pArmorText.color = _pMegaarmorTextColor;
     }
 
     private void UpdateHUDAmmunition(int ammo)
     {
-        PlayerAmmoText = ammo.ToString();
+        PlayerAmmoText = $"{ammo}";
     }
 
     public void CursorState(bool isLocked, bool isVisible)

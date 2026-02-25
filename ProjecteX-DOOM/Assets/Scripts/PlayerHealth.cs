@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public class PlayerHealth : MonoBehaviour, ITargeteable
 {
@@ -7,11 +8,44 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
     [SerializeField] private int _armor = 0;
     [SerializeField] private int _megaarmor = 0;
 
-    public static event Action OnPlayerDeath = delegate { };
+    public static event Action<int> OnHealthChange;
+    public static event Action<int> OnArmorChange;
+    public static event Action<int> OnMegaarmorChange;
+    public static event Action OnPlayerDeath;
 
-    public int Health { get => _health; set => _health = value; }
-    public int Armor { get => _armor; set => _armor = value; }
-    public int Megaarmor { get => _megaarmor; set => _megaarmor = value; }
+    public int Health
+    {
+        get => _health;
+        set
+        {
+            _health = value;
+            OnHealthChange?.Invoke(value);
+        }
+    }
+    public int Armor
+    {
+        get => _armor;
+        set
+        {
+            _armor = value;
+            if (value != 0) OnArmorChange?.Invoke(value);
+        }
+    }
+    public int Megaarmor
+    {
+        get => _megaarmor;
+        set
+        {
+            _megaarmor = value;
+            if (value != 0) OnMegaarmorChange?.Invoke(value);
+        }
+    }
+
+    private void Start()
+    {
+        OnHealthChange?.Invoke(_health);
+        OnArmorChange?.Invoke(_armor);
+    }
 
     public void TakeDamage(int damage)
     {
@@ -43,6 +77,6 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
 
     private void Die()
     {
-        OnPlayerDeath.Invoke();
+        OnPlayerDeath?.Invoke();
     }
 }
