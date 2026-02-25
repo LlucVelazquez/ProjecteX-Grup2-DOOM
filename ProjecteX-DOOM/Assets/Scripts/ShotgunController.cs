@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Shotgun : MonoBehaviour
+public class ShotgunController : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Transform _shootPoint;

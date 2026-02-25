@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _interactionText;
 
     private PlayerHealth _pHealth;
+    private PlayerAttacks _pAttacks;
 
     private Color _pArmorTextDefaultColor;
 
