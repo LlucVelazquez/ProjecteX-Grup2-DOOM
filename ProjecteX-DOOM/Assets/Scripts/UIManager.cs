@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
 
     public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
 
-    [Header("HUD")]
+    [Header("Player (P) HUD")]
     [SerializeField] private TextMeshProUGUI _pNotificationText;
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
