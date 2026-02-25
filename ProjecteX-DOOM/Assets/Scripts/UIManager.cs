@@ -27,18 +27,19 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _interactionText;
 
     private PlayerHealth _pHealth;
-    private PlayerAttacks _pAttacks;
 
     private Color _pArmorTextDefaultColor;
 
     private void OnEnable()
     {
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
+        ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
     }
 
     private void OnDisable()
     {
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
+        ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
     }
 
     private void Awake()
@@ -84,6 +85,11 @@ public class UIManager : MonoBehaviour
             PlayerArmorText = $"{(megaarmor ? _pHealth.Megaarmor : _pHealth.Armor)}";
             _pArmorText.color = megaarmor ? _pMegaarmorTextColor : _pArmorTextDefaultColor;
         }
+    }
+
+    private void UpdateHUDAmmunition(int ammo)
+    {
+        PlayerAmmoText = ammo.ToString();
     }
 
     public void CursorState(bool isLocked, bool isVisible)

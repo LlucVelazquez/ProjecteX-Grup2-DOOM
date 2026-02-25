@@ -1,6 +1,8 @@
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+using Sys = System;
 
-public class ShotgunController : MonoBehaviour
+public class ShotgunController : MonoBehaviour, IUsable
 {
     [Header("References")]
     [SerializeField] private Transform _shootPoint;
@@ -18,18 +20,40 @@ public class ShotgunController : MonoBehaviour
     [SerializeField] private float _spreadMin = 2.2f;
     [SerializeField] private float _spreadMax = 9.8f;
 
-    public float Ammunition;
+    public static event Sys.Action<int> OnAmmunitionChange;
+
+    public int CurrentAmmunition
+    {
+        get => _currentAmmo;
+        set
+        {
+            _currentAmmo = value;
+            OnAmmunitionChange?.Invoke(value);
+        }
+    }
+
+    private int _currentAmmo;
 
     private void Awake()
     {
-        Ammunition = _initialAmmunition;
+        _currentAmmo = _initialAmmunition;
+    }
+
+    private void Start()
+    {
+        OnAmmunitionChange?.Invoke(_currentAmmo);
+    }
+
+    public void Use()
+    {
+        Shoot();
     }
 
     public void Shoot()
     {
-        if (Ammunition <= 0) return;
+        if (CurrentAmmunition <= 0) return;
 
-        Ammunition--;
+        CurrentAmmunition--;
 
         for (int i = 0; i < _pellets; i++)
         {
@@ -76,7 +100,7 @@ public class ShotgunController : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        Ammunition += ammo;
+        CurrentAmmunition += ammo;
     }
 
     private int GetDamage()

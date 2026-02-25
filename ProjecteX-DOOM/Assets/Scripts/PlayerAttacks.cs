@@ -22,9 +22,9 @@ public class PlayerAttacks : MonoBehaviour
 
     private void Attack()
     {
-        if (_weaponHolder._currentWeapon.TryGetComponent<ShotgunController>(out var shotgun))
+        if (_weaponHolder._currentWeapon.TryGetComponent<IUsable>(out var usable))
         {
-            shotgun.Shoot();
+            usable.Use();
         }
         else
         {
