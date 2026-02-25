@@ -8,6 +8,10 @@ public class WeaponSwitchBehaviour : MonoBehaviour
 
     public GameObject _currentWeapon;
 
+    public GameObject CurrentWeapon { get => _currentWeapon; }
+
+    public IUsable GetCurrentUsable() => _currentWeapon.GetComponent<IUsable>();
+
     public void SwitchWeapon(int index)
     {
         _currentWeapon = _weapons[index];

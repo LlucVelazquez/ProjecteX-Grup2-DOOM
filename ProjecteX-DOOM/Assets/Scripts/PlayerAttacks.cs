@@ -22,7 +22,8 @@ public class PlayerAttacks : MonoBehaviour
 
     private void Attack()
     {
-        if (_weaponHolder._currentWeapon.TryGetComponent<IUsable>(out var usable))
+        IUsable usable = _weaponHolder.GetCurrentUsable();
+        if (usable != null)
         {
             usable.Use();
         }
