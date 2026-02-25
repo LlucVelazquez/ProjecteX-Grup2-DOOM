@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 using static UnityEngine.Rendering.DebugUI;
 using Sys = System;
 
+[RequireComponent(typeof(Animator))]
 public class ShotgunController : MonoBehaviour, IUsable
 {
     [Header("References")]
@@ -20,7 +22,15 @@ public class ShotgunController : MonoBehaviour, IUsable
     [SerializeField] private float _spreadMin = 2.2f;
     [SerializeField] private float _spreadMax = 9.8f;
 
+    [Header("Animation Settings")]
+    [SerializeField] private string _animPumpParName = "Pump";
+    [SerializeField] private string _animPumpStateName = "Pump Handle";
+
     public static event Sys.Action<int> OnAmmunitionChange;
+
+    private Animator _animator;
+
+    private bool _isShooting = false;
 
     public int CurrentAmmunition
     {
@@ -36,6 +46,8 @@ public class ShotgunController : MonoBehaviour, IUsable
 
     private void Awake()
     {
+        _animator = GetComponent<Animator>();
+
         _currentAmmo = _initialAmmunition;
     }
 
@@ -52,7 +64,11 @@ public class ShotgunController : MonoBehaviour, IUsable
     public void Shoot()
     {
         if (CurrentAmmunition <= 0) return;
+        if (_isShooting) return;
 
+        _isShooting = true;
+
+        _animator.SetTrigger(_animPumpParName);
         CurrentAmmunition--;
 
         for (int i = 0; i < _pellets; i++)
@@ -73,6 +89,28 @@ public class ShotgunController : MonoBehaviour, IUsable
 
             Debug.DrawRay(_shootPoint.transform.position, spreadDirection * _range, Color.red, 1f);
         }
+
+        StartCoroutine(WaitForAnimation());
+    }
+
+    private IEnumerator WaitForAnimation()
+    {
+        yield return null;
+
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        while (!stateInfo.IsName(_animPumpStateName))
+        {
+            yield return null;
+            stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        }
+
+        while (stateInfo.normalizedTime < 0.9f)
+        {
+            yield return null;
+            stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        }
+
+        _isShooting = false;
     }
 
     private Vector3 GetSpreadDirection(Vector3 forward)

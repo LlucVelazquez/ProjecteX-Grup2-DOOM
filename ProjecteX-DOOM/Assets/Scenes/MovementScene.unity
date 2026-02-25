@@ -2349,19 +2349,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2029576717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148372770283}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c61da62bd785b244eadd3b4bcdd517a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AnimatorStillInStateBehaviourScript
-  _animStateName: Pump Handle
 --- !u!1 &2074835579
 GameObject:
   m_ObjectHideFlags: 0
@@ -2671,7 +2658,6 @@ GameObject:
   - component: {fileID: 543450652376225617}
   - component: {fileID: 2029576716}
   - component: {fileID: 919132148372770284}
-  - component: {fileID: 2029576717}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -2701,7 +2687,8 @@ MonoBehaviour:
   _spreadStandardDeviation: 1.5
   _spreadMin: 2.2
   _spreadMax: 9.8
-  Ammunition: 0
+  _animPumpParName: Pump
+  _animPumpStateName: Pump Handle
 --- !u!4 &1003356813191887714
 Transform:
   m_ObjectHideFlags: 0
