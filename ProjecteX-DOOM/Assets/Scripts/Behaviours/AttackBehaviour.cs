@@ -22,7 +22,9 @@ public class AttackBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        _attackCollider.isTrigger = true;
         _attackCollider.enabled = false;
+
         _ignoreLayers |= (1 << gameObject.layer);
     }
 
