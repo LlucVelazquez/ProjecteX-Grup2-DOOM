@@ -51,24 +51,24 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         float damageResult = damage;
         float damageReduction;
 
-        if (_megaarmor > 0)
+        if (Megaarmor > 0)
         {
             damageReduction = (float)damage / 2;
             damageResult = Mathf.Ceil(damageReduction);
 
-            _megaarmor -= (int)damageReduction;
+            Megaarmor -= (int)Mathf.Ceil(damageReduction);
         }
-        else if (_armor > 0)
+        else if (Armor > 0)
         {
             damageReduction = (float)damage / 3;
-            damageResult = Mathf.Ceil(damageReduction) * 2;
+            damageResult = Mathf.Ceil(damageReduction * 2);
 
-            _armor -= (int)damageReduction;
+            Armor -= (int)Mathf.Ceil(damageReduction);
         }
 
-        _health -= (int)damageResult;
+        Health -= (int)damageResult;
 
-        if (_health <= 0)
+        if (Health <= 0)
         {
             Die();
         }
