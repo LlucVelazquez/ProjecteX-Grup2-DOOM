@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -22,11 +23,16 @@ public class UIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI _interactionText;
 
+    [Header("Escape Action")]
+    [SerializeField] private InputActionAsset _actionAsset;
+    [SerializeField] private string _escapeActionName = "UI/Escape";
+
     public string PlayerHealthText { get => _pHealthText.text; set => _pHealthText.text = value; }
     public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
     public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
     public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
 
+    private InputAction _escapeAction;
     private Color _pArmorTextDefaultColor;
 
     private void OnEnable()
@@ -38,6 +44,9 @@ public class UIManager : MonoBehaviour
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
         PlayerController.OnWeaponChangeHasAmmo += ShowAmmoText;
         PlayerController.OnWeaponChange += ShowWeaponIcon;
+
+        _escapeAction?.Enable();
+        _escapeAction.performed += OnEscapePressed;
     }
 
     private void OnDisable()
@@ -49,6 +58,9 @@ public class UIManager : MonoBehaviour
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
         PlayerController.OnWeaponChangeHasAmmo -= ShowAmmoText;
         PlayerController.OnWeaponChange -= ShowWeaponIcon;
+
+        _escapeAction?.Disable();
+        _escapeAction.performed -= OnEscapePressed;
     }
 
     private void Awake()
@@ -61,6 +73,12 @@ public class UIManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+
+        _escapeAction = _actionAsset.FindAction(_escapeActionName);
+        if (_escapeAction == null)
+        {
+            Debug.Log($"Action '{_escapeActionName}' does not exist in Action Asset '{_actionAsset.name}'");
         }
 
         _pArmorTextDefaultColor = _pArmorText.color;
@@ -110,6 +128,18 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = isLocked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = isVisible;
+    }
+
+    private void OnEscapePressed(InputAction.CallbackContext context)
+    {
+        if (_pauseMenu.activeSelf)
+        {
+            ResumeGame();
+        } 
+        else
+        {
+            PauseGame();
+        }
     }
 
     public void ShowDeathMenu()
