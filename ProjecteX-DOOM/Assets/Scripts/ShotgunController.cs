@@ -1,10 +1,15 @@
+using System.Collections;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
+using Sys = System;
 
-public class Shotgun : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
 {
     [Header("References")]
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private Camera _camera;
+    [SerializeField] private Sprite _shotgunIcon;
 
     [Header("Shotgun Settings")]
     [SerializeField] private int _damageMulti = 5;
@@ -18,18 +23,54 @@ public class Shotgun : MonoBehaviour
     [SerializeField] private float _spreadMin = 2.2f;
     [SerializeField] private float _spreadMax = 9.8f;
 
-    public float Ammunition;
+    [Header("Animation Settings")]
+    [SerializeField] private float _animWaitTime = 0.1f;
+    [SerializeField] private string _animPumpParName = "Pump";
+    [SerializeField] private string _animPumpStateName = "Pump Handle";
+
+    public Sprite Icon { get => _shotgunIcon; }
+    public int CurrentAmmunition
+    {
+        get => _currentAmmo;
+        set
+        {
+            _currentAmmo = value;
+            OnAmmunitionChange?.Invoke(value);
+        }
+    }
+
+    public static event Sys.Action<int> OnAmmunitionChange;
+
+    private Animator _animator;
+
+    private int _currentAmmo;
+    private bool _isShooting = false;
 
     private void Awake()
     {
-        Ammunition = _initialAmmunition;
+        _animator = GetComponent<Animator>();
+
+        _currentAmmo = _initialAmmunition;
+    }
+
+    private void Start()
+    {
+        OnAmmunitionChange?.Invoke(_currentAmmo);
+    }
+
+    public void Use()
+    {
+        Shoot();
     }
 
     public void Shoot()
     {
-        if (Ammunition <= 0) return;
+        if (CurrentAmmunition <= 0) return;
+        if (_isShooting) return;
 
-        Ammunition--;
+        _isShooting = true;
+
+        CurrentAmmunition--;
 
         for (int i = 0; i < _pellets; i++)
         {
@@ -49,6 +90,30 @@ public class Shotgun : MonoBehaviour
 
             Debug.DrawRay(_shootPoint.transform.position, spreadDirection * _range, Color.red, 1f);
         }
+
+        StartCoroutine(ShootCooldown());
+    }
+
+    private IEnumerator ShootCooldown()
+    {
+        yield return new WaitForSeconds(_animWaitTime);
+        _animator.SetTrigger(_animPumpParName);
+
+        yield return null;
+
+        AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        while (!stateInfo.IsName(_animPumpStateName))
+        {
+            yield return null;
+            stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        }
+        while (stateInfo.normalizedTime < 0.9f)
+        {
+            yield return null;
+            stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+        }
+
+        _isShooting = false;
     }
 
     private Vector3 GetSpreadDirection(Vector3 forward)
@@ -76,7 +141,7 @@ public class Shotgun : MonoBehaviour
 
     public void AddAmmo(int ammo)
     {
-        Ammunition += ammo;
+        CurrentAmmunition += ammo;
     }
 
     private int GetDamage()

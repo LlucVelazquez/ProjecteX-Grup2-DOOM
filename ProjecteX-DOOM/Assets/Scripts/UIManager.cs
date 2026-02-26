@@ -1,22 +1,19 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    public string PlayerHealthText { get => _pHealthText.text;  set => _pHealthText.text = value; }
-    public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
-    public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
-
-    public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
-
-    [Header("HUD")]
+    [Header("Player (P) HUD")]
     [SerializeField] private TextMeshProUGUI _pNotificationText;
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
     [SerializeField] private TextMeshProUGUI _pAmmoText;
+    [SerializeField] private Image _pWeaponImage;
     [SerializeField] private Color _pMegaarmorTextColor;
 
     [Header("Menus")]
@@ -26,18 +23,44 @@ public class UIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI _interactionText;
 
-    private PlayerHealth _pHealth;
+    [Header("Escape Action")]
+    [SerializeField] private InputActionAsset _actionAsset;
+    [SerializeField] private string _escapeActionName = "UI/Escape";
 
+    public string PlayerHealthText { get => _pHealthText.text; set => _pHealthText.text = value; }
+    public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
+    public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
+    public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
+
+    private InputAction _escapeAction;
     private Color _pArmorTextDefaultColor;
 
     private void OnEnable()
     {
+        PlayerHealth.OnHealthChange += UpdateHUDHealth;
+        PlayerHealth.OnArmorChange += UpdateHUDArmor;
+        PlayerHealth.OnMegaarmorChange += UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
+        ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
+        PlayerController.OnWeaponChangeHasAmmo += ShowAmmoText;
+        PlayerController.OnWeaponChange += ShowWeaponIcon;
+
+        _escapeAction?.Enable();
+        _escapeAction.performed += OnEscapePressed;
     }
 
     private void OnDisable()
     {
+        PlayerHealth.OnHealthChange -= UpdateHUDHealth;
+        PlayerHealth.OnArmorChange -= UpdateHUDArmor;
+        PlayerHealth.OnMegaarmorChange -= UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
+        ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
+        PlayerController.OnWeaponChangeHasAmmo -= ShowAmmoText;
+        PlayerController.OnWeaponChange -= ShowWeaponIcon;
+
+        _escapeAction?.Disable();
+        _escapeAction.performed -= OnEscapePressed;
     }
 
     private void Awake()
@@ -52,36 +75,52 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        _escapeAction = _actionAsset.FindAction(_escapeActionName);
+        if (_escapeAction == null)
+        {
+            Debug.Log($"Action '{_escapeActionName}' does not exist in Action Asset '{_actionAsset.name}'");
+        }
+
         _pArmorTextDefaultColor = _pArmorText.color;
     }
 
-    private void Start()
+    private void UpdateHUDHealth(int health)
     {
-        if (GameManager.Instance.Player != null)
+        PlayerHealthText = $"{health}";
+    }
+
+    private void UpdateHUDArmor(int armor)
+    {
+        PlayerArmorText = $"{armor}";
+        _pArmorText.color = _pArmorTextDefaultColor;
+    }
+
+    private void UpdateHUDMegaarmor(int megaarmor)
+    {
+        PlayerArmorText = $"{megaarmor}";
+        _pArmorText.color = _pMegaarmorTextColor;
+    }
+
+    private void UpdateHUDAmmunition(int ammo)
+    {
+        PlayerAmmoText = $"{ammo}";
+    }
+
+    private void ShowAmmoText(bool state)
+    {
+        _pAmmoText.enabled = state;
+    }
+
+    private void ShowWeaponIcon(GameObject weapon)
+    {
+        if (weapon.TryGetComponent<IIconable>(out var iconable))
         {
-            _pHealth = GameManager.Instance.Player.GetComponent<PlayerHealth>();
-            UpdateHUD();
+            _pWeaponImage.sprite = iconable.Icon;
+            _pWeaponImage.gameObject.SetActive(true);
         }
         else
         {
-            Debug.LogError("PlayerController instance not found. PlayerHealth will not be assigned to UIManager.");
-        }
-    }
-
-    private void Update()
-    {
-        UpdateHUD();
-    }
-
-    private void UpdateHUD()
-    {
-        if (_pHealth != null)
-        {
-            PlayerHealthText = $"{_pHealth.Health}";
-
-            bool megaarmor = _pHealth.Megaarmor > 0f;
-            PlayerArmorText = $"{(megaarmor ? _pHealth.Megaarmor : _pHealth.Armor)}";
-            _pArmorText.color = megaarmor ? _pMegaarmorTextColor : _pArmorTextDefaultColor;
+            _pWeaponImage.gameObject.SetActive(false);
         }
     }
 
@@ -89,6 +128,18 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = isLocked ? CursorLockMode.Locked : CursorLockMode.None;
         Cursor.visible = isVisible;
+    }
+
+    private void OnEscapePressed(InputAction.CallbackContext context)
+    {
+        if (_pauseMenu.activeSelf)
+        {
+            ResumeGame();
+        } 
+        else
+        {
+            PauseGame();
+        }
     }
 
     public void ShowDeathMenu()
