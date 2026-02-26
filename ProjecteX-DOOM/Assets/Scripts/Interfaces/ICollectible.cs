@@ -1,8 +1,10 @@
+using System;
 using UnityEngine;
 
 public interface ICollectible
 {
     public string Name { get; }
+    public string CollectMessage { get; }
 
-    public void OnCollect(GameObject collector);
+    public void Collect(GameObject collector);
 }

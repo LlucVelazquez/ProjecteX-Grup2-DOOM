@@ -3,9 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(ReiniciableBehaviour))]
 public class HealPlayer : MonoBehaviour, ICollectible
 {
-    public string Name { get => _healthItem.name; }
-
     [SerializeField] private HealthItemSO _healthItem;
+
+    public string Name { get => _healthItem.name; }
+    public string CollectMessage { get => $"Has recollit {Name}"; }
 
     private ReiniciableBehaviour _rb;
     private Collider _collider;
@@ -42,11 +43,11 @@ public class HealPlayer : MonoBehaviour, ICollectible
     {
         if (other.gameObject.layer == LayerMask.NameToLayer(GameManager.Instance.PlayerLayerName))
         {
-            OnCollect(other.gameObject);
+            Collect(other.gameObject);
         }
     }
 
-    public void OnCollect(GameObject collector)
+    public void Collect(GameObject collector)
     {
         PlayerHealth pHealth = collector.GetComponent<PlayerHealth>();
 
@@ -61,6 +62,8 @@ public class HealPlayer : MonoBehaviour, ICollectible
             }
 
             pHealth.Health = health;
+
+            CollectibleEvents.RaiseOnCollect(CollectMessage);
 
             //gameObject.SetActive(false);
             _rb.DisableObject();

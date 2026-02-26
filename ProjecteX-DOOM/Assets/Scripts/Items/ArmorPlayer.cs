@@ -1,10 +1,11 @@
 using UnityEngine;
 
 public class ArmorPlayer : MonoBehaviour, ICollectible
-{
-    public string Name { get => _armorItem.name; }
-    
+{    
     [SerializeField] private ArmorItemSO _armorItem;
+
+    public string Name { get => _armorItem.name; }
+    public string CollectMessage { get => $"Has recollit {Name}"; }
 
     private Collider _collider;
 
@@ -29,11 +30,11 @@ public class ArmorPlayer : MonoBehaviour, ICollectible
     {
         if (other.gameObject.layer == LayerMask.NameToLayer(GameManager.Instance.PlayerLayerName))
         {
-            OnCollect(other.gameObject);
+            Collect(other.gameObject);
         }
     }
 
-    public void OnCollect(GameObject collector)
+    public void Collect(GameObject collector)
     {
         PlayerHealth pHealth = collector.GetComponent<PlayerHealth>();
 
@@ -68,6 +69,7 @@ public class ArmorPlayer : MonoBehaviour, ICollectible
                     SetArmor(pHealth);
                 }
             }
+            CollectibleEvents.RaiseOnCollect(CollectMessage);
         }
         else
         {

@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,6 +11,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Player (P) HUD")]
     [SerializeField] private TextMeshProUGUI _pNotificationText;
+    [SerializeField] private float _pNotificationTime = 1f;
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
     [SerializeField] private TextMeshProUGUI _pAmmoText;
@@ -34,6 +36,7 @@ public class UIManager : MonoBehaviour
 
     private InputAction _escapeAction;
     private Color _pArmorTextDefaultColor;
+    private Coroutine _pNotificationCoroutine;
 
     private void OnEnable()
     {
@@ -41,9 +44,13 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnArmorChange += UpdateHUDArmor;
         PlayerHealth.OnMegaarmorChange += UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
+        
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
+        
         PlayerController.OnWeaponChangeHasAmmo += ShowAmmoText;
         PlayerController.OnWeaponChange += ShowWeaponIcon;
+        
+        CollectibleEvents.OnCollect += ShowHUDNotification;
 
         _escapeAction?.Enable();
         _escapeAction.performed += OnEscapePressed;
@@ -55,9 +62,13 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnArmorChange -= UpdateHUDArmor;
         PlayerHealth.OnMegaarmorChange -= UpdateHUDMegaarmor;
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
+        
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
+        
         PlayerController.OnWeaponChangeHasAmmo -= ShowAmmoText;
         PlayerController.OnWeaponChange -= ShowWeaponIcon;
+        
+        CollectibleEvents.OnCollect -= ShowHUDNotification;
 
         _escapeAction?.Disable();
         _escapeAction.performed -= OnEscapePressed;
@@ -122,6 +133,21 @@ public class UIManager : MonoBehaviour
         {
             _pWeaponImage.gameObject.SetActive(false);
         }
+    }
+
+    private void ShowHUDNotification(string message)
+    {
+        if (_pNotificationCoroutine != null)
+            StopCoroutine(_pNotificationCoroutine);
+
+        _pNotificationCoroutine = StartCoroutine(Notificate(message));
+    }
+
+    private IEnumerator Notificate(string message)
+    {
+        _pNotificationText.text = message;
+        yield return new WaitForSeconds(_pNotificationTime);
+        _pNotificationText.text = "";
     }
 
     public void CursorState(bool isLocked, bool isVisible)
