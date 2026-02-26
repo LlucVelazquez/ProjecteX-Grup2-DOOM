@@ -6,12 +6,12 @@ public class FollowBehaviour : MonoBehaviour
 {
     [Header("Follow Settings")]
     [SerializeField] private GameObject _followTarget;
-    [SerializeField] private float _followDistance = 10f;
+    [SerializeField] private float _followRange = 10f;
 
     [Tooltip("By default adds gameObject and Target Layers")]
     [SerializeField] private LayerMask _ignoreLayers;
 
-    [HideInInspector] public bool isFollowingTarget = false;
+    public Vector3 TargetPosition { get => _followTarget.transform.position; }
 
     private NavMeshAgent _agent;
 
@@ -27,6 +27,9 @@ public class FollowBehaviour : MonoBehaviour
         initialRotation = transform.rotation;
     }
 
+    public bool IsTargetWithinTheLineOfSight()
+        => DistanceUtils.HasLineOfSight(transform.position, _followTarget.transform.position, _followRange, _ignoreLayers);
+
     public void FollowTarget()
     {
         if (IsFollowTargetNotNull())
@@ -37,39 +40,30 @@ public class FollowBehaviour : MonoBehaviour
         }
     }
 
-    public void ReturnToInitialPosition()
+    public bool ReturnToInitialPosition()
     {
         if (IsFollowTargetNotNull())
         {
             _agent.SetDestination(initialPosition);
 
-            if (_agent.remainingDistance <= _agent.stoppingDistance)
+            if (HasReachedTheDestination())
             {
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, initialRotation, _agent.angularSpeed * Time.deltaTime);
+                return true;
             }
         }
+        return false;
     }
 
-    public bool IsTargetInRange()
+    public void StopFollow()
     {
-        return GetDistanceToTarget() <= _followDistance;
+        _agent.ResetPath();
+        _agent.velocity = Vector3.zero;
     }
 
-    public bool IsTargetWithinTheVision()
+    private bool HasReachedTheDestination()
     {
-        Vector3 direction = (_followTarget.transform.position - transform.position).normalized;
-        LayerMask layerMask = ~_ignoreLayers;
-
-        if (Physics.Raycast(transform.position, direction, GetDistanceToTarget(), layerMask))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    public float GetDistanceToTarget()
-    {
-        return Vector3.Distance(_followTarget.transform.position, transform.position);
+        return _agent.remainingDistance <= _agent.stoppingDistance;
     }
 
     private bool IsFollowTargetNotNull()
