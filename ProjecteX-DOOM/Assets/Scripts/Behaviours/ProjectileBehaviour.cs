@@ -1,43 +1,47 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class ProjectileBehaviour : MonoBehaviour
 {
-    [SerializeField] private int _damage = 10;
-    [SerializeField] private string _targetLayerName;
-
     [HideInInspector] public ProjectileFiringBehaviour shooter;
+    [HideInInspector] public Vector3 direction;
+    [HideInInspector] public float speed;
+    [HideInInspector] public int damage;
 
-    private Collider _collider;
+    private Rigidbody _rigidbody;
 
     private void Awake()
     {
-        _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
+    }
 
-        if (_collider != null)
-        {
-            _collider.isTrigger = true;
-        }
+    private void Update()
+    {
+        _rigidbody.linearVelocity = direction.normalized * speed;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer(_targetLayerName))
+        if (other.gameObject.layer != shooter.gameObject.layer)
         {
-            if (other.gameObject.TryGetComponent<ITargeteable>(out ITargeteable target))
+            if (other.gameObject.layer == LayerMask.NameToLayer(shooter.targetLayerName))
             {
-                target.TakeDamage(_damage);
-                ReturnToShooter();
+                if (other.gameObject.TryGetComponent<ITargeteable>(out ITargeteable target))
+                {
+                    target.TakeDamage(damage);
+                }
+                else
+                {
+                    Debug.LogWarning($"The object '{other.gameObject.name}' on layer '{shooter.targetLayerName}' does not implement ITargeteable. AttackBehaviour will not function properly.");
+                }
             }
-            else
-            {
-                Debug.LogWarning($"The object '{other.gameObject.name}' on layer '{_targetLayerName}' does not implement ITargeteable. AttackBehaviour will not function properly.");
-            }
+            ReturnToShooter();
         }
     }
 
     private void ReturnToShooter()
     {
         gameObject.SetActive(false);
-        shooter.StackPush(gameObject);
+        shooter.ProjectileStackPush(gameObject);
     }
 }
