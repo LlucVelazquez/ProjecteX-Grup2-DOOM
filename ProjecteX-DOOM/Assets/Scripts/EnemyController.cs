@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyHealth), typeof(FollowBehaviour), typeof(AttackBehaviour))]
+[RequireComponent(typeof(ProjectileFiringBehaviour))]
 public class EnemyController : MonoBehaviour
 {
     // In chase and attack states the enmey contiunes shooting
@@ -11,6 +12,7 @@ public class EnemyController : MonoBehaviour
 
     private FollowBehaviour _fb;
     private AttackBehaviour _ab;
+    private ProjectileFiringBehaviour _pfb;
 
     private State _currentState;
 
@@ -20,6 +22,7 @@ public class EnemyController : MonoBehaviour
 
         _fb = GetComponent<FollowBehaviour>();
         _ab = GetComponent<AttackBehaviour>();
+        _pfb = GetComponent<ProjectileFiringBehaviour>();
 
         _currentState = State.Idle;
     }
@@ -99,11 +102,16 @@ public class EnemyController : MonoBehaviour
         }
 
         _fb.FollowTarget();
-
-        if (_currentState != State.Attack && DistanceUtils.IsInRange(transform.position, _fb.TargetPosition, _ab.attackRange))
+        
+        if (_currentState != State.Attack)
         {
-            _currentState = State.Attack;
-            _ab.CanAttack = true;
+            _pfb.Shoot(DistanceUtils.GetDirection(transform.position, _fb.TargetPosition));
+
+            if (DistanceUtils.IsInRange(transform.position, _fb.TargetPosition, _ab.attackRange))
+            {
+                _currentState = State.Attack;
+                _ab.CanAttack = true;
+            }
         }
     }
 
