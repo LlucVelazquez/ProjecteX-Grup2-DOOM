@@ -222,7 +222,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GravityBehaviour
   _groundLayers:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 129
   _physicsSphereRadiusOffset: 0.1
   _verticalVelocityLimit: 20
   gravity: 9.81
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 5958401895502741993}
   - component: {fileID: 3568383638463289053}
   - component: {fileID: 683708122972858341}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pump.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 6107421220341370150}
   - component: {fileID: 64564008333085697}
   - component: {fileID: 5096813090741532940}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Handle.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 2737224638749275262}
   - component: {fileID: 277012061608893988}
   - component: {fileID: 6563372896010271943}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Barrel.003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 7836083808057124342}
   - component: {fileID: 1460637901226293488}
   - component: {fileID: 2764093866736257362}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Pump Handle.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -763,7 +763,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2292694699977999706}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ShootPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -966,7 +966,7 @@ GameObject:
   - component: {fileID: 5784579151043549475}
   - component: {fileID: 5683133406792864254}
   - component: {fileID: 8397799078950398903}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Trigger.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: 2933532077267653277}
   - component: {fileID: 5293888833195370256}
   - component: {fileID: 8127261088185312280}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Stock.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1146,7 +1146,7 @@ GameObject:
   - component: {fileID: 7870212135409334132}
   - component: {fileID: 6305210871989909797}
   - component: {fileID: 1950905472535607089}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
