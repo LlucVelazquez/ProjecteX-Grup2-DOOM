@@ -6,7 +6,8 @@ public class ProjectileBehaviour : MonoBehaviour
     [HideInInspector] public ProjectileFiringBehaviour shooter;
     [HideInInspector] public Vector3 direction;
     [HideInInspector] public float speed;
-    [HideInInspector] public int damage;
+    [HideInInspector] public int damageMulti;
+    [HideInInspector] public int maxBaseDamage;
 
     private Rigidbody _rigidbody;
 
@@ -28,7 +29,7 @@ public class ProjectileBehaviour : MonoBehaviour
             {
                 if (other.gameObject.TryGetComponent<ITargeteable>(out ITargeteable target))
                 {
-                    target.TakeDamage(damage);
+                    target.TakeDamage(DamageUtils.GetDamageByMulti(maxBaseDamage, damageMulti));
                 }
                 else
                 {

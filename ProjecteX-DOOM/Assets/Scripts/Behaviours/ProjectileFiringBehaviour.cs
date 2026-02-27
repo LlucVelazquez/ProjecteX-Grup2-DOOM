@@ -7,7 +7,8 @@ public class ProjectileFiringBehaviour : MonoBehaviour
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private float _shootInterval = 3f;
     [SerializeField] private float projectileSpeed = 5f;
-    [SerializeField] private int projectileDamage = 10;
+    [SerializeField] private int projectileDamageMulti = 3;
+    [SerializeField] private int projectileMaxBaseDamage = 8;
 
     public static Stack<GameObject> ProjectileStack = new Stack<GameObject>();
 
@@ -36,7 +37,8 @@ public class ProjectileFiringBehaviour : MonoBehaviour
     {
         _projectile.GetComponent<ProjectileBehaviour>().shooter = this;
         _projectile.GetComponent<ProjectileBehaviour>().speed = projectileSpeed;
-        _projectile.GetComponent<ProjectileBehaviour>().damage = projectileDamage;
+        _projectile.GetComponent<ProjectileBehaviour>().damageMulti = projectileDamageMulti;
+        _projectile.GetComponent<ProjectileBehaviour>().maxBaseDamage = projectileMaxBaseDamage;
         _projectile.GetComponent<ProjectileBehaviour>().direction = direction;
 
         Instantiate(_projectile, _shootPoint.position, _shootPoint.rotation);

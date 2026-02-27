@@ -4,7 +4,8 @@ public class AttackBehaviour : MonoBehaviour
 {
     [SerializeField] private Collider _attackCollider;
     [SerializeField] private string _targetLayerName;
-    [SerializeField] private int _damage = 10;
+    [SerializeField] private int _damageMulti = 3;
+    [SerializeField] private int _maxBaseDamage = 8;
     [SerializeField] private float _damageInterval = 1f;
 
     [Tooltip("By default adds gameObject and Target Layers")]
@@ -64,7 +65,7 @@ public class AttackBehaviour : MonoBehaviour
         {
             if (Time.time - _lastDamageTime >= _damageInterval)
             {
-                _target.TakeDamage(_damage);
+                _target.TakeDamage(DamageUtils.GetDamageByMulti(_maxBaseDamage, _damageMulti));
                 _lastDamageTime = Time.time;
             }
         }

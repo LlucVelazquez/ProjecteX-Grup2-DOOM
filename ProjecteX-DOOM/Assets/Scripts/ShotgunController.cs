@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 using Sys = System;
 
 [RequireComponent(typeof(Animator))]
@@ -13,6 +12,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
 
     [Header("Shotgun Settings")]
     [SerializeField] private int _damageMulti = 5;
+    [SerializeField] private int _maxBaseDamage = 3;
     [SerializeField] private float _range = 100f;
     [SerializeField] private int _pellets = 7;
     [SerializeField] private int _initialAmmunition = 8;
@@ -82,7 +82,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
                 ITargeteable target = hit.transform.GetComponent<ITargeteable>();
                 if (target != null)
                 {
-                    int damage = GetDamage();
+                    int damage = DamageUtils.GetDamageByMulti(_maxBaseDamage, _damageMulti);
                     target.TakeDamage(damage);
                     Debug.Log($"Hit to target {hit.collider.name} - Damage: {damage}");
                 }
@@ -142,10 +142,5 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     public void AddAmmo(int ammo)
     {
         CurrentAmmunition += ammo;
-    }
-
-    private int GetDamage()
-    {
-        return Random.Range(1, 4) * _damageMulti;
     }
 }
