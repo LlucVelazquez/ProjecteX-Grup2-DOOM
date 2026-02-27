@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2886e99a7d3bf41b98e8ced58b95ad, type: 3}
   m_Name: HealthBonus
   m_EditorClassIdentifier: Assembly-CSharp::HealthItemSO
-  name: Health bonus
-  description: A health bonus (or health potion) is a powerup that appears as a small
-    blue bottle containing a special potion or medicine. Picking one up increases
-    the player's health by 1% up to a maximum of 200%.
-  healAmount: 1
-  maxHealth: 200
+  _name: Bonus de Vida
+  _collectMsg: Has recollit un Bonus de Vida
+  _description: 
+  _healAmount: 1
+  _maxHealth: 200

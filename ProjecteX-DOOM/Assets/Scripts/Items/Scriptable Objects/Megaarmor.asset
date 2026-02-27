@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a049c6e3dd74ce43bb1c00d11dd2105, type: 3}
   m_Name: Megaarmor
   m_EditorClassIdentifier: Assembly-CSharp::ArmorItemSO
-  name: Megaarmor
-  description: The megaarmor is a blue military vest. When collected, it increases
-    the player's armor percentage to 200. It cannot be collected if the player already
-    has 200 percent armor.
-  armorType: 2
-  armorAmount: 200
-  maxArmor: 200
+  _name: Megaarmadura
+  _collectMsg: 'Has recollit Megaarmadura '
+  _description: 
+  _armorType: 2
+  _armorAmount: 200
+  _maxArmor: 200

@@ -12,11 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a049c6e3dd74ce43bb1c00d11dd2105, type: 3}
   m_Name: Armor
   m_EditorClassIdentifier: Assembly-CSharp::ArmorItemSO
-  name: Armor
-  description: The standard armor is a bright green military vest, similar to the
-    one worn by the player sprite. When collected, it increases the player's armor
-    percentage to 100. It cannot be collected if the player already has at least
-    100 percent armor.
-  armorType: 1
-  armorAmount: 100
-  maxArmor: 100
+  _name: Armadura
+  _collectMsg: 'Has recollit Armadura '
+  _description: 
+  _armorType: 1
+  _armorAmount: 100
+  _maxArmor: 100

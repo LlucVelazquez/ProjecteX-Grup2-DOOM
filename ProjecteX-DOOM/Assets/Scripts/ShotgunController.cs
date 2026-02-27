@@ -29,6 +29,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     [SerializeField] private string _animPumpStateName = "Pump Handle";
 
     public Sprite Icon { get => _shotgunIcon; }
+    public WeaponType Weapon { get => WeaponType.Shotgun; }
     public int CurrentAmmunition
     {
         get => _currentAmmo;
@@ -139,8 +140,8 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
         return Mathf.Clamp(angle, _spreadMin, _spreadMax);
     }
 
-    public void AddAmmo(int ammo)
+    public void AddAmmunition(int ammunition)
     {
-        CurrentAmmunition += ammo;
+        CurrentAmmunition += ammunition;
     }
 }

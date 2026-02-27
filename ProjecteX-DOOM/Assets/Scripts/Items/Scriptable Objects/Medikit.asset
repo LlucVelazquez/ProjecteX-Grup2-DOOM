@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab2886e99a7d3bf41b98e8ced58b95ad, type: 3}
   m_Name: Medikit
   m_EditorClassIdentifier: Assembly-CSharp::HealthItemSO
-  name: Medikit
-  description: A medikit is a first aid kit that appears as large white box with
-    a red cross/plus sign. Picking one up will increase the player's health by 25%
-    up to a maximum of 100%.
-  healAmount: 25
-  maxHealth: 100
+  _name: "Kit M\xE8dic"
+  _collectMsg: "Has recollit un Kit M\xE8dic "
+  _description: 
+  _healAmount: 25
+  _maxHealth: 100
