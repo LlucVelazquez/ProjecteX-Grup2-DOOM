@@ -43,6 +43,7 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnHealthChange += UpdateHUDHealth;
         PlayerHealth.OnArmorChange += UpdateHUDArmor;
         PlayerHealth.OnMegaarmorChange += UpdateHUDMegaarmor;
+        PlayerHealth.OnLowHealth += ShowLowHealthIndicator;
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
         
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
@@ -61,6 +62,7 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnHealthChange -= UpdateHUDHealth;
         PlayerHealth.OnArmorChange -= UpdateHUDArmor;
         PlayerHealth.OnMegaarmorChange -= UpdateHUDMegaarmor;
+        PlayerHealth.OnLowHealth -= ShowLowHealthIndicator;
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
         
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
@@ -148,6 +150,11 @@ public class UIManager : MonoBehaviour
         _pNotificationText.text = message;
         yield return new WaitForSeconds(_pNotificationTime);
         _pNotificationText.text = "";
+    }
+
+    private void ShowLowHealthIndicator(bool lowHealth)
+    {
+        Debug.Log(lowHealth);
     }
 
     public void CursorState(bool isLocked, bool isVisible)
