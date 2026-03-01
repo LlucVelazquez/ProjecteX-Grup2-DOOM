@@ -1,13 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class ScreenEffects : MonoBehaviour
 {
-    [Header("Genral Settings")]
-    [SerializeField] private float _effectsDamageInterval = 1f;
-    [SerializeField] private float _effectsDuration = 0.3f;
-
     [Header("Damage Effect")]
+    [SerializeField] private FullScreenPassRendererFeature _damageFullScreenPassRendererFeature;
+    [SerializeField] private float _damageEffectInterval = 1f;
+    [SerializeField] private float _damageEffectDuration = 0.3f;
     [SerializeField] private string _damageEffectVignetteRadiusName = "VignetteRadius";
     [SerializeField] private string _damageEffectBlurMultiplierName = "BlurMultiplier";
     [SerializeField] private string _damageEffectBlurTintName = "BlurTint";
@@ -22,6 +22,8 @@ public class ScreenEffects : MonoBehaviour
 
     private void Awake()
     {
+        _damageFullScreenPassRendererFeature.SetActive(false);
+
         Shader.SetGlobalFloat(_damageEffectVignetteRadiusName, 1f);
         Shader.SetGlobalFloat(_damageEffectBlurMultiplierName, 0f);
         Shader.SetGlobalColor(_damageEffectBlurTintName, Color.white);
@@ -32,12 +34,13 @@ public class ScreenEffects : MonoBehaviour
         if (_bloodEffectEnabled && Time.time > _timer)
         {
             TriggerDamageEffects(Random.Range(.1f, 1f));
-            _timer = Time.time + _effectsDamageInterval;
+            _timer = Time.time + _damageEffectInterval;
         }
     }
 
     private void ShowDamageEffects(bool show)
     {
+        _damageFullScreenPassRendererFeature.SetActive(show);
         _bloodEffectEnabled = show;
 
         if (!show)
@@ -61,7 +64,7 @@ public class ScreenEffects : MonoBehaviour
         float targetBlur = Remap(intensity, 0, 1, 0.5f, 1f);
         float currentRadius = 1f;
 
-        for (float t = 0; t < 1f; t += Time.deltaTime / _effectsDuration)
+        for (float t = 0; t < 1f; t += Time.deltaTime / _damageEffectDuration)
         {
             currentRadius = Mathf.Lerp(1f, targetRadius, t);
             Shader.SetGlobalFloat(_damageEffectVignetteRadiusName, currentRadius);
@@ -70,7 +73,7 @@ public class ScreenEffects : MonoBehaviour
             yield return null;
         }
 
-        for (float t = 0; t < 1f; t += Time.deltaTime / _effectsDuration)
+        for (float t = 0; t < 1f; t += Time.deltaTime / _damageEffectDuration)
         {
             currentRadius = Mathf.Lerp(targetRadius, 1f, t);
             Shader.SetGlobalFloat(_damageEffectVignetteRadiusName, currentRadius);
