@@ -1,8 +1,9 @@
-Shader "Custom/ChromaKeyNegre" {
+ï»¿Shader "Custom/ChromaKeyNegre" {
     Properties {
         _MainTex ("Texture", 2D) = "white" {}
         _Threshold ("Threshold", Range(0,1)) = 0.1
-        _KeyColor ("Key Color", Color) = (0,0,0,1)  // Negre
+        _Transparency ("Transparency", Range(0,1)) = 0.0
+        _KeyColor ("KeyColor", Color) = (0,0,0,1)
     }
     SubShader {
         Tags {"Queue"="Transparent" "RenderType"="Transparent"}
@@ -20,6 +21,7 @@ Shader "Custom/ChromaKeyNegre" {
             
             sampler2D _MainTex;
             float _Threshold;
+            float _Transparency;
             fixed4 _KeyColor;
             
             v2f vert (appdata v) { 
@@ -31,12 +33,9 @@ Shader "Custom/ChromaKeyNegre" {
             
             fixed4 frag (v2f i) : SV_Target {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                
-                // Distància al color negre (KeyColor)
                 float dist = distance(col.rgb, _KeyColor.rgb);
                 
-                // Alpha = 1 (opac) si NO és negre, 0 (transparent) si SÍ és negre
-                float alpha = step(_Threshold, dist);
+                float alpha = lerp(_Transparency, 1.0, step(_Threshold, dist));
                 
                 return fixed4(col.rgb, alpha);
             }
