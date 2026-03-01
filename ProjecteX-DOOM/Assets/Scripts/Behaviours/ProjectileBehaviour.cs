@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class ProjectileBehaviour : MonoBehaviour
+public class ProjectileBehaviour : MonoBehaviour, IResettable
 {
     [HideInInspector] public ProjectileFiringBehaviour shooter;
     [HideInInspector] public Vector3 direction;
@@ -14,6 +14,11 @@ public class ProjectileBehaviour : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.RegisterResettable(this);
     }
 
     private void Update()
@@ -44,5 +49,10 @@ public class ProjectileBehaviour : MonoBehaviour
     {
         gameObject.SetActive(false);
         shooter.ProjectileStackPush(gameObject);
+    }
+
+    public void OnReset(bool fullRestart)
+    {
+        ReturnToShooter();
     }
 }

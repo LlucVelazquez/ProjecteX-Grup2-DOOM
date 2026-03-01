@@ -1,11 +1,13 @@
 using UnityEngine;
 
-public class CollectibleBehaviour : MonoBehaviour
+public class CollectibleBehaviour : MonoBehaviour, IResettable
 {
     [SerializeField] private ScriptableObject _item;
 
     private ICollectible _collectible;
     private Collider _collider;
+
+    private Vector3 _initialPosition;
 
     private void Awake()
     {
@@ -31,6 +33,13 @@ public class CollectibleBehaviour : MonoBehaviour
         {
             Debug.LogError($"El gameobject '{gameObject.name}' no té cap collider.");
         }
+
+        _initialPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.RegisterResettable(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,5 +50,11 @@ public class CollectibleBehaviour : MonoBehaviour
         {
             _collectible.Collect(gameObject, other.gameObject);
         }
+    }
+
+    public void OnReset(bool fullRestart)
+    {
+        transform.position = _initialPosition;
+        gameObject.SetActive(true);
     }
 }

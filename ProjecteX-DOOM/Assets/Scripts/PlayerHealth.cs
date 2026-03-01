@@ -6,10 +6,12 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
     [SerializeField] private int _health = 100;
     [SerializeField] private int _armor = 0;
     [SerializeField] private int _megaarmor = 0;
+    [SerializeField] private int _lowHealthValue = 20;
 
     public static event Action<int> OnHealthChange;
     public static event Action<int> OnArmorChange;
     public static event Action<int> OnMegaarmorChange;
+    public static event Action<bool> OnLowHealth;
     public static event Action OnPlayerDeath;
 
     public int Health
@@ -18,6 +20,19 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         set
         {
             _health = value;
+
+            if (_health <= _lowHealthValue && !_isLowHealth)
+            {
+                _isLowHealth = true;
+                OnLowHealth?.Invoke(_isLowHealth);
+            }
+
+            if (_health > _lowHealthValue && _isLowHealth)
+            {
+                _isLowHealth = false;
+                OnLowHealth?.Invoke(_isLowHealth);
+            }
+
             OnHealthChange?.Invoke(value);
         }
     }
@@ -40,10 +55,27 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         }
     }
 
+    private bool _isLowHealth = false;
+    private int _initialHealth, _initialArmor, _initialMegaarmor;
+
+    private void Awake()
+    {
+        _initialHealth = _health;
+        _initialArmor = _armor;
+        _initialMegaarmor = _megaarmor;
+    }
+
     private void Start()
     {
         OnHealthChange?.Invoke(_health);
         OnArmorChange?.Invoke(_armor);
+    }
+
+    public void ResetHealth()
+    {
+        Health = _initialHealth;
+        Armor = _initialArmor;
+        Megaarmor = _initialMegaarmor;
     }
 
     public void TakeDamage(int damage)
