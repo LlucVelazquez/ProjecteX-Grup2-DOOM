@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     private float _yRotation;
     private int _currentWeaponIndex;
 
+    private void OnEnable() => UIManager.OnPauseGame += SetPlayerInputsState;
+    private void OnDisable() => UIManager.OnPauseGame -= SetPlayerInputsState;
+
     private void Awake()
     {
         _playerInputs = GetComponent<PlayerInputs>();
@@ -117,5 +120,21 @@ public class PlayerController : MonoBehaviour
     {
         _crb.RotateCamera(_playerInputs.Look, out _yRotation);
         transform.localRotation = Quaternion.Euler(0f, _yRotation, 0f);
+    }
+
+    private void SetPlayerInputsState(bool state)
+    {
+        _playerInputs.enabled = !state;
+    }
+
+    public void ResetPlayer(Vector3 position)
+    {
+        CharacterController cc = GetComponent<CharacterController>();
+
+        cc.enabled = false;
+        transform.position = position;
+        cc.enabled = true;
+
+        GetComponent<PlayerHealth>()?.ResetHealth();
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1117799808503978548}
   - component: {fileID: 890557280922283949}
+  - component: {fileID: 2461868624890691731}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -44,3 +45,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b06f9c2ef1cade439a66acf19e2e94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  _playerLayerName: Player
+  _enemyLayerName: Enemy
+--- !u!114 &2461868624890691731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8458682448721730421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4a9d7ef6e65a0545be3fcc10ca19d6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CheckpointSystem

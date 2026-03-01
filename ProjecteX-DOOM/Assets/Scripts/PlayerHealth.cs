@@ -56,11 +56,26 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
     }
 
     private bool _isLowHealth = false;
+    private int _initialHealth, _initialArmor, _initialMegaarmor;
+
+    private void Awake()
+    {
+        _initialHealth = _health;
+        _initialArmor = _armor;
+        _initialMegaarmor = _megaarmor;
+    }
 
     private void Start()
     {
         OnHealthChange?.Invoke(_health);
         OnArmorChange?.Invoke(_armor);
+    }
+
+    public void ResetHealth()
+    {
+        Health = _initialHealth;
+        Armor = _initialArmor;
+        Megaarmor = _initialMegaarmor;
     }
 
     public void TakeDamage(int damage)

@@ -24,7 +24,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     private void OnEnable()
     {
         InputActions = new InputSystem_Actions();
-        InputActions.Enable();
+        //InputActions.Enable();
 
         InputActions.Player.Enable();
         InputActions.Player.SetCallbacks(this);

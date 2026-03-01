@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -28,6 +29,9 @@ public class UIManager : MonoBehaviour
     [Header("Escape Action")]
     [SerializeField] private InputActionAsset _actionAsset;
     [SerializeField] private string _escapeActionName = "UI/Escape";
+
+    public static event Action<bool> OnPauseGame;
+    public static event Action<bool> OnRestartGame;
 
     public string PlayerHealthText { get => _pHealthText.text; set => _pHealthText.text = value; }
     public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
@@ -186,22 +190,44 @@ public class UIManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        OnPauseGame?.Invoke(true);
+
+        CursorState(false, true);
+
         _pauseMenu.SetActive(true);
     }
 
     public void ResumeGame()
     {
         Time.timeScale = 1f;
+        OnPauseGame?.Invoke(false);
+
+        CursorState(true, false);
+
         _pauseMenu.SetActive(false);
     }
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        
+        OnRestartGame?.Invoke(false);
+
+        Restart();
+    }
+
+    public void FullRestartGame()
+    {
+        OnRestartGame?.Invoke(true);
+
+        Restart();
+    }
+
+    private void Restart()
+    {
         CursorState(false, true);
-        _pauseMenu.SetActive(false);
+
         _deathMenu.SetActive(false);
+
+        ResumeGame();
     }
 
     public void QuitGame()

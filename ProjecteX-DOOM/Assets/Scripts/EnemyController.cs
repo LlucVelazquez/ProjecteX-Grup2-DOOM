@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyHealth), typeof(FollowBehaviour), typeof(AttackBehaviour))]
 [RequireComponent(typeof(ProjectileFiringBehaviour))]
-public class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour, IResettable
 {
     // In chase and attack states the enmey contiunes shooting
     // And in attack state continues chasing
@@ -15,6 +15,7 @@ public class EnemyController : MonoBehaviour
     private ProjectileFiringBehaviour _pfb;
 
     private State _currentState;
+    private Vector3 _initialPosition;
 
     private void Awake()
     {
@@ -25,6 +26,12 @@ public class EnemyController : MonoBehaviour
         _pfb = GetComponent<ProjectileFiringBehaviour>();
 
         _currentState = State.Idle;
+        _initialPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.RegisterResettable(this);
     }
 
     private void Update()
@@ -131,6 +138,12 @@ public class EnemyController : MonoBehaviour
     {
         _fb.StopFollow();
 
-        Debug.Log("Enemy Die");
+        gameObject.SetActive(false);
+    }
+
+    public void OnReset(bool fullRestart)
+    {
+        transform.position = _initialPosition;
+        gameObject.SetActive(true);
     }
 }
