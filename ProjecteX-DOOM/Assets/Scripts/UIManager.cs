@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class UIManager : MonoBehaviour
 {
@@ -182,9 +183,11 @@ public class UIManager : MonoBehaviour
     public void ShowDeathMenu()
     {
         Time.timeScale = 0f;
-        _deathMenu.SetActive(true);
+        OnPauseGame?.Invoke(true);
 
         CursorState(false, true);
+
+        _deathMenu.SetActive(true);
     }
 
     public void PauseGame()
