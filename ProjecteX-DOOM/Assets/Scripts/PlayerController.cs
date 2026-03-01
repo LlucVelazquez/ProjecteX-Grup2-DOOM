@@ -134,7 +134,5 @@ public class PlayerController : MonoBehaviour
         cc.enabled = false;
         transform.position = position;
         cc.enabled = true;
-
-        GetComponent<PlayerHealth>()?.ResetHealth();
     }
 }

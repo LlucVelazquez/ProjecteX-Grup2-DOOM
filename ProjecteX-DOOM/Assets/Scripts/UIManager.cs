@@ -116,7 +116,7 @@ public class UIManager : MonoBehaviour
     private void UpdateHUDMegaarmor(int megaarmor)
     {
         PlayerArmorText = $"{megaarmor}";
-        _pArmorText.color = _pMegaarmorTextColor;
+        if (megaarmor != 0) _pArmorText.color = _pMegaarmorTextColor;
     }
 
     private void UpdateHUDAmmunition(int ammo)

@@ -47,6 +47,9 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     private int _currentAmmo;
     private bool _isShooting = false;
 
+    private void OnEnable() => UIManager.OnRestartGame += ResetAmmo;
+    private void OnDisable() => UIManager.OnRestartGame -= ResetAmmo;
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -57,6 +60,11 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     private void Start()
     {
         OnAmmunitionChange?.Invoke(_currentAmmo);
+    }
+
+    private void ResetAmmo(bool fullRestart)
+    {
+        CurrentAmmunition = _initialAmmunition;
     }
 
     public void Use()
