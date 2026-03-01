@@ -371,26 +371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleBehaviour
   _item: {fileID: 11400000, guid: 50bbc0004c6454f4f88e0a6bf06333ca, type: 2}
---- !u!1 &539473146 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4874513364830838794, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-  m_PrefabInstance: {fileID: 8926064247591687633}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &539473149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539473146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ff3965ec8151e142be3ffd2f3ff6653, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BloodEffect
-  _bloodEffectMat: {fileID: 2100000, guid: f3b4f7de192d29f4baf46506500a3263, type: 2}
-  _bloodEffectVignetteRadiusName: VignetteRadius
-  _effectInterval: 1
 --- !u!1 &544922657
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,22 +2637,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 54555248759254143, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 54555248759254143, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 54555248759254143, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 54555248759254143, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1104613282641720636, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2718,22 +2682,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1543274352964132603, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887218937915890478, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887218937915890478, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887218937915890478, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1887218937915890478, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
@@ -2864,10 +2812,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4874513364830838794, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 539473149}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e40d0e4c924af0046b69cd72e20ec216, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -1335,6 +1335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4501868695636781433}
   - component: {fileID: 7037276365722706718}
+  - component: {fileID: 1266388191123739637}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -1382,6 +1383,24 @@ MonoBehaviour:
   _interactionText: {fileID: 0}
   _actionAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   _escapeActionName: UI/Escape
+--- !u!114 &1266388191123739637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4874513364830838794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ff3965ec8151e142be3ffd2f3ff6653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloodEffect
+  _effectsDamageInterval: 1
+  _effectsDuration: 0.3
+  _damageEffectVignetteRadiusName: VignetteRadius
+  _damageEffectBlurMultiplierName: BlurMultiplier
+  _damageEffectBlurTintName: BlurTint
+  _damageEffectTint: {r: 1, g: 0.6, b: 0.6, a: 0}
 --- !u!1 &5268971763205213303
 GameObject:
   m_ObjectHideFlags: 0
