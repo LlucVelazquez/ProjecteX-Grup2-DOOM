@@ -33,6 +33,11 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
                 OnLowHealth?.Invoke(_isLowHealth);
             }
 
+            if (_health <= 0)
+            {
+                _health = 0;
+            }
+
             OnHealthChange?.Invoke(value);
         }
     }
@@ -42,7 +47,7 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         set
         {
             _armor = value;
-            if (value != 0) OnArmorChange?.Invoke(value);
+            if (value != 0 || _restarted) OnArmorChange?.Invoke(value);
         }
     }
     public int Megaarmor
@@ -51,12 +56,16 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         set
         {
             _megaarmor = value;
-            if (value != 0) OnMegaarmorChange?.Invoke(value);
+            if (value != 0 || _restarted) OnMegaarmorChange?.Invoke(value);
         }
     }
 
     private bool _isLowHealth = false;
     private int _initialHealth, _initialArmor, _initialMegaarmor;
+    private bool _restarted = false;
+
+    private void OnEnable() => UIManager.OnRestartGame += ResetHealth;
+    private void OnDisable() => UIManager.OnRestartGame -= ResetHealth;
 
     private void Awake()
     {
@@ -71,11 +80,15 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         OnArmorChange?.Invoke(_armor);
     }
 
-    public void ResetHealth()
+    private void ResetHealth(bool fullRestart)
     {
+        _restarted = true;
+
         Health = _initialHealth;
         Armor = _initialArmor;
         Megaarmor = _initialMegaarmor;
+
+        _restarted = false;
     }
 
     public void TakeDamage(int damage)
