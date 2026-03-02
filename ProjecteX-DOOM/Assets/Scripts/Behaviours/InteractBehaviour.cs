@@ -22,6 +22,14 @@ public class InteractBehaviour : MonoBehaviour
             {
                 UIManager.Instance.InteractionText = _interactable.InteractionPrompt;
             }
+            else
+            {
+                UIManager.Instance.InteractionText = "";
+            }
+        }
+        else
+        {
+            UIManager.Instance.InteractionText = "";
         }
     }
 }
