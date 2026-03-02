@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     [Header("Player (P) HUD")]
     [SerializeField] private TextMeshProUGUI _pNotificationText;
     [SerializeField] private float _pNotificationTime = 1f;
+    [SerializeField] private TextMeshProUGUI _pObjectiveListText;
     [SerializeField] private TextMeshProUGUI _pHealthText;
     [SerializeField] private TextMeshProUGUI _pArmorText;
     [SerializeField] private TextMeshProUGUI _pAmmoText;
