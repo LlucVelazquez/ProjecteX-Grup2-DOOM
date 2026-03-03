@@ -6,6 +6,8 @@ public class CamRotationBehaviour : MonoBehaviour
     public CinemachineCamera Camera { get => _cam; private set => _cam = value; }
 
     [SerializeField] private CinemachineCamera _cam;
+    [SerializeField] private string _sensitivityKey = "Sensitivity";
+    [SerializeField] private float _defaultSensitivity = 0.1f;
 
     public float lookSense = 0.1f;
     public float lookLimitV = 89f;
@@ -20,5 +22,10 @@ public class CamRotationBehaviour : MonoBehaviour
 
         _cam.transform.localRotation = Quaternion.Euler(_cameraRotation.y, 0f, 0f);
         targetYRotation = _cameraRotation.x;
+    }
+
+    public void UpdateSensitivity()
+    {
+        lookSense = PlayerPrefs.GetFloat(_sensitivityKey, _defaultSensitivity);
     }
 }

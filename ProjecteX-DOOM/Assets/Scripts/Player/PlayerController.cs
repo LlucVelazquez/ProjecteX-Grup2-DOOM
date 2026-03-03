@@ -23,8 +23,18 @@ public class PlayerController : MonoBehaviour
     private float _yRotation;
     private int _currentWeaponIndex;
 
-    private void OnEnable() => UIManager.OnPauseGame += SetPlayerInputsState;
-    private void OnDisable() => UIManager.OnPauseGame -= SetPlayerInputsState;
+    private void OnEnable()
+    {
+        OptionsMenuManager.OnOptionsChange += UpdateSense;
+
+        UIManager.OnPauseGame += SetPlayerInputsState;
+    }
+    private void OnDisable()
+    {
+        OptionsMenuManager.OnOptionsChange -= UpdateSense;
+
+        UIManager.OnPauseGame -= SetPlayerInputsState;
+    }
 
     private void Awake()
     {
@@ -60,6 +70,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.CursorState(true, false);
+
+        UpdateSense();
     }
 
     private void Update()
@@ -120,6 +132,11 @@ public class PlayerController : MonoBehaviour
     {
         _crb.RotateCamera(_playerInputs.Look, out _yRotation);
         transform.localRotation = Quaternion.Euler(0f, _yRotation, 0f);
+    }
+
+    private void UpdateSense()
+    {
+        _crb.UpdateSensitivity();
     }
 
     private void SetPlayerInputsState(bool state)
