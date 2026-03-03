@@ -24,6 +24,7 @@ public class UIManager : MonoBehaviour
     [Header("Menus")]
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _deathMenu;
+    [SerializeField] private GameObject _optionsMenu;
 
     [Header("UI")]
     [SerializeField] private TextMeshProUGUI _interactionText;
@@ -101,6 +102,10 @@ public class UIManager : MonoBehaviour
         }
 
         _pArmorTextDefaultColor = _pArmorText.color;
+
+        _pauseMenu.SetActive(false);
+        _deathMenu.SetActive(false);
+        _optionsMenu.SetActive(false);
     }
 
     private void UpdateHUDHealth(int health)
@@ -232,6 +237,11 @@ public class UIManager : MonoBehaviour
         _deathMenu.SetActive(false);
 
         ResumeGame();
+    }
+
+    public void Options()
+    {
+        _optionsMenu.GetComponentInParent<OptionsMenuManager>().ShowOptionsMenu(_pauseMenu);
     }
 
     public void QuitGame()
