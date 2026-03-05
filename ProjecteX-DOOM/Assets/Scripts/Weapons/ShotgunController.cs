@@ -9,6 +9,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     [SerializeField] private Transform _shootPoint;
     [SerializeField] private Camera _camera;
     [SerializeField] private Sprite _shotgunIcon;
+    [SerializeField] private GameObject _muzzleFlash;
 
     [Header("Shotgun Settings")]
     [SerializeField] private int _damageMulti = 5;
@@ -100,6 +101,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
             Debug.DrawRay(_shootPoint.transform.position, spreadDirection * _range, Color.red, 1f);
         }
 
+        Instantiate(_muzzleFlash, _shootPoint.position, Quaternion.identity, _shootPoint);
         StartCoroutine(ShootCooldown());
     }
 

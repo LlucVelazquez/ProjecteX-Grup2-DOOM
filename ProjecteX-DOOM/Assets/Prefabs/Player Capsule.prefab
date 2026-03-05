@@ -194,6 +194,7 @@ MonoBehaviour:
   _health: 90
   _armor: 0
   _megaarmor: 0
+  _lowHealthValue: 20
 --- !u!114 &8283598232818506167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CamRotationBehaviour
   _cam: {fileID: 991990357920589034}
+  _sensitivityKey: Sensitivity
+  _defaultSensitivity: 0.1
   lookSense: 0.1
   lookLimitV: 89
 --- !u!114 &1145339869091168126
@@ -1212,7 +1215,9 @@ MonoBehaviour:
   _shootPoint: {fileID: 2292694699977999706}
   _camera: {fileID: 8199730778366713175}
   _shotgunIcon: {fileID: 1586850586, guid: 06f2415d3409f4d46be7704c08f74bbc, type: 3}
+  _muzzleFlash: {fileID: 6153715731770899799, guid: 66af7f13deba70f4da78759ec3e94b97, type: 3}
   _damageMulti: 5
+  _maxBaseDamage: 3
   _range: 100
   _pellets: 7
   _initialAmmunition: 8

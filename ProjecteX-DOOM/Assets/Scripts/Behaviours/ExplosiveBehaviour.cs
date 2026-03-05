@@ -6,6 +6,7 @@ public class ExplosiveBehaviour : MonoBehaviour
 
     [Tooltip("El dom utilitza unitats de mapa, en comptes de metres, 1 metre = 32 unitats de mapa")]
     [SerializeField] private float _units = 32f;
+    [SerializeField] private GameObject _explosion;
     [SerializeField] private LayerMask _targetLayers;
     [SerializeField] private LayerMask _obstacleLayers;
 
@@ -41,6 +42,8 @@ public class ExplosiveBehaviour : MonoBehaviour
                 }
             }
         }
+
+        Instantiate(_explosion, transform.position, Quaternion.identity);
     }
 
     private void OnDrawGizmosSelected()
