@@ -15,6 +15,8 @@ public class MainMenuManager : MonoBehaviour
     private void Start()
     {
         ShowMainMenu();
+
+        AudioManager.Instance.PlayeMusic(MusicType.MainMusic);
     }
 
     public void ShowMainMenu()
