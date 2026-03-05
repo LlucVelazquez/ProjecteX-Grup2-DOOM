@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyHealth), typeof(FollowBehaviour), typeof(AttackBehaviour))]
-[RequireComponent(typeof(ProjectileFiringBehaviour))]
+[RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimation), typeof(FollowBehaviour))]
+[RequireComponent(typeof(AttackBehaviour), typeof(ProjectileFiringBehaviour))]
 public class EnemyController : MonoBehaviour, IResettable
 {
     // In chase and attack states the enmey contiunes shooting
@@ -112,7 +112,7 @@ public class EnemyController : MonoBehaviour, IResettable
         
         if (_currentState != State.Attack)
         {
-            _pfb.Shoot(DistanceUtils.GetDirection(transform.position, _fb.TargetPosition));
+            _pfb.Shoot(DistanceUtils.GetDirection(_pfb.ShootPointPosition, _fb.TargetPosition));
 
             if (DistanceUtils.IsInRange(transform.position, _fb.TargetPosition, _ab.attackRange))
             {

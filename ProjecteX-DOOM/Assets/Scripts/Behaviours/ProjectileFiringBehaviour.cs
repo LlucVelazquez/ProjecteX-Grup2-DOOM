@@ -10,6 +10,8 @@ public class ProjectileFiringBehaviour : MonoBehaviour
     [SerializeField] private int projectileDamageMulti = 3;
     [SerializeField] private int projectileMaxBaseDamage = 8;
 
+    public Vector3 ShootPointPosition => _shootPoint.position;
+
     public static Stack<GameObject> ProjectileStack = new Stack<GameObject>();
 
     public string targetLayerName;
@@ -35,13 +37,14 @@ public class ProjectileFiringBehaviour : MonoBehaviour
 
     private void SpawnProjectile(Vector3 direction)
     {
-        _projectile.GetComponent<ProjectileBehaviour>().shooter = this;
-        _projectile.GetComponent<ProjectileBehaviour>().speed = projectileSpeed;
-        _projectile.GetComponent<ProjectileBehaviour>().damageMulti = projectileDamageMulti;
-        _projectile.GetComponent<ProjectileBehaviour>().maxBaseDamage = projectileMaxBaseDamage;
-        _projectile.GetComponent<ProjectileBehaviour>().direction = direction;
+        GameObject projectile = Instantiate(_projectile, _shootPoint.position, Quaternion.LookRotation(direction));
+        ProjectileBehaviour pb = projectile.GetComponent<ProjectileBehaviour>();
 
-        Instantiate(_projectile, _shootPoint.position, _shootPoint.rotation);
+        pb.shooter = this;
+        pb.speed = projectileSpeed;
+        pb.damageMulti = projectileDamageMulti;
+        pb.maxBaseDamage = projectileMaxBaseDamage;
+        pb.direction = direction;
     }
 
     public void ProjectileStackPush(GameObject go)
@@ -54,11 +57,9 @@ public class ProjectileFiringBehaviour : MonoBehaviour
     {
         GameObject go = ProjectileStack.Pop();
 
-        go.SetActive(true);
-
         go.transform.position = _shootPoint.position;
-        go.transform.rotation = _shootPoint.rotation;
-
+        go.transform.rotation = Quaternion.LookRotation(direction);
         go.GetComponent<ProjectileBehaviour>().direction = direction;
+        go.SetActive(true);
     }
 }

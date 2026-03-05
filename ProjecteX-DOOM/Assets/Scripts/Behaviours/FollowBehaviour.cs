@@ -25,6 +25,12 @@ public class FollowBehaviour : MonoBehaviour
 
         initialPosition = transform.position;
         initialRotation = transform.rotation;
+
+        Debug.Log($"gameObject layer: {gameObject.layer} ({LayerMask.LayerToName(gameObject.layer)})");
+        Debug.Log($"target layer: {_followTarget.layer} ({LayerMask.LayerToName(_followTarget.layer)})");
+        Debug.Log($"ignoreLayers value: {_ignoreLayers.value}");
+        Debug.Log($"~ignoreLayers value: {(~_ignoreLayers)}");
+        Debug.Log($"Wall layer number: {LayerMask.NameToLayer("Default")}");
     }
 
     public bool IsTargetWithinTheLineOfSight()
