@@ -27,14 +27,31 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    [Header("Volume Keys")]
+    [SerializeField] private string _masterVolumeKey = "MasterVolume";
+    [SerializeField] private string _musicVolumeKey = "MusicVolume";
+    [SerializeField] private string _sfxVolumeKey = "SfXVolume";
+
+    [Header("Deafult Volumes")]
+    [SerializeField] private float _defaultMasterVolume = 1f;
+    [SerializeField] private float _defaultMusicVolume = 1f;
+    [SerializeField] private float _defaultSFXVolume = 1f;
+
+    [Header("Audio Clips")]
     [SerializeField] private MusicList[] _musics = new MusicList[0];
     [SerializeField] private SoundList[] _sounds = new SoundList[0];
 
     private AudioSource _musicSource;
     private AudioSource _soundSource;
 
+    private float _masterVolume;
+    private float _musicVolume;
+    private float _sfxVolume;
+
     private void OnEnable()
     {
+        OptionsMenuManager.OnOptionsChange += UpdateVolumes;
+
 #if UNITY_EDITOR
         string[] soundNames = Enum.GetNames(typeof(SoundType));
         string[] musicNames = Enum.GetNames(typeof(MusicType));
@@ -51,6 +68,11 @@ public class AudioManager : MonoBehaviour
             _musics[i].name = musicNames[i];
         }
 #endif
+    }
+
+    private void OnDisable()
+    {
+        OptionsMenuManager.OnOptionsChange -= UpdateVolumes;
     }
 
     private void Reset()
@@ -83,14 +105,39 @@ public class AudioManager : MonoBehaviour
         _musicSource.loop = true;
     }
 
-    public void PlaySound(SoundType sound, float volume = 1f)
+    private void Start()
+    {
+        UpdateVolumes();
+    }
+
+    private void UpdateVolumes()
+    {
+        _masterVolume = PlayerPrefs.GetFloat(_masterVolumeKey, _defaultMasterVolume);
+        _musicVolume = PlayerPrefs.GetFloat(_musicVolumeKey, _defaultMusicVolume);
+        _sfxVolume = PlayerPrefs.GetFloat(_sfxVolumeKey, _defaultSFXVolume);
+
+        _musicSource.volume = _musicVolume * _masterVolume;
+        _soundSource.volume = _sfxVolume * _masterVolume;
+    }
+
+    public void PlaySound(SoundType sound)
+    {
+        PlaySound(sound, _sfxVolume * _masterVolume);
+    }
+
+    public void PlaySound(SoundType sound, float volume)
     {
         AudioClip[] clips = _sounds[(int)sound].SoundClips;
         AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];
         _soundSource.PlayOneShot(rclip, volume);
     }
 
-    public void PlayeMusic(MusicType music, float volume = 1f)
+    public void PlayeMusic(MusicType music)
+    {
+        PlayeMusic(music, _musicVolume * _masterVolume);
+    }
+
+    public void PlayeMusic(MusicType music, float volume)
     {
         _musicSource.clip = _musics[(int)music].MusicClip;
         _musicSource.volume = volume;
