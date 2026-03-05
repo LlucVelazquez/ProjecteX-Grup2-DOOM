@@ -245,6 +245,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CollectibleBehaviour
   _item: {fileID: 11400000, guid: 71ecd491a9a60e34388b671efe45496c, type: 2}
+--- !u!1 &319679291
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 319679292}
+  m_Layer: 0
+  m_Name: Shoot Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &319679292
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319679291}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7327590093995350751}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &386209065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,7 +1163,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957288027}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
@@ -1164,7 +1195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957288027}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
   m_Name: 
@@ -4939,7 +4970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4773909031969971555, guid: 00116c569cee94241830c75a8b7ffd13, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5895,6 +5926,7 @@ Transform:
   m_Children:
   - {fileID: 1801441006074743361}
   - {fileID: 510095099869751476}
+  - {fileID: 319679292}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7359889010764459391
@@ -6154,15 +6186,17 @@ GameObject:
   - component: {fileID: 7996991003421818986}
   - component: {fileID: 7996991003421818985}
   - component: {fileID: 7996991003421818984}
+  - component: {fileID: 7996991003421818990}
   - component: {fileID: 7996991003421818983}
   - component: {fileID: 7996991003421818982}
+  - component: {fileID: 7996991003421818991}
   m_Layer: 0
   m_Name: Enemy Imp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &7996991003421818982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6187,8 +6221,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a1a73fc903409488b6f8c7d3a027c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileFiringBehaviour
-  _projectile: {fileID: 0}
-  _shootPoint: {fileID: 0}
+  _projectile: {fileID: 7903899614087611412, guid: f5ce23450822320419c53ec034cc1b4f, type: 3}
+  _shootPoint: {fileID: 319679292}
   _shootInterval: 3
   projectileSpeed: 5
   projectileDamageMulti: 3
@@ -6206,8 +6240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88f4694f4995abb40af6104c1ee393d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttackBehaviour
-  _attackCollider: {fileID: 0}
-  _targetLayerName: 
+  _attackCollider: {fileID: 7996991003421818990}
+  _targetLayerName: Player
   _damageMulti: 3
   _maxBaseDamage: 8
   _damageInterval: 1
@@ -6227,7 +6261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f710ccfc9dfd8c74cb5ad90b22117fba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FollowBehaviour
-  _followTarget: {fileID: 0}
+  _followTarget: {fileID: 3475980431200460157}
   _followRange: 10
   _ignoreLayers:
     serializedVersion: 2
@@ -6312,6 +6346,41 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &7996991003421818990
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7996991003421818981}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1, z: 1}
+  m_Center: {x: 0, y: 1.15, z: 0.75}
+--- !u!114 &7996991003421818991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7996991003421818981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8609127b87650d4ebe13a6f95adea52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAnimation
+  _animationTransitionSpeed: 10
+  _velocityParam: Velocity
 --- !u!1 &8138350759246617211
 GameObject:
   m_ObjectHideFlags: 0
