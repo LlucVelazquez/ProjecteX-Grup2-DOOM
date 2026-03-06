@@ -16,6 +16,8 @@ public class EnemyController : MonoBehaviour, IResettable
 
     private State _currentState;
     private Vector3 _initialPosition;
+    private Quaternion _initialRotation;
+    private int _initialHealth;
 
     private void Awake()
     {
@@ -27,6 +29,8 @@ public class EnemyController : MonoBehaviour, IResettable
 
         _currentState = State.Idle;
         _initialPosition = transform.position;
+        _initialRotation = transform.rotation;
+        _initialHealth = _health.Health;
     }
 
     private void Start()
@@ -143,7 +147,9 @@ public class EnemyController : MonoBehaviour, IResettable
 
     public void OnReset(bool fullRestart)
     {
-        transform.position = _initialPosition;
+        transform.SetPositionAndRotation(_initialPosition, _initialRotation);
+        _health.Health = _initialHealth;
+        _currentState = State.Idle;
         gameObject.SetActive(true);
     }
 }

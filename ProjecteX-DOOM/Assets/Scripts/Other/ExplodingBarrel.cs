@@ -10,12 +10,14 @@ public class ExplodingBarrel : MonoBehaviour, ITargeteable, IResettable
     private ExplosiveBehaviour _exb;
 
     private Vector3 _initialPosition;
+    private int _initialHealth;
 
     private void Awake()
     {
         _exb = GetComponent<ExplosiveBehaviour>();
 
         _initialPosition = transform.position;
+        _initialHealth = _health;
     }
 
     private void Start()
@@ -38,6 +40,7 @@ public class ExplodingBarrel : MonoBehaviour, ITargeteable, IResettable
     public void OnReset(bool fullRestart)
     {
         transform.position = _initialPosition;
+        Health = _initialHealth;
         gameObject.SetActive(true);
     }
 }

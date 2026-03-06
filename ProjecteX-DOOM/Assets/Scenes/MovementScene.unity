@@ -8617,7 +8617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0811cf2dd7120744f89250abf9969132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
-  _health: 10
+  _health: 60
 --- !u!136 &7996991003421818988
 CapsuleCollider:
   m_ObjectHideFlags: 0
