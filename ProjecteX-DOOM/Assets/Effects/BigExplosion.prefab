@@ -24398,6 +24398,7 @@ GameObject:
   - component: {fileID: 2460731275740677255}
   - component: {fileID: 2010445565228966922}
   - component: {fileID: 7763461687215712521}
+  - component: {fileID: 1835979724346855314}
   m_Layer: 0
   m_Name: BigExplosion
   m_TagString: Untagged
@@ -29334,6 +29335,18 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &1835979724346855314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4711341645958794163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04c370558c952e45a17d8949f28e7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuicideEffectBehaviour
 --- !u!1 &6063063479598156630
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
 
     public int CurrentWeaponIndex { get => _currentWeaponIndex; set => _currentWeaponIndex = value - 1; }
 
-    public static event Action<bool> OnWeaponChangeHasAmmo;
     public static event Action<GameObject> OnWeaponChange;
 
     private float _yRotation;
@@ -119,11 +118,11 @@ public class PlayerController : MonoBehaviour
 
     private void WeaponHandler()
     {
-        if (_currentWeaponIndex != _playerInputs.SelectedWeapon - 1)
+        if (_currentWeaponIndex != _playerInputs.SelectedWeapon - 1 && _wsb.CanSwitchWeapon())
         {
             CurrentWeaponIndex = _playerInputs.SelectedWeapon;
             _wsb.SwitchWeapon(CurrentWeaponIndex);
-            OnWeaponChangeHasAmmo?.Invoke(_wsb.CurrentWeaponHasAmmo());
+
             OnWeaponChange?.Invoke(_wsb.CurrentWeapon);
         }
     }

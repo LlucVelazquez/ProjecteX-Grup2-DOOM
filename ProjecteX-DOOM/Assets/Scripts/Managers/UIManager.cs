@@ -55,8 +55,7 @@ public class UIManager : MonoBehaviour
         
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
         
-        PlayerController.OnWeaponChangeHasAmmo += ShowAmmoText;
-        PlayerController.OnWeaponChange += ShowWeaponIcon;
+        PlayerController.OnWeaponChange += ShowWeaponUI;
         
         CollectibleEvents.OnCollect += ShowHUDNotification;
 
@@ -74,8 +73,7 @@ public class UIManager : MonoBehaviour
         
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
         
-        PlayerController.OnWeaponChangeHasAmmo -= ShowAmmoText;
-        PlayerController.OnWeaponChange -= ShowWeaponIcon;
+        PlayerController.OnWeaponChange -= ShowWeaponUI;
         
         CollectibleEvents.OnCollect -= ShowHUDNotification;
 
@@ -130,12 +128,7 @@ public class UIManager : MonoBehaviour
         PlayerAmmoText = $"{ammo}";
     }
 
-    private void ShowAmmoText(bool state)
-    {
-        _pAmmoText.enabled = state;
-    }
-
-    private void ShowWeaponIcon(GameObject weapon)
+    private void ShowWeaponUI(GameObject weapon)
     {
         if (weapon.TryGetComponent<IIconable>(out var iconable))
         {
@@ -145,6 +138,15 @@ public class UIManager : MonoBehaviour
         else
         {
             _pWeaponImage.gameObject.SetActive(false);
+        }
+
+        if (weapon.TryGetComponent<IRefillable>(out var refillable))
+        {
+            _pAmmoText.text = $"{refillable.CurrentAmmunition}";
+        }
+        else
+        {
+            _pAmmoText.text = "";
         }
     }
 

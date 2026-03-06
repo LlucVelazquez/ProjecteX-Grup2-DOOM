@@ -7,17 +7,15 @@ public class WeaponSwitchBehaviour : MonoBehaviour
 {
     [SerializeField] private List<GameObject> _weapons;
 
-    public GameObject _currentWeapon;
-
     public GameObject CurrentWeapon { get => _currentWeapon; }
 
-    public IUsable GetCurrentUsable() => _currentWeapon.GetComponent<IUsable>();
+    public GameObject _currentWeapon;
 
-    public void SwitchWeapon(int index)
+    private void Awake()
     {
-        _currentWeapon = _weapons[index];
+        _currentWeapon = _weapons[0];
 
-        foreach(GameObject weapon in _weapons)
+        foreach (GameObject weapon in _weapons)
         {
             if (weapon == _currentWeapon)
                 weapon.SetActive(true);
@@ -26,8 +24,26 @@ public class WeaponSwitchBehaviour : MonoBehaviour
         }
     }
 
-    public bool CurrentWeaponHasAmmo()
+    public IUsable GetCurrentUsable() => _currentWeapon.GetComponent<IUsable>();
+
+    public bool CanSwitchWeapon() => !_currentWeapon.TryGetComponent<IUsable>(out var usable) || !usable.Using;
+
+    public void SwitchWeapon(int index)
     {
-        return _currentWeapon.TryGetComponent<IRefillable>(out _);
+        if (index < _weapons.Count)
+        {
+            if (_currentWeapon.TryGetComponent<IUsable>(out var usable) && usable.Using)
+                return;
+
+            _currentWeapon = _weapons[index];
+
+            foreach (GameObject weapon in _weapons)
+            {
+                if (weapon == _currentWeapon)
+                    weapon.SetActive(true);
+                else
+                    weapon.SetActive(false);
+            }
+        }
     }
 }

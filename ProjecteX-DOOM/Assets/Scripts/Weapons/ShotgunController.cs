@@ -30,6 +30,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     [SerializeField] private string _animPumpStateName = "Pump Handle";
 
     public Sprite Icon { get => _shotgunIcon; }
+    public bool Using { get => _isShooting; }
     public WeaponType Weapon { get => WeaponType.Shotgun; }
     public int CurrentAmmunition
     {

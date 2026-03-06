@@ -4917,6 +4917,7 @@ GameObject:
   - component: {fileID: 3895734476523952620}
   - component: {fileID: 5398979274347073092}
   - component: {fileID: 3489346023193753312}
+  - component: {fileID: 9205654246408695507}
   m_Layer: 0
   m_Name: MuzzleFlash
   m_TagString: Untagged
@@ -9813,3 +9814,15 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &9205654246408695507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6153715731770899799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c04c370558c952e45a17d8949f28e7b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SuicideEffectBehaviour
