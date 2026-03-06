@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5305081676980842171}
   - component: {fileID: 2912884302300446402}
   - component: {fileID: 5529581027205791295}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Sphere Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,4 +156,5 @@ MonoBehaviour:
   shooter: {fileID: 0}
   direction: {x: -0.8760524, y: 0, z: 0.48221606}
   speed: 2
-  damage: 0
+  damageMulti: 0
+  maxBaseDamage: 0

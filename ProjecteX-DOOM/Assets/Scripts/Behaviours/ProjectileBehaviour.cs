@@ -28,7 +28,7 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != shooter.gameObject.layer)
+        if (other.gameObject.layer != shooter.gameObject.layer && other.gameObject.layer != gameObject.layer)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer(shooter.targetLayerName))
             {

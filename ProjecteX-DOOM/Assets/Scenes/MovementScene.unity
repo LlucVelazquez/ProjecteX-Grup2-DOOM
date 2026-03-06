@@ -9274,11 +9274,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileFiringBehaviour
   _projectile: {fileID: 7903899614087611412, guid: f5ce23450822320419c53ec034cc1b4f, type: 3}
   _shootPoint: {fileID: 319679292}
+  _shootProjectilesPerShot: 1
+  _shootIntervalPerShot: 0.1
+  _shootNoiseStrength: 0.1
   _shootInterval: 3
   projectileSpeed: 5
   projectileDamageMulti: 3
   projectileMaxBaseDamage: 8
-  targetLayerName: 
+  targetLayerName: Player
 --- !u!114 &7996991003421818984
 MonoBehaviour:
   m_ObjectHideFlags: 0

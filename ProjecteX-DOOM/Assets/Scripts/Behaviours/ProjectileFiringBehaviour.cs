@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,6 +6,9 @@ public class ProjectileFiringBehaviour : MonoBehaviour
 {
     [SerializeField] private GameObject _projectile;
     [SerializeField] private Transform _shootPoint;
+    [SerializeField] private int _shootProjectilesPerShot = 1;
+    [SerializeField] private float _shootIntervalPerShot = 0.1f;
+    [SerializeField] private float _shootNoiseStrength = 0.1f;
     [SerializeField] private float _shootInterval = 3f;
     [SerializeField] private float projectileSpeed = 5f;
     [SerializeField] private int projectileDamageMulti = 3;
@@ -22,6 +26,31 @@ public class ProjectileFiringBehaviour : MonoBehaviour
     {
         if (Time.time - _lastShootTime >= _shootInterval)
         {
+            if (_shootProjectilesPerShot > 1)
+            {
+                StartCoroutine(ShotCorrutine(direction));
+            }
+            else
+            {
+                if (ProjectileStack.Count == 0)
+                {
+                    SpawnProjectile(direction);
+                }
+                else
+                {
+                    ProjectileStackPop(direction);
+                }
+            }
+            _lastShootTime = Time.time;
+        }
+    }
+
+    private IEnumerator ShotCorrutine(Vector3 direction)
+    {
+        for (int i = 0; i < _shootProjectilesPerShot; i++)
+        {
+            direction = AddNoise(direction, _shootNoiseStrength);
+
             if (ProjectileStack.Count == 0)
             {
                 SpawnProjectile(direction);
@@ -30,9 +59,18 @@ public class ProjectileFiringBehaviour : MonoBehaviour
             {
                 ProjectileStackPop(direction);
             }
-
-            _lastShootTime = Time.time;
+            yield return new WaitForSeconds(_shootIntervalPerShot);
         }
+    }
+
+    Vector3 AddNoise(Vector3 direction, float strength)
+    {
+        Vector3 noise = new Vector3(
+            Random.Range(-strength, strength),
+            Random.Range(-strength, strength),
+            Random.Range(-strength, strength)
+        );
+        return (direction + noise).normalized;
     }
 
     private void SpawnProjectile(Vector3 direction)
