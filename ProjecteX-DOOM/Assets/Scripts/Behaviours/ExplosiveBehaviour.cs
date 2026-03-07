@@ -43,7 +43,7 @@ public class ExplosiveBehaviour : MonoBehaviour
             }
         }
 
-        AudioManager.Instance.PlaySound(SoundType.Explosion);
+        AudioManager.Instance.PlaySoundAtPoint(SoundType.Explosion, transform.position, minDist: _explosionRadius, maxDist: _explosionRadius * 5);
         Instantiate(_explosion, transform.position, Quaternion.identity);
     }
 

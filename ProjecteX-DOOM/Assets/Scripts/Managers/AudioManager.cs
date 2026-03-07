@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum SoundType
@@ -57,12 +58,17 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private MusicList[] _musics = new MusicList[0];
     [SerializeField] private SoundList[] _sounds = new SoundList[0];
 
+    [Header("Source Pool Settings")]
+    [SerializeField] private int _poolSize = 10;
+
     private AudioSource _musicSource;
     private AudioSource _soundSource;
+    private AudioSource[] _sourcePool;
 
     private float _masterVolume;
     private float _musicVolume;
     private float _sfxVolume;
+    private int _poolIndex = 0;
 
     private void OnEnable()
     {
@@ -119,6 +125,27 @@ public class AudioManager : MonoBehaviour
         _soundSource = GetComponents<AudioSource>()[1];
 
         _musicSource.loop = true;
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            DestroyImmediate(transform.GetChild(i).gameObject);
+        }
+
+        _sourcePool = new AudioSource[_poolSize];
+        for (int i = 0; i < _poolSize; i++)
+        {
+            GameObject obj = new GameObject($"PosAudioSource_{i}");
+            obj.transform.SetParent(transform);
+
+            AudioSource src = obj.AddComponent<AudioSource>();
+            src.playOnAwake = false;
+            src.spatialBlend = 1f;
+            src.rolloffMode = AudioRolloffMode.Logarithmic;
+            src.minDistance = 2f;
+            src.maxDistance = 30f;
+
+            _sourcePool[i] = src;
+        }
     }
 
     private void Start()
@@ -141,6 +168,22 @@ public class AudioManager : MonoBehaviour
         AudioClip[] clips = _sounds[(int)sound].SoundClips;
         AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];
         _soundSource.PlayOneShot(rclip, _sfxVolume * _masterVolume * volume);
+    }
+
+    public void PlaySoundAtPoint(SoundType sound, Vector3 position, float volume = 1f, float minDist = 2f, float maxDist = 30f)
+    {
+        AudioClip[] clips = _sounds[(int)sound].SoundClips;
+        AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];
+
+        AudioSource source = _sourcePool[_poolIndex];
+        _poolIndex = (_poolIndex + 1) % _poolSize;
+
+        source.transform.position = position;
+        source.minDistance = minDist;
+        source.maxDistance = maxDist;
+        source.clip = rclip;
+        source.volume = _sfxVolume * _masterVolume * volume;
+        source.Play();
     }
 
     public void PlayeMusic(MusicType music, float volume = 1f)

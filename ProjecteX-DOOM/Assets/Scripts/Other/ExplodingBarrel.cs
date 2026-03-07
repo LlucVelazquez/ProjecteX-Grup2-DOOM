@@ -27,7 +27,6 @@ public class ExplodingBarrel : MonoBehaviour, ITargeteable, IResettable
 
     public void TakeDamage(int damage)
     {
-        Debug.Log($"Barrel took {damage} damage!");
         _health -= damage;
 
         if (_health <= 0)
