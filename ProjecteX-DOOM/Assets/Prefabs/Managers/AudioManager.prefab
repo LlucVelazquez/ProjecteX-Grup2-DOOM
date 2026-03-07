@@ -46,6 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0dab13c897b9174fa790b9b8f765b01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  _masterVolumeKey: MasterVolume
+  _musicVolumeKey: MusicVolume
+  _sfxVolumeKey: SfXVolume
+  _defaultMasterVolume: 1
+  _defaultMusicVolume: 1
+  _defaultSFXVolume: 1
   _musics:
   - name: MainMusic
     _musicClip: {fileID: 8300000, guid: 014536b9783ca4b4cafbac59261876bd, type: 3}
@@ -87,11 +93,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: a13219c03e2f1fb43bf19d1e4ba0fa42, type: 3}
+  m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

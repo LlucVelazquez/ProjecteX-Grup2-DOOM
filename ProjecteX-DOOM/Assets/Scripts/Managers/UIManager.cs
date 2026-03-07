@@ -3,9 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Video;
 
 public class UIManager : MonoBehaviour
 {
@@ -20,6 +18,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _pAmmoText;
     [SerializeField] private Image _pWeaponImage;
     [SerializeField] private Color _pMegaarmorTextColor;
+
+    [Header("Lore")]
+    [SerializeField] private Image _loreIntroPanel;
+    [SerializeField] private TextMeshProUGUI _loreIntroText;
 
     [Header("Menus")]
     [SerializeField] private GameObject _pauseMenu;
@@ -59,6 +61,8 @@ public class UIManager : MonoBehaviour
         
         CollectibleEvents.OnCollect += ShowHUDNotification;
 
+        LoreIntroManager.OnIntroRequested += ShowLoreIntro;
+
         _escapeAction?.Enable();
         _escapeAction.performed += OnEscapePressed;
     }
@@ -76,6 +80,8 @@ public class UIManager : MonoBehaviour
         PlayerController.OnWeaponChange -= ShowWeaponUI;
         
         CollectibleEvents.OnCollect -= ShowHUDNotification;
+
+        LoreIntroManager.OnIntroRequested -= ShowLoreIntro;
 
         _escapeAction?.Disable();
         _escapeAction.performed -= OnEscapePressed;
@@ -168,6 +174,78 @@ public class UIManager : MonoBehaviour
     private void ShowLowHealthIndicator(bool lowHealth)
     {
         Debug.Log(lowHealth);
+    }
+
+    private void ShowLoreIntro(LoreTextSO loreData)
+    {
+        StartCoroutine(ShowLoreIntroCoroutine(loreData));
+    }
+
+    private IEnumerator ShowLoreIntroCoroutine(LoreTextSO loreData)
+    {
+        OnPauseGame?.Invoke(true);
+
+        _loreIntroPanel.gameObject.SetActive(true);
+        Color c = _loreIntroPanel.color;
+        c.a = 1f;
+        _loreIntroPanel.color = c;
+
+        yield return new WaitForSeconds(loreData.fadeDuration);
+
+        foreach (string text in loreData.texts)
+        {
+            _loreIntroText.text = text;
+
+            yield return StartCoroutine(FadeText(_loreIntroText, 0f, 1f, loreData.fadeDuration));
+
+            yield return new WaitForSeconds(loreData.displayDuration);
+
+            yield return StartCoroutine(FadeText(_loreIntroText, 1f, 0f, loreData.fadeDuration));
+        }
+
+        yield return StartCoroutine(FadeImage(_loreIntroPanel, 1f, 0f, loreData.fadeDuration));
+
+        _loreIntroPanel.gameObject.SetActive(false);
+
+        OnPauseGame?.Invoke(false);
+    }
+
+    private IEnumerator FadeText(TextMeshProUGUI text, float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        Color c = text.color;
+        c.a = from;
+        text.color = c;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            c.a = Mathf.Lerp(from, to, elapsed / duration);
+            text.color = c;
+            yield return null;
+        }
+
+        c.a = to;
+        text.color = c;
+    }
+
+    private IEnumerator FadeImage(Image image, float from, float to, float duration)
+    {
+        float elapsed = 0f;
+        Color c = image.color;
+        c.a = from;
+        image.color = c;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            c.a = Mathf.Lerp(from, to, elapsed / duration);
+            image.color = c;
+            yield return null;
+        }
+
+        c.a = to;
+        image.color = c;
     }
 
     public void CursorState(bool isLocked, bool isVisible)
