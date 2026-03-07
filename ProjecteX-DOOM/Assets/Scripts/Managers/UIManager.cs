@@ -63,8 +63,7 @@ public class UIManager : MonoBehaviour
 
         LoreIntroManager.OnIntroRequested += ShowLoreIntro;
 
-        _escapeAction?.Enable();
-        _escapeAction.performed += OnEscapePressed;
+        EnableEscape(true);
     }
 
     private void OnDisable()
@@ -83,8 +82,21 @@ public class UIManager : MonoBehaviour
 
         LoreIntroManager.OnIntroRequested -= ShowLoreIntro;
 
-        _escapeAction?.Disable();
-        _escapeAction.performed -= OnEscapePressed;
+        EnableEscape(false);
+    }
+
+    private void EnableEscape(bool enable)
+    {
+        if (enable)
+        {
+            _escapeAction?.Enable();
+            _escapeAction.performed += OnEscapePressed;
+        }
+        else
+        {
+            _escapeAction?.Disable();
+            _escapeAction.performed -= OnEscapePressed;
+        }
     }
 
     private void Awake()
@@ -184,6 +196,7 @@ public class UIManager : MonoBehaviour
     private IEnumerator ShowLoreIntroCoroutine(LoreTextSO loreData)
     {
         OnPauseGame?.Invoke(true);
+        EnableEscape(false);
 
         _loreIntroPanel.gameObject.SetActive(true);
         Color c = _loreIntroPanel.color;
@@ -208,6 +221,7 @@ public class UIManager : MonoBehaviour
         _loreIntroPanel.gameObject.SetActive(false);
 
         OnPauseGame?.Invoke(false);
+        EnableEscape(true);
     }
 
     private IEnumerator FadeText(TextMeshProUGUI text, float from, float to, float duration)

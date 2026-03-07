@@ -6,6 +6,8 @@ public enum SoundType
     PlayerFootsteps,
     PlayerSprintFootsteps,
     PlayerHurt,
+    PlayerLowHealth,
+    PlayerHighHeartbeat,
     PlayerDeath,
     ShotgunFire,
     ShotgunReload,
@@ -13,7 +15,21 @@ public enum SoundType
     SwordAirSlash,
     SwordSolidHit,
     SwordEnemyHit,
+    DoorOpen,
+    DoorClose,
+    ImpSight,
+    ImpAttack,
+    ImpDeath,
+    HealthItem,
+    ArmorItem,
+    AmmoItem,
+    ProjectileShoot,
+    Projectile,
+    ProjectileHit,
     BarrelExplosion,
+    SwitchOn,
+    SwitchOff,
+    SecretFound
 }
 
 public enum MusicType
@@ -120,27 +136,17 @@ public class AudioManager : MonoBehaviour
         _soundSource.volume = _sfxVolume * _masterVolume;
     }
 
-    public void PlaySound(SoundType sound)
-    {
-        PlaySound(sound, _sfxVolume * _masterVolume);
-    }
-
-    public void PlaySound(SoundType sound, float volume)
+    public void PlaySound(SoundType sound, float volume = 1f)
     {
         AudioClip[] clips = _sounds[(int)sound].SoundClips;
         AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];
-        _soundSource.PlayOneShot(rclip, volume);
+        _soundSource.PlayOneShot(rclip, _sfxVolume * _masterVolume * volume);
     }
 
-    public void PlayeMusic(MusicType music)
-    {
-        PlayeMusic(music, _musicVolume * _masterVolume);
-    }
-
-    public void PlayeMusic(MusicType music, float volume)
+    public void PlayeMusic(MusicType music, float volume = 1f)
     {
         _musicSource.clip = _musics[(int)music].MusicClip;
-        _musicSource.volume = volume;
+        _musicSource.volume = _musicVolume * _masterVolume * volume;
         _musicSource.Play();
     }
 }
