@@ -60,6 +60,17 @@ MonoBehaviour:
   _sounds:
   - name: PlayerFootsteps
     _soundClips:
+    - {fileID: 8300000, guid: 8bf7d77319ef3344b9e504c4c4286e5b, type: 3}
+    - {fileID: 8300000, guid: 3a9700646260e394ba90ba4136e6cf8b, type: 3}
+    - {fileID: 8300000, guid: a3abf12d4a2f62d43890d63cb303adc3, type: 3}
+    - {fileID: 8300000, guid: 4a785d89cde951048ae81072e11ef5d5, type: 3}
+    - {fileID: 8300000, guid: 8897c2168e36e1040b83281c48c3de1d, type: 3}
+    - {fileID: 8300000, guid: 7d906876aab769749baeead9ec8375a6, type: 3}
+    - {fileID: 8300000, guid: 1795c99f12f8ded4cb27427f527daaf9, type: 3}
+    - {fileID: 8300000, guid: edaaedeb2e3882e4580544e96ae363f4, type: 3}
+    - {fileID: 8300000, guid: 0b79d403ee651984d9388b15f0e4571d, type: 3}
+  - name: PlayerSprintFootsteps
+    _soundClips:
     - {fileID: 8300000, guid: 6d9990b0f3b0bb94e833b768a21dc13c, type: 3}
     - {fileID: 8300000, guid: 48d0b94dde9f2ba418cfad0676956284, type: 3}
     - {fileID: 8300000, guid: a6406b4a388d6d54fa4483259bcee548, type: 3}
@@ -69,16 +80,6 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 09455a0f18d871640aa9cf31446a00e4, type: 3}
     - {fileID: 8300000, guid: 426223b5be88fe647bde9bc98f00fcb5, type: 3}
     - {fileID: 8300000, guid: 299be71cfad070b478aae14621b499e8, type: 3}
-  - name: PlayerSprintFootsteps
-    _soundClips:
-    - {fileID: 8300000, guid: 7680e4c07ed85264481abb37c371654c, type: 3}
-    - {fileID: 8300000, guid: 1259b6134f6cb544088367f58b97d511, type: 3}
-    - {fileID: 8300000, guid: 1f2d5de8c4f06b540b5455434f0ebb2e, type: 3}
-    - {fileID: 8300000, guid: a41479afdc393b84490abfe613b66892, type: 3}
-    - {fileID: 8300000, guid: 7b8a340921fc0014683563e29ece9a33, type: 3}
-    - {fileID: 8300000, guid: db44f69de12ef1249850f67ef3f13351, type: 3}
-    - {fileID: 8300000, guid: baf8fe2dbc2393c4db572db74da76550, type: 3}
-    - {fileID: 8300000, guid: a97efc0f3f58b954c90fbace8ee48894, type: 3}
   - name: PlayerHurt
     _soundClips: []
   - name: PlayerLowHealth

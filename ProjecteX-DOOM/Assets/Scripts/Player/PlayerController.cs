@@ -7,8 +7,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [Header("Audio Footsetps Settings")]
-    [SerializeField] private float _walkStepInterval = 0.5f;
-    [SerializeField] private float sprintStepInterval = 0.3f;
+    [SerializeField] private float _walkStepInterval = 1f;
+    [SerializeField] private float sprintStepInterval = 2f;
 
     private PlayerInputs _playerInputs;
 
@@ -150,11 +150,11 @@ public class PlayerController : MonoBehaviour
         {
             if (!isSprinting)
             {
-                AudioManager.Instance.PlaySound(SoundType.PlayerFootsteps);
+                AudioManager.Instance.PlaySound(SoundType.PlayerFootsteps, 0.2f);
             }
             else
             {
-                AudioManager.Instance.PlaySound(SoundType.PlayerSprintFootsteps);
+                AudioManager.Instance.PlaySound(SoundType.PlayerSprintFootsteps, 0.2f);
             }
             _footstepTimer = stepInterval;
         }
