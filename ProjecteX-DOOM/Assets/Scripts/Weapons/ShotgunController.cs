@@ -83,6 +83,8 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
 
         CurrentAmmunition--;
 
+        AudioManager.Instance.PlaySound(SoundType.ShotgunFire);
+
         for (int i = 0; i < _pellets; i++)
         {
             Vector3 spreadDirection = GetSpreadDirection(_camera.transform.forward);
@@ -110,6 +112,8 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     {
         yield return new WaitForSeconds(_animWaitTime);
         _animator.SetTrigger(_animPumpParName);
+
+        AudioManager.Instance.PlaySound(SoundType.ShotgunReload);
 
         yield return null;
 
