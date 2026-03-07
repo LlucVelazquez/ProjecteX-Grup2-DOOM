@@ -26,7 +26,7 @@ public enum SoundType
     ProjectileShoot,
     Projectile,
     ProjectileHit,
-    BarrelExplosion,
+    Explosion,
     SwitchOn,
     SwitchOff,
     SecretFound

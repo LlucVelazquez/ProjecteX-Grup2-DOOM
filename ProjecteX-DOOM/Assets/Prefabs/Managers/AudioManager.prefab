@@ -89,9 +89,11 @@ MonoBehaviour:
   - name: PlayerDeath
     _soundClips: []
   - name: ShotgunFire
-    _soundClips: []
+    _soundClips:
+    - {fileID: 8300000, guid: 51f813255cb4c5d4fbb082d2d358399f, type: 3}
   - name: ShotgunReload
-    _soundClips: []
+    _soundClips:
+    - {fileID: 8300000, guid: bd2ba35734c68114c895c4e8e22fc59a, type: 3}
   - name: SwordEquip
     _soundClips: []
   - name: SwordAirSlash
@@ -122,8 +124,11 @@ MonoBehaviour:
     _soundClips: []
   - name: ProjectileHit
     _soundClips: []
-  - name: BarrelExplosion
-    _soundClips: []
+  - name: Explosion
+    _soundClips:
+    - {fileID: 8300000, guid: 8c60bbe32a6fa0e44aaef9ef6815cef7, type: 3}
+    - {fileID: 8300000, guid: 922b029542cbc524c8fa7d29678233cd, type: 3}
+    - {fileID: 8300000, guid: 518b8d42ea5f2a44792e09e752c3c96a, type: 3}
   - name: SwitchOn
     _soundClips: []
   - name: SwitchOff
