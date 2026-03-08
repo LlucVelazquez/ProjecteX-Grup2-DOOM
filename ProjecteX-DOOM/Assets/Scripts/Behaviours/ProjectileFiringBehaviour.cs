@@ -16,11 +16,18 @@ public class ProjectileFiringBehaviour : MonoBehaviour
 
     public Vector3 ShootPointPosition => _shootPoint.position;
 
-    public static Stack<GameObject> ProjectileStack = new Stack<GameObject>();
+    public Stack<GameObject> ProjectileStack = new Stack<GameObject>();
 
     public string targetLayerName;
 
+    private Transform _projectileContainer;
     private float _lastShootTime;
+
+    private void Awake()
+    {
+        GameObject container = new GameObject($"{gameObject.name}_Projectiles");
+        _projectileContainer = container.transform;
+    }
 
     public void Shoot(Vector3 direction)
     {
@@ -63,7 +70,7 @@ public class ProjectileFiringBehaviour : MonoBehaviour
         }
     }
 
-    Vector3 AddNoise(Vector3 direction, float strength)
+    private Vector3 AddNoise(Vector3 direction, float strength)
     {
         Vector3 noise = new Vector3(
             Random.Range(-strength, strength),
@@ -75,7 +82,7 @@ public class ProjectileFiringBehaviour : MonoBehaviour
 
     private void SpawnProjectile(Vector3 direction)
     {
-        GameObject projectile = Instantiate(_projectile, _shootPoint.position, Quaternion.LookRotation(direction));
+        GameObject projectile = Instantiate(_projectile, _shootPoint.position, Quaternion.LookRotation(direction), _projectileContainer);
         ProjectileBehaviour pb = projectile.GetComponent<ProjectileBehaviour>();
 
         pb.shooter = this;
@@ -95,6 +102,7 @@ public class ProjectileFiringBehaviour : MonoBehaviour
     {
         GameObject go = ProjectileStack.Pop();
 
+        go.transform.SetParent(_projectileContainer);
         go.transform.position = _shootPoint.position;
         go.transform.rotation = Quaternion.LookRotation(direction);
         go.GetComponent<ProjectileBehaviour>().direction = direction;

@@ -19,6 +19,7 @@ public enum SoundType
     DoorClose,
     ImpSight,
     ImpAttack,
+    ImpHurt,
     ImpDeath,
     HealthItem,
     ArmorItem,
@@ -29,7 +30,8 @@ public enum SoundType
     Explosion,
     SwitchOn,
     SwitchOff,
-    SecretFound
+    SecretFound,
+    None
 }
 
 public enum MusicType
@@ -155,6 +157,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(SoundType sound, float volume = 1f)
     {
+        if (sound == SoundType.None) return;
+
         AudioClip[] clips = _sounds[(int)sound].SoundClips;
         AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];
         _soundSource.PlayOneShot(rclip, _sfxVolume * _masterVolume * volume);
@@ -163,6 +167,7 @@ public class AudioManager : MonoBehaviour
     public void PlaySoundAtPoint(SoundType sound, Vector3 position, float volume = 1f, float minDist = 2f, float maxDist = 30f)
     {
         if (_sourcePool == null) return;
+        if (sound == SoundType.None) return;
 
         AudioClip[] clips = _sounds[(int)sound].SoundClips;
         AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];

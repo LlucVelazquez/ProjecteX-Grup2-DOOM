@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AttackBehaviour : MonoBehaviour
@@ -14,6 +15,8 @@ public class AttackBehaviour : MonoBehaviour
     public float attackRange = 2f;
 
     public bool CanAttack { set => _attackCollider.enabled = value; }
+
+    public event Action OnAttack;
 
     private ITargeteable _target;
     private Transform _targetTransform;
@@ -65,6 +68,7 @@ public class AttackBehaviour : MonoBehaviour
         {
             if (Time.time - _lastDamageTime >= _damageInterval)
             {
+                OnAttack?.Invoke();
                 _target.TakeDamage(DamageUtils.GetDamageByMulti(_maxBaseDamage, _damageMulti));
                 _lastDamageTime = Time.time;
             }

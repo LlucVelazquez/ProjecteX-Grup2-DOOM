@@ -2,9 +2,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
-public class EnemyAnimation : MonoBehaviour
+public class EnemyAnimMovement : MonoBehaviour
 {
-    [SerializeField] private float _animationTransitionSpeed = 10f;
+    [SerializeField] private float _transitionSpeed = 10f;
     [SerializeField] private string _velocityParam = "Velocity";
 
     private Animator _animator;
@@ -20,10 +20,8 @@ public class EnemyAnimation : MonoBehaviour
 
     private void Update()
     {
-        float targetBlendValue = _agent.velocity.magnitude;
-
-        _currentBlendValue = Mathf.Lerp(_currentBlendValue, targetBlendValue, _animationTransitionSpeed * Time.deltaTime);
-
+        float target = _agent.velocity.magnitude;
+        _currentBlendValue = Mathf.Lerp(_currentBlendValue, target, _transitionSpeed * Time.deltaTime);
         _animator.SetFloat(_velocityParam, _currentBlendValue);
     }
 }

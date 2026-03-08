@@ -1,7 +1,8 @@
+using System;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyHealth), typeof(EnemyAnimation), typeof(FollowBehaviour))]
-[RequireComponent(typeof(AttackBehaviour), typeof(ProjectileFiringBehaviour))]
+[RequireComponent(typeof(EnemyHealth), typeof(EnemySound))]
+[RequireComponent(typeof(TargetDetectionBehaviour))]
 public class EnemyController : MonoBehaviour, IResettable
 {
     // In chase and attack states the enmey contiunes shooting
@@ -9,28 +10,35 @@ public class EnemyController : MonoBehaviour, IResettable
     private enum State { Idle, Return, Chase, Attack, Die }
 
     private EnemyHealth _health;
+    private EnemySound _sound;
+
+    private TargetDetectionBehaviour _tdb;
 
     private FollowBehaviour _fb;
     private AttackBehaviour _ab;
     private ProjectileFiringBehaviour _pfb;
+    private RotateToTargetBehaviour _rtb;
 
     private State _currentState;
     private Vector3 _initialPosition;
     private Quaternion _initialRotation;
-    private int _initialHealth;
+    private bool _sightSoundPlayed = false;
 
     private void Awake()
     {
         _health = GetComponent<EnemyHealth>();
+        _sound = GetComponent<EnemySound>();
+
+        _tdb = GetComponent<TargetDetectionBehaviour>();
 
         _fb = GetComponent<FollowBehaviour>();
         _ab = GetComponent<AttackBehaviour>();
         _pfb = GetComponent<ProjectileFiringBehaviour>();
+        _rtb = GetComponent<RotateToTargetBehaviour>();
 
         _currentState = State.Idle;
         _initialPosition = transform.position;
         _initialRotation = transform.rotation;
-        _initialHealth = _health.Health;
     }
 
     private void Start()
@@ -75,7 +83,7 @@ public class EnemyController : MonoBehaviour, IResettable
             _currentState = State.Die;
         }
 
-        if (_fb.IsTargetWithinTheLineOfSight())
+        if (_tdb.IsTargetWithinTheLineOfSight())
         {
             _currentState = State.Chase;
         }
@@ -83,42 +91,54 @@ public class EnemyController : MonoBehaviour, IResettable
 
     private void Return()
     {
+        _sightSoundPlayed = false;
+
         if (_health.Health <= 0)
         {
             _currentState = State.Die;
         }
 
-        if (_fb.IsTargetWithinTheLineOfSight())
+        if (_tdb.IsTargetWithinTheLineOfSight())
         {
             _currentState = State.Chase;
         }
 
-        bool returned = _fb.ReturnToInitialPosition();
-        if (returned && !_fb.IsTargetWithinTheLineOfSight())
+        if (_fb != null)
         {
-            _currentState = State.Idle;
+            bool returned = _fb.ReturnToInitialPosition();
+            if (returned && !_tdb.IsTargetWithinTheLineOfSight())
+            {
+                _currentState = State.Idle;
+            }
         }
     }
 
     private void Chase()
     {
+        if (!_sightSoundPlayed)
+        {
+            _sound.PlaySight();
+            _sightSoundPlayed = true;
+        }
+
         if (_health.Health <= 0)
         {
             _currentState = State.Die;
         }
 
-        if (!_fb.IsTargetWithinTheLineOfSight())
+        if (!_tdb.IsTargetWithinTheLineOfSight())
         {
             _currentState = State.Return;
         }
 
-        _fb.FollowTarget();
-        
+        if (_fb != null) _fb.FollowTarget(_tdb.TargetPosition);
+        if (_rtb != null) _rtb.RotateTowards(_tdb.TargetPosition);
+
         if (_currentState != State.Attack)
         {
-            _pfb.Shoot(DistanceUtils.GetDirection(_pfb.ShootPointPosition, _fb.TargetPosition));
+            if (_pfb != null) _pfb.Shoot(DistanceUtils.GetDirection(_pfb.ShootPointPosition, _tdb.TargetPosition));
 
-            if (DistanceUtils.IsInRange(transform.position, _fb.TargetPosition, _ab.attackRange))
+            if (_ab != null && DistanceUtils.IsInRange(transform.position, _tdb.TargetPosition, _ab.attackRange))
             {
                 _currentState = State.Attack;
                 _ab.CanAttack = true;
@@ -128,10 +148,13 @@ public class EnemyController : MonoBehaviour, IResettable
 
     private void Attack()
     {
-        if (!DistanceUtils.IsInRange(transform.position, _fb.TargetPosition, _ab.attackRange))
+        if (_ab == null) { _currentState = State.Chase; return; }
+
+        if (!DistanceUtils.IsInRange(transform.position, _tdb.TargetPosition, _ab.attackRange))
         {
             _currentState = State.Chase;
             _ab.CanAttack = false;
+            return;
         }
 
         Chase();
@@ -140,7 +163,8 @@ public class EnemyController : MonoBehaviour, IResettable
 
     public void Die()
     {
-        _fb.StopFollow();
+        _sound.PlayDeath();
+        if (_fb != null) _fb.StopFollow();
 
         gameObject.SetActive(false);
     }
@@ -148,7 +172,8 @@ public class EnemyController : MonoBehaviour, IResettable
     public void OnReset(bool fullRestart)
     {
         transform.SetPositionAndRotation(_initialPosition, _initialRotation);
-        _health.Health = _initialHealth;
+        _health.ResetHealth();
+        _sightSoundPlayed = false;
         _currentState = State.Idle;
         gameObject.SetActive(true);
     }
