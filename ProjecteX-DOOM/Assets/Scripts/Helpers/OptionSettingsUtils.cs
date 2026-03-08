@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public static class OptionSettingsUtils
 {
     public static float DefaultSensitivity { get => _defaultSensitivity; }

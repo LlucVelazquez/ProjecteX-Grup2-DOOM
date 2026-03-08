@@ -178,6 +178,12 @@ public class AudioManager : MonoBehaviour
         source.Play();
     }
 
+    public AudioClip GetSound(SoundType sound)
+    {
+        AudioClip[] clips = _sounds[(int)sound].SoundClips;
+        return clips[UnityEngine.Random.Range(0, clips.Length)];
+    }
+
     public void PlayMusic(MusicType music, float volume = 1f)
     {
         _musicSource.clip = _musics[(int)music].MusicClip;

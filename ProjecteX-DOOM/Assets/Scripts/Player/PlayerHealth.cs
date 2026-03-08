@@ -12,6 +12,7 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
     public static event Action<int> OnArmorChange;
     public static event Action<int> OnMegaarmorChange;
     public static event Action<bool> OnLowHealth;
+    public static event Action OnPlayerHurt;
     public static event Action OnPlayerDeath;
 
     public int Health
@@ -112,6 +113,7 @@ public class PlayerHealth : MonoBehaviour, ITargeteable
         }
 
         Health -= (int)damageResult;
+        OnPlayerHurt?.Invoke();
 
         if (Health <= 0)
         {
