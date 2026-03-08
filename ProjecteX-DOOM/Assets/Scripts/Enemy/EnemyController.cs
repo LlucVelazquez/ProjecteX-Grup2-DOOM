@@ -171,6 +171,7 @@ public class EnemyController : MonoBehaviour, IResettable
 
     public void OnReset(bool fullRestart)
     {
+        if (_fb != null) _fb.StopFollow();
         transform.SetPositionAndRotation(_initialPosition, _initialRotation);
         _health.ResetHealth();
         _sightSoundPlayed = false;

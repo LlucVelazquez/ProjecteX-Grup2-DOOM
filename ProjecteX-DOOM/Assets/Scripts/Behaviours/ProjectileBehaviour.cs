@@ -11,21 +11,29 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
 
     private Rigidbody _rigidbody;
     private AudioSource _source;
+    private Collider _collider;
 
-    private void OnEnable() => OptionsMenuManager.OnOptionsChange += UpdateVolume;
+    private void OnEnable()
+    {
+        OptionsMenuManager.OnOptionsChange += UpdateVolume;
+
+        UpdateVolume();
+        PlaySound();
+    }
     private void OnDisable() => OptionsMenuManager.OnOptionsChange -= UpdateVolume;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _source = GetComponent<AudioSource>();
+        _collider = GetComponent<Collider>();
+
+        _collider.isTrigger = true;
     }
 
     private void Start()
     {
         GameManager.Instance.RegisterResettable(this);
-        UpdateVolume();
-        PlaySound();
     }
 
     private void UpdateVolume()
@@ -33,12 +41,16 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
         float masterVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.MasterVolumeKey, OptionSettingsUtils.DefaultMasterVolume);
         float sfxVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.SFXVolumeKey, OptionSettingsUtils.DefaultSFXVolume);
 
-        _source.volume = sfxVolume * masterVolume * 0.5f;
+        _source.volume = sfxVolume * masterVolume * 0.3f;
     }
 
     private void PlaySound()
     {
         _source.loop = true;
+        _source.spatialBlend = 1f;
+        _source.rolloffMode = AudioRolloffMode.Logarithmic;
+        _source.minDistance = 1f;
+        _source.maxDistance = 10f;
         _source.clip = AudioManager.Instance.GetSound(SoundType.Projectile);
         _source.Play();
     }
@@ -63,13 +75,16 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
                     Debug.LogWarning($"The object '{other.gameObject.name}' on layer '{shooter.targetLayerName}' does not implement ITargeteable. AttackBehaviour will not function properly.");
                 }
             }
-            AudioManager.Instance.PlaySoundAtPoint(SoundType.ProjectileHit, transform.position);
+
+            _source.PlayOneShot(AudioManager.Instance.GetSound(SoundType.ProjectileHit));
+
             ReturnToShooter();
         }
     }
 
     private void ReturnToShooter()
     {
+        _source.Stop();
         gameObject.SetActive(false);
         shooter.ProjectileStackPush(gameObject);
     }

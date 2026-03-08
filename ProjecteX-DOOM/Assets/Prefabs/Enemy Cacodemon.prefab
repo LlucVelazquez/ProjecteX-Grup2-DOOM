@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a1a73fc903409488b6f8c7d3a027c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileFiringBehaviour
-  _projectile: {fileID: 7903899614087611412, guid: f5ce23450822320419c53ec034cc1b4f, type: 3}
+  _projectile: {fileID: 5258061957298606992, guid: 726d6a3dc1dc7d34ab773a6ef7faaa0e, type: 3}
   _shootPoint: {fileID: 4804476921354518536}
   _shootProjectilesPerShot: 5
   _shootIntervalPerShot: 0.1
