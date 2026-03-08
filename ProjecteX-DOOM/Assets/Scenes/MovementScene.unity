@@ -7394,6 +7394,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
+      propertyPath: _sounds.Array.data[26]._soundClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
+      propertyPath: _sounds.Array.data[27]._soundClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
+      propertyPath: _sounds.Array.data[28]._soundClips.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
       propertyPath: _sounds.Array.data[30]._soundClips.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -7473,6 +7485,18 @@ PrefabInstance:
       propertyPath: '_sounds.Array.data[24]._soundClips.Array.data[2]'
       value: 
       objectReference: {fileID: 8300000, guid: 518b8d42ea5f2a44792e09e752c3c96a, type: 3}
+    - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
+      propertyPath: '_sounds.Array.data[26]._soundClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 16cfa4c6172b284408030f2654dd3990, type: 3}
+    - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
+      propertyPath: '_sounds.Array.data[27]._soundClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 38a80972d27483d4cb55fcda4e60895b, type: 3}
+    - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
+      propertyPath: '_sounds.Array.data[28]._soundClips.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 9073768ec11120243bbb3e5aea4b39d9, type: 3}
     - target: {fileID: 1676669719668063828, guid: 556525c7dd7e911428a8b4d967a94cd0, type: 3}
       propertyPath: '_sounds.Array.data[30]._soundClips.Array.data[0]'
       value: 

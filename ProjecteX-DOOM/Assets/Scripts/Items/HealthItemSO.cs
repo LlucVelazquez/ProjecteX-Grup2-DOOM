@@ -33,6 +33,7 @@ public class HealthItemSO : ScriptableObject, ICollectible
             pHealth.Health = health;
 
             CollectibleEvents.RaiseOnCollect(CollectMessage);
+            AudioManager.Instance.PlaySound(SoundType.HealthItem);
             collectible.SetActive(false);
         }
         else

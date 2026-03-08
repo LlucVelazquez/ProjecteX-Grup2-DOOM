@@ -26,6 +26,7 @@ public class AmmoItemSO : ScriptableObject, ICollectible
                 if (weapon.Weapon == _weaponAmmo)
                 {
                     weapon.AddAmmunition(_ammoAmount);
+                    AudioManager.Instance.PlaySound(SoundType.AmmoItem);
                     collectible.SetActive(false);
                     CollectibleEvents.RaiseOnCollect(CollectMessage);
                     return;
