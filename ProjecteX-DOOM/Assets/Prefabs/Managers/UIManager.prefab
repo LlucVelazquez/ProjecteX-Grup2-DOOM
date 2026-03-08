@@ -1872,6 +1872,7 @@ MonoBehaviour:
   _pAmmoText: {fileID: 8085066293899716110}
   _pWeaponImage: {fileID: 5824793550209652525}
   _pMegaarmorTextColor: {r: 0, g: 0.08803638, b: 0.6603774, a: 1}
+  _pObjectiveText: {fileID: 6617788826323631788}
   _loreIntroPanel: {fileID: 1836133926201438716}
   _loreIntroText: {fileID: 5740980437618452135}
   _pauseMenu: {fileID: 8131889605517743024}
@@ -4644,7 +4645,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- MATA!'
+  m_text: '- Bona nit :)'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2b1ffe3a6bd094bd98bbb0c30ab33cbf, type: 2}
   m_sharedMaterial: {fileID: -8107499911088768170, guid: 2b1ffe3a6bd094bd98bbb0c30ab33cbf, type: 2}

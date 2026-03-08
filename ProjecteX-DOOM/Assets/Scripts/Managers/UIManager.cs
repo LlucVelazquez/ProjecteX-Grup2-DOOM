@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _pAmmoText;
     [SerializeField] private Image _pWeaponImage;
     [SerializeField] private Color _pMegaarmorTextColor;
+    [SerializeField] private TextMeshProUGUI _pObjectiveText;
 
     [Header("Lore")]
     [SerializeField] private Image _loreIntroPanel;
@@ -41,6 +42,7 @@ public class UIManager : MonoBehaviour
     public string PlayerHealthText { get => _pHealthText.text; set => _pHealthText.text = value; }
     public string PlayerArmorText { get => _pArmorText.text; set => _pArmorText.text = value; }
     public string PlayerAmmoText { get => _pAmmoText.text; set => _pAmmoText.text = value; }
+    public string PlayerObjectiveText { get => _pObjectiveText.text; set => _pObjectiveText.text = "- " + value; }
     public string InteractionText { get => _interactionText.text; set => _interactionText.text = value; }
 
     private InputAction _escapeAction;
