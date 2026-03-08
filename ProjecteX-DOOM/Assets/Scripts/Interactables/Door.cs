@@ -8,8 +8,15 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField] private string _prompt = "Prem 'E' per obrir";
     [SerializeField] private UnityEvent _onInteractEvent;
 
+    private bool _open = false;
+
     public void OnInteract(GameObject interactor)
     {
-        _onInteractEvent?.Invoke();
+        if (!_open)
+        {
+            _open = true;
+            _onInteractEvent?.Invoke();
+            AudioManager.Instance.PlaySound(SoundType.DoorOpen);
+        }
     }
 }
