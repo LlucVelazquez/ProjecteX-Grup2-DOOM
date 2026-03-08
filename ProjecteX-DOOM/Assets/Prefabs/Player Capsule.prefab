@@ -1353,7 +1353,7 @@ GameObject:
   - component: {fileID: 5698886979825412015}
   - component: {fileID: 2736292063443555058}
   m_Layer: 10
-  m_Name: Cube
+  m_Name: SwordCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
