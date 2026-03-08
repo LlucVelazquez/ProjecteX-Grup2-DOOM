@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f501cf8a09cd0488fb22270df05ef5, type: 3}
+  m_Name: Level1 Intro
+  m_EditorClassIdentifier: Assembly-CSharp::LoreTextSO
+  texts:
+  - "Ets el millor marine que ha entrenat la Terra.\nEl m\xE9s fort de tots.\nMassa
+    perill\xF3s per quedar-te."
+  - "La UAC jugava amb portals interdimensionals.\nNing\xFA sabia on portaven.\nAra
+    ho saben."
+  - 'Phobos ha caigut.
+
+    Deimos ha desaparegut.'
+  - "Els teus companys han entrat armats fins a les dents... i l'\xFAnic que ha sortit
+    \xE9s silenci."
+  - Ara et toca a tu entrar.
+  - No t'aturis a pensar. Mata sense dubtar.
+  - A l'infern no hi ha pauses.
+  displayDuration: 3
+  fadeDuration: 1
