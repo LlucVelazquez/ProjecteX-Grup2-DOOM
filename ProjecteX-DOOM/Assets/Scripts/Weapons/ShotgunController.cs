@@ -67,6 +67,7 @@ public class ShotgunController : MonoBehaviour, IUsable, IRefillable, IIconable
     private void ResetAmmo(bool fullRestart)
     {
         CurrentAmmunition = _initialAmmunition;
+        _isShooting = false;
     }
 
     public void Use()
