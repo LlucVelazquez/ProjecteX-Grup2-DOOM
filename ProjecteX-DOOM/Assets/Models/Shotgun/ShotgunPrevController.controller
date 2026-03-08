@@ -55,7 +55,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ShotgunController
+  m_Name: ShotgunPrevController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Pump
@@ -123,7 +123,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -7857175279549943086, guid: e351d13652b68014990a89fb4448eb42, type: 3}
+  m_Motion: {fileID: -7857175279549943086, guid: 7152ad39018f9a84aa456a6ba3d481b2, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
