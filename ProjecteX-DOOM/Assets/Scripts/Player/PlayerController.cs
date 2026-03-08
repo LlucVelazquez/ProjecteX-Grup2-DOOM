@@ -2,15 +2,13 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputs), typeof(CharacterController))]
+[RequireComponent(typeof(PlayerSounds))]
 [RequireComponent(typeof(MoveBehaviour), typeof(GravityBehaviour), typeof(CamRotationBehaviour))]
 [RequireComponent(typeof(SprintBehaviour), typeof(WeaponSwitchBehaviour), typeof(InteractBehaviour))]
 public class PlayerController : MonoBehaviour
 {
-    [Header("Audio Footsetps Settings")]
-    [SerializeField] private float _walkStepInterval = 1f;
-    [SerializeField] private float sprintStepInterval = 2f;
-
     private PlayerInputs _playerInputs;
+    private PlayerSounds _playerSounds;
 
     private MoveBehaviour _mb;
     private GravityBehaviour _gb;
@@ -25,7 +23,6 @@ public class PlayerController : MonoBehaviour
 
     private float _yRotation;
     private int _currentWeaponIndex;
-    private float _footstepTimer;
 
     private void OnEnable()
     {
@@ -43,6 +40,7 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _playerInputs = GetComponent<PlayerInputs>();
+        _playerSounds = GetComponent<PlayerSounds>();
 
         if (GameManager.Instance != null)
         {
@@ -85,7 +83,8 @@ public class PlayerController : MonoBehaviour
 
         CheckInteraction();
         WeaponHandler();
-        PlayerFootstep();
+
+        _playerSounds.PlayPlayerFootsteps(_gb.isGrounded, _playerInputs.Move == Vector2.zero, _playerInputs.SprintToggledOn);
     }
 
     private void LateUpdate()
@@ -130,33 +129,6 @@ public class PlayerController : MonoBehaviour
             _wsb.SwitchWeapon(CurrentWeaponIndex);
 
             OnWeaponChange?.Invoke(_wsb.CurrentWeapon);
-        }
-    }
-
-    private void PlayerFootstep()
-    {
-        if (!_gb.isGrounded || _playerInputs.Move == Vector2.zero)
-        {
-            _footstepTimer = 0f;
-            return;
-        }
-
-        bool isSprinting = _playerInputs.SprintToggledOn;
-        float stepInterval = isSprinting ? sprintStepInterval : _walkStepInterval;
-
-        _footstepTimer -= Time.deltaTime;
-
-        if (_footstepTimer <= 0f)
-        {
-            if (!isSprinting)
-            {
-                AudioManager.Instance.PlaySound(SoundType.PlayerFootsteps, 0.2f);
-            }
-            else
-            {
-                AudioManager.Instance.PlaySound(SoundType.PlayerSprintFootsteps, 0.2f);
-            }
-            _footstepTimer = stepInterval;
         }
     }
 

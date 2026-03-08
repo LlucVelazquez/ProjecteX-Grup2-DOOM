@@ -16,7 +16,7 @@ public class LoreIntroManager : MonoBehaviour
             return;
         }
 
-        AudioManager.Instance.PlayeMusic(_levelMusic);
+        AudioManager.Instance.PlayMusic(_levelMusic);
         OnIntroRequested?.Invoke(_loreData);
     }
 }

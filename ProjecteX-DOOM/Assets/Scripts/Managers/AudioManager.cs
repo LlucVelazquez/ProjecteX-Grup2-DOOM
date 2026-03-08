@@ -119,6 +119,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
 
         _musicSource = GetComponents<AudioSource>()[0];
@@ -172,6 +173,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundAtPoint(SoundType sound, Vector3 position, float volume = 1f, float minDist = 2f, float maxDist = 30f)
     {
+        if (_sourcePool == null) return;
+
         AudioClip[] clips = _sounds[(int)sound].SoundClips;
         AudioClip rclip = clips[UnityEngine.Random.Range(0, clips.Length)];
 
@@ -186,7 +189,7 @@ public class AudioManager : MonoBehaviour
         source.Play();
     }
 
-    public void PlayeMusic(MusicType music, float volume = 1f)
+    public void PlayMusic(MusicType music, float volume = 1f)
     {
         _musicSource.clip = _musics[(int)music].MusicClip;
         _musicSource.volume = _musicVolume * _masterVolume * volume;
