@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
 public class ProjectileBehaviour : MonoBehaviour, IResettable
 {
     [HideInInspector] public ProjectileFiringBehaviour shooter;
@@ -10,15 +10,37 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
     [HideInInspector] public int maxBaseDamage;
 
     private Rigidbody _rigidbody;
+    private AudioSource _source;
+
+    private void OnEnable() => OptionsMenuManager.OnOptionsChange += UpdateVolume;
+    private void OnDisable() => OptionsMenuManager.OnOptionsChange -= UpdateVolume;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _source = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         GameManager.Instance.RegisterResettable(this);
+        UpdateVolume();
+        PlaySound();
+    }
+
+    private void UpdateVolume()
+    {
+        float masterVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.MasterVolumeKey, OptionSettingsUtils.DefaultMasterVolume);
+        float sfxVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.SFXVolumeKey, OptionSettingsUtils.DefaultSFXVolume);
+
+        _source.volume = sfxVolume * masterVolume * 0.5f;
+    }
+
+    private void PlaySound()
+    {
+        _source.loop = true;
+        _source.clip = AudioManager.Instance.GetSound(SoundType.Projectile);
+        _source.Play();
     }
 
     private void Update()
@@ -41,6 +63,7 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
                     Debug.LogWarning($"The object '{other.gameObject.name}' on layer '{shooter.targetLayerName}' does not implement ITargeteable. AttackBehaviour will not function properly.");
                 }
             }
+            AudioManager.Instance.PlaySoundAtPoint(SoundType.ProjectileHit, transform.position);
             ReturnToShooter();
         }
     }
