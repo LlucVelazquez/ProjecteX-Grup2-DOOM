@@ -37,6 +37,7 @@ public class Checkpoint : MonoBehaviour, IResettable
             _activated = true;
             CheckpointSystem.Instance.RegisterCheckpoint(transform.position);
             CollectibleEvents.RaiseOnCollect(_activateMessage);
+            AudioManager.Instance.PlaySound(SoundType.SecretFound);
         }
     }
 

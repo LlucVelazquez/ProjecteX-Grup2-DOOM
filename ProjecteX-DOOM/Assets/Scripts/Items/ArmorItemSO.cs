@@ -70,6 +70,7 @@ public class ArmorItemSO : ScriptableObject, ICollectible
 
         pHealth.Armor = armor;
         CollectibleEvents.RaiseOnCollect(CollectMessage);
+        AudioManager.Instance.PlaySound(SoundType.ArmorItem);
         collectible.SetActive(false);
     }
 
@@ -85,6 +86,7 @@ public class ArmorItemSO : ScriptableObject, ICollectible
 
         pHealth.Megaarmor = armor;
         CollectibleEvents.RaiseOnCollect(CollectMessage);
+        AudioManager.Instance.PlaySound(SoundType.ArmorItem);
         collectible.SetActive(false);
     }
 }
