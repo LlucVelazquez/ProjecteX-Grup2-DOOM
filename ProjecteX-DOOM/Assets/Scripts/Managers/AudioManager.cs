@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum SoundType
@@ -43,16 +42,6 @@ public enum MusicType
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-
-    [Header("Volume Keys")]
-    [SerializeField] private string _masterVolumeKey = "MasterVolume";
-    [SerializeField] private string _musicVolumeKey = "MusicVolume";
-    [SerializeField] private string _sfxVolumeKey = "SfXVolume";
-
-    [Header("Deafult Volumes")]
-    [SerializeField] private float _defaultMasterVolume = 1f;
-    [SerializeField] private float _defaultMusicVolume = 1f;
-    [SerializeField] private float _defaultSFXVolume = 1f;
 
     [Header("Audio Clips")]
     [SerializeField] private MusicList[] _musics = new MusicList[0];
@@ -156,9 +145,9 @@ public class AudioManager : MonoBehaviour
 
     private void UpdateVolumes()
     {
-        _masterVolume = PlayerPrefs.GetFloat(_masterVolumeKey, _defaultMasterVolume);
-        _musicVolume = PlayerPrefs.GetFloat(_musicVolumeKey, _defaultMusicVolume);
-        _sfxVolume = PlayerPrefs.GetFloat(_sfxVolumeKey, _defaultSFXVolume);
+        _masterVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.MasterVolumeKey, OptionSettingsUtils.DefaultMasterVolume);
+        _musicVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.MusicVolumeKey, OptionSettingsUtils.DefaultMusicVolume);
+        _sfxVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.SFXVolumeKey, OptionSettingsUtils.DefaultSFXVolume);
 
         _musicSource.volume = _musicVolume * _masterVolume;
         _soundSource.volume = _sfxVolume * _masterVolume;

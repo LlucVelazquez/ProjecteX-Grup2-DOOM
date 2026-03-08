@@ -18,18 +18,6 @@ public class OptionsMenuManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _optMusicVolValueText;
     [SerializeField] private TextMeshProUGUI _optSFXVolValueText;
 
-    [Header("Deafult Settings")]
-    [SerializeField] private float _defaultSensitivity = 0.1f;
-    [SerializeField] private float _defaultMasterVolume = 1f;
-    [SerializeField] private float _defaultMusicVolume = 1f;
-    [SerializeField] private float _defaultSFXVolume = 1f;
-
-    [Header("PlayerPrefs Keys")]
-    [SerializeField] private string _sensitivityKey = "Sensitivity";
-    [SerializeField] private string _masterVolumeKey = "MasterVolume";
-    [SerializeField] private string _musicVolumeKey = "MusicVolume";
-    [SerializeField] private string _sfxVolumeKey = "SfXVolume";
-
     public static event Action OnOptionsChange;
 
     private float _currentSensitivity;
@@ -51,10 +39,10 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void SetOptionsMenu()
     {
-        _currentSensitivity = PlayerPrefs.GetFloat(_sensitivityKey, _defaultSensitivity);
-        _currentMasterVolume = PlayerPrefs.GetFloat(_masterVolumeKey, _defaultMasterVolume);
-        _currentMusicVolume = PlayerPrefs.GetFloat(_musicVolumeKey, _defaultMusicVolume);
-        _currentSFXVolume = PlayerPrefs.GetFloat(_sfxVolumeKey, _defaultSFXVolume);
+        _currentSensitivity = PlayerPrefs.GetFloat(OptionSettingsUtils.SensitivityKey, OptionSettingsUtils.DefaultSensitivity);
+        _currentMasterVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.MasterVolumeKey, OptionSettingsUtils.DefaultMasterVolume);
+        _currentMusicVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.MusicVolumeKey, OptionSettingsUtils.DefaultMusicVolume);
+        _currentSFXVolume = PlayerPrefs.GetFloat(OptionSettingsUtils.SFXVolumeKey, OptionSettingsUtils.DefaultSFXVolume);
 
         _optSensitivitySlider.value = _currentSensitivity;
         _optMasterVolSlider.value = _currentMasterVolume;
@@ -93,23 +81,23 @@ public class OptionsMenuManager : MonoBehaviour
 
     public void ResetOptions()
     {
-        _currentSensitivity = _defaultSensitivity;
-        _currentMasterVolume = _defaultMasterVolume;
-        _currentMusicVolume = _defaultMusicVolume;
-        _currentSFXVolume = _defaultSFXVolume;
+        _currentSensitivity = OptionSettingsUtils.DefaultSensitivity;
+        _currentMasterVolume = OptionSettingsUtils.DefaultMasterVolume;
+        _currentMusicVolume = OptionSettingsUtils.DefaultMusicVolume;
+        _currentSFXVolume = OptionSettingsUtils.DefaultSFXVolume;
 
-        _optSensitivitySlider.value = _defaultSensitivity;
-        _optMasterVolSlider.value = _defaultMasterVolume;
-        _optMusicVolSlider.value = _defaultMusicVolume;
-        _optSFXVolSlider.value = _defaultSFXVolume;
+        _optSensitivitySlider.value = OptionSettingsUtils.DefaultSensitivity;
+        _optMasterVolSlider.value = OptionSettingsUtils.DefaultMasterVolume;
+        _optMusicVolSlider.value = OptionSettingsUtils.DefaultMusicVolume;
+        _optSFXVolSlider.value = OptionSettingsUtils.DefaultSFXVolume;
     }
 
     public void SaveOptions()
     {
-        PlayerPrefs.SetFloat(_sensitivityKey, _currentSensitivity);
-        PlayerPrefs.SetFloat(_masterVolumeKey, _currentMasterVolume);
-        PlayerPrefs.SetFloat(_musicVolumeKey, _currentMusicVolume);
-        PlayerPrefs.SetFloat(_sfxVolumeKey, _currentSFXVolume);
+        PlayerPrefs.SetFloat(OptionSettingsUtils.SensitivityKey, _currentSensitivity);
+        PlayerPrefs.SetFloat(OptionSettingsUtils.MasterVolumeKey, _currentMasterVolume);
+        PlayerPrefs.SetFloat(OptionSettingsUtils.MusicVolumeKey, _currentMusicVolume);
+        PlayerPrefs.SetFloat(OptionSettingsUtils.SFXVolumeKey, _currentSFXVolume);
 
         OnOptionsChange?.Invoke();
     }
