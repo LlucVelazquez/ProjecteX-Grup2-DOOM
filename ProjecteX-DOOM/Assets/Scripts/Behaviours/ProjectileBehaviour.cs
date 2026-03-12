@@ -8,6 +8,7 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
     [HideInInspector] public float speed;
     [HideInInspector] public int damageMulti;
     [HideInInspector] public int maxBaseDamage;
+    [HideInInspector] public LayerMask shooterLayer;
 
     private Rigidbody _rigidbody;
     private AudioSource _source;
@@ -75,7 +76,10 @@ public class ProjectileBehaviour : MonoBehaviour, IResettable
                     Debug.LogWarning($"The object '{other.gameObject.name}' on layer '{shooter.targetLayerName}' does not implement ITargeteable. AttackBehaviour will not function properly.");
                 }
             }
+        }
 
+        if (other.gameObject.layer != shooterLayer)
+        {
             _source.PlayOneShot(AudioManager.Instance.GetSound(SoundType.ProjectileHit));
 
             ReturnToShooter();

@@ -81,11 +81,13 @@ public class EnemyController : MonoBehaviour, IResettable
         if (_health.Health <= 0)
         {
             _currentState = State.Die;
+            return;
         }
 
         if (_tdb.IsTargetWithinTheLineOfSight())
         {
             _currentState = State.Chase;
+            return;
         }
     }
 
@@ -96,11 +98,13 @@ public class EnemyController : MonoBehaviour, IResettable
         if (_health.Health <= 0)
         {
             _currentState = State.Die;
+            return;
         }
 
         if (_tdb.IsTargetWithinTheLineOfSight())
         {
             _currentState = State.Chase;
+            return;
         }
 
         if (_fb != null)
@@ -109,6 +113,7 @@ public class EnemyController : MonoBehaviour, IResettable
             if (returned && !_tdb.IsTargetWithinTheLineOfSight())
             {
                 _currentState = State.Idle;
+                return;
             }
         }
     }
@@ -124,11 +129,13 @@ public class EnemyController : MonoBehaviour, IResettable
         if (_health.Health <= 0)
         {
             _currentState = State.Die;
+            return;
         }
 
         if (!_tdb.IsTargetWithinTheLineOfSight())
         {
             _currentState = State.Return;
+            return;
         }
 
         if (_fb != null) _fb.FollowTarget(_tdb.TargetPosition);
@@ -142,6 +149,7 @@ public class EnemyController : MonoBehaviour, IResettable
             {
                 _currentState = State.Attack;
                 _ab.CanAttack = true;
+                return;
             }
         }
     }
@@ -149,6 +157,12 @@ public class EnemyController : MonoBehaviour, IResettable
     private void Attack()
     {
         if (_ab == null) { _currentState = State.Chase; return; }
+
+        if (_health.Health <= 0)
+        {
+            _currentState = State.Die;
+            return;
+        }
 
         if (!DistanceUtils.IsInRange(transform.position, _tdb.TargetPosition, _ab.attackRange))
         {

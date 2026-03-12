@@ -6726,7 +6726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TargetDetectionBehaviour
   _target: {fileID: 0}
-  _detectionRange: 10
+  _detectionRange: 20
   _ignoreLayers:
     serializedVersion: 2
     m_Bits: 0

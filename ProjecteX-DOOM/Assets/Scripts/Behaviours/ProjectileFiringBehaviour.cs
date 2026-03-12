@@ -90,6 +90,7 @@ public class ProjectileFiringBehaviour : MonoBehaviour
         pb.damageMulti = projectileDamageMulti;
         pb.maxBaseDamage = projectileMaxBaseDamage;
         pb.direction = direction;
+        pb.shooterLayer = gameObject.layer;
     }
 
     public void ProjectileStackPush(GameObject go)

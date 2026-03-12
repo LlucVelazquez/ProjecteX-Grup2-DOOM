@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
-public class DamageArea : MonoBehaviour
+public class DamageArea : MonoBehaviour, IResettable
 {
     [Header("Area Damage Settings")]
     [SerializeField] private int _damage = 10;
@@ -18,6 +17,11 @@ public class DamageArea : MonoBehaviour
     {
         _collider = GetComponent<Collider>();
         _collider.isTrigger = true;
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.RegisterResettable(this);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,6 +59,15 @@ public class DamageArea : MonoBehaviour
         else
         {
             Debug.LogError("Player does not contain PlayerHealth Component");
+        }
+    }
+
+    public void OnReset(bool fullRestart)
+    {
+        if (_damageCoroutine != null)
+        {
+            StopCoroutine(_damageCoroutine);
+            _damageCoroutine = null;
         }
     }
 }

@@ -22,15 +22,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.42
+      value: -22.34
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.25016817
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.98
+      value: -22.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38,15 +38,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -64,9 +64,25 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -6733177361254619370, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
       propertyPath: m_Name
       value: HPBottle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8700725330082129686, guid: 41dd05651dd294a4ebafa4f2a95148bb, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
