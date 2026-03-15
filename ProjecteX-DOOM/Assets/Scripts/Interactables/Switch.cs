@@ -1,15 +1,18 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Switch : MonoBehaviour, IInteractable
 {
+    [SerializeField] private string _prompt = "Prem 'E' per interactuar";
+    [SerializeField] private int _switchId;
+
     public string InteractionPrompt { get => _prompt; }
 
-    [SerializeField] private string _prompt = "Prem 'E' per interactuar";
-    [SerializeField] private UnityEvent _onInteractEvent;
+    public static event Action<int> OnSwitchPress;
 
     public void OnInteract(GameObject interactor)
     {
-        _onInteractEvent?.Invoke();
+        OnSwitchPress?.Invoke(_switchId);
     }
 }

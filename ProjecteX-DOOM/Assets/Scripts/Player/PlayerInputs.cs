@@ -42,6 +42,7 @@ public class PlayerInputs : MonoBehaviour, InputSystem_Actions.IPlayerActions
     {
         Jump = false;
         Attack = false;
+        Interact = false;
     }
 
     public void OnAttack(InputAction.CallbackContext context)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private string _playerLayerName = "Player";
     [SerializeField] private string _enemyLayerName = "Enemy";
+    [SerializeField] private List<NavMeshSurface> _navMeshSurfaces = new List<NavMeshSurface>();
 
     public PlayerController Player { get; set; }
     public string PlayerLayerName { get => _playerLayerName; }
@@ -61,5 +63,13 @@ public class GameManager : MonoBehaviour
     private void FullRestart()
     {
         CheckpointSystem.Instance.ResetToInitial();
+    }
+
+    private void NavMeshReBake()
+    {
+        foreach (NavMeshSurface surface in _navMeshSurfaces)
+        {
+            surface.BuildNavMesh();
+        }
     }
 }
