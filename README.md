@@ -4,7 +4,7 @@
 
 La build es troba en format .zip en el drive ja que per el seu pes no s'ha pogut pujar al github.
 
-[Build]([https://drive.google.com/file/d/1XrF0OnHaoySk8e6lzgIKdo354FFed1rF/view?usp=drive_link](https://drive.google.com/file/d/1Ft5mo_zHkVpyCLKElInUQJS1wyq9fO-h/view?usp=drive_link))
+[Build](https://drive.google.com/file/d/1XrF0OnHaoySk8e6lzgIKdo354FFed1rF/view?usp=drive_link](https://drive.google.com/file/d/1Ft5mo_zHkVpyCLKElInUQJS1wyq9fO-h/view?usp=drive_link))
 
 ## Sistema de Jugador
 
