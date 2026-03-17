@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     [Header("Menus")]
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _deathMenu;
+    [SerializeField] private GameObject _winMenu;
     [SerializeField] private GameObject _optionsMenu;
 
     [Header("UI")]
@@ -56,7 +57,9 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnMegaarmorChange += UpdateHUDMegaarmor;
         PlayerHealth.OnLowHealth += ShowLowHealthIndicator;
         PlayerHealth.OnPlayerDeath += ShowDeathMenu;
-        
+
+        BossBehaviour.OnBossDeath += ShowWinMenu;
+
         ShotgunController.OnAmmunitionChange += UpdateHUDAmmunition;
         
         PlayerController.OnWeaponChange += ShowWeaponUI;
@@ -75,7 +78,9 @@ public class UIManager : MonoBehaviour
         PlayerHealth.OnMegaarmorChange -= UpdateHUDMegaarmor;
         PlayerHealth.OnLowHealth -= ShowLowHealthIndicator;
         PlayerHealth.OnPlayerDeath -= ShowDeathMenu;
-        
+
+        BossBehaviour.OnBossDeath -= ShowWinMenu;
+
         ShotgunController.OnAmmunitionChange -= UpdateHUDAmmunition;
         
         PlayerController.OnWeaponChange -= ShowWeaponUI;
@@ -123,6 +128,7 @@ public class UIManager : MonoBehaviour
 
         _pauseMenu.SetActive(false);
         _deathMenu.SetActive(false);
+        _winMenu.SetActive(false);
         _optionsMenu.SetActive(false);
     }
 
@@ -292,6 +298,16 @@ public class UIManager : MonoBehaviour
         _deathMenu.SetActive(true);
     }
 
+    public void ShowWinMenu()
+    {
+        Time.timeScale = 0f;
+        OnPauseGame?.Invoke(true);
+
+        CursorState(false, true);
+
+        _winMenu.SetActive(true);
+    }
+
     public void PauseGame()
     {
         Time.timeScale = 0f;
@@ -331,6 +347,7 @@ public class UIManager : MonoBehaviour
         CursorState(false, true);
 
         _deathMenu.SetActive(false);
+        _winMenu.SetActive(false);
 
         ResumeGame();
     }

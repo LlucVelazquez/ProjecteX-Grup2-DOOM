@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour, IResettable
     private AttackBehaviour _ab;
     private ProjectileFiringBehaviour _pfb;
     private RotateToTargetBehaviour _rtb;
+    private BossBehaviour _bb;
 
     private State _currentState;
     private Vector3 _initialPosition;
@@ -35,6 +36,7 @@ public class EnemyController : MonoBehaviour, IResettable
         _ab = GetComponent<AttackBehaviour>();
         _pfb = GetComponent<ProjectileFiringBehaviour>();
         _rtb = GetComponent<RotateToTargetBehaviour>();
+        _bb = GetComponent<BossBehaviour>();
 
         _currentState = State.Idle;
         _initialPosition = transform.position;
@@ -179,6 +181,7 @@ public class EnemyController : MonoBehaviour, IResettable
     {
         _sound.PlayDeath();
         if (_fb != null) _fb.StopFollow();
+        if (_bb != null) _bb.BossDead();
 
         gameObject.SetActive(false);
     }
